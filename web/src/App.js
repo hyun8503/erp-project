@@ -8,7 +8,6 @@ import {CssBaseline} from "@material-ui/core";
 import axios from "axios";
 
 import TopBar from "./components/TopBar";
-import SideMenu from "./components/SideMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
@@ -91,10 +90,6 @@ class App extends React.Component {
                                 setMobileOpen={this.setMobileOpen}
                                 isLoggedIn={loginState === store.State.Authenticated}
                                 doLogout={() => this.props.authStore.doLogout()} />
-                        <SideMenu mobileOpen={this.state.mobileOpen}
-                                  setMobileOpen={this.setMobileOpen}
-                                  isLoggedIn={loginState === store.State.Authenticated} />
-
                         {loginState === store.State.Authenticated ? (
                             <React.Fragment>
                               <Switch>

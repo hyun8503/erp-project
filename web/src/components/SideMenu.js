@@ -1,7 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Toolbar} from "@material-ui/core";
+import {
+    Divider,
+    Drawer,
+    Hidden,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    ListSubheader,
+    Toolbar
+} from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import ComputerIcon from '@material-ui/icons/Computer';
 
@@ -9,12 +19,6 @@ const logoWidth = 129;
 const logoHeight = 22;
 
 const useStyles = makeStyles((theme) => ({
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: theme.drawerWidth,
-            flexShrink: 0,
-        },
-    },
     appBar: {
         width: theme.drawerWidth,
         paddingLeft: 0,
@@ -22,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
     },
     drawerPaper: {
+        marginTop: '64px',
         width: theme.drawerWidth,
         height: '100%',
         border: 'none',
@@ -77,9 +82,8 @@ export default function SideMenu(props) {
     );
 
     return (
-        <nav className={classes.drawer} aria-label="mailbox folders">
+        <React.Fragment>
             <Hidden smUp implementation="css">
-
                 <Drawer variant="temporary"
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={mobileOpen}
@@ -111,11 +115,6 @@ export default function SideMenu(props) {
 
                         open
                 >
-                    <Toolbar className={classes.toolbar}>
-                        {/*<Link to='/' className={classes.link}>*/}
-                        {/*    <img src="/images/aether_white.png" alt="AetherIT" className={classes.logo}/>*/}
-                        {/*</Link>*/}
-                    </Toolbar>
                     {isLoggedIn ? (
                         drawer
                     ) : (
@@ -123,6 +122,6 @@ export default function SideMenu(props) {
                     )}
                 </Drawer>
             </Hidden>
-        </nav>
+        </React.Fragment>
     );
 };

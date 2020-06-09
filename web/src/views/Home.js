@@ -3,20 +3,30 @@ import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 
-import {Container, Toolbar, Typography} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
+import SideMenu from "../components/SideMenu";
+import Grid from "@material-ui/core/Grid";
 
 
 const styles = theme => ({
+    wrap: {
+        display: 'flex',
+        marginTop: '64px',
+        width: '100%',
+    },
     mainContainer: {
-        flexGrow: 1,
+        paddingLeft: `calc(${theme.drawerWidth}px + ${theme.spacing(3)}px)`,
+        width: '100%',
+        height: '100%',
         padding: theme.spacing(3),
     },
     appBarSpacer: theme.mixins.toolbar,
     mainContent: {
-        marginTop: theme.spacing(2),
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        maxWidth: '1200px',
+        width: '100%',
+        height: '100%',
+        padding: theme.spacing(2),
     },
     toolbar: {
         width: '100%',
@@ -34,16 +44,21 @@ class Home extends React.Component {
         const { classes } = this.props;
 
         return (
-            <Container component="main" className={classes.mainContainer}>
+            <div className={classes.wrap}>
+                <SideMenu
+                    mobileOpen = {false}
+                    setMobileOpen = {() => {}}
+                    isLoggedIn = {true}
+                />
                 <div className={classes.appBarSpacer} />
-                <div className={classes.mainContent}>
-                    <Toolbar className={classes.toolbar}>
+                <Grid className={classes.mainContainer} container justify={"center"}>
+                    <Paper className={classes.mainContent}>
                         <Typography variant="h4" component="h2">
                             Homesdfsdf
                         </Typography>
-                    </Toolbar>
-                </div>
-            </Container>
+                    </Paper>
+                </Grid>
+            </div>
         );
     }
 };
