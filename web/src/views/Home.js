@@ -39,7 +39,7 @@ class Home extends React.Component {
                 <div className={classes.mainContent}>
                     <Toolbar className={classes.toolbar}>
                         <Typography variant="h4" component="h2">
-                            Home
+                            Homesdfsdf
                         </Typography>
                     </Toolbar>
                 </div>
