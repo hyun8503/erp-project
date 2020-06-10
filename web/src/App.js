@@ -3,16 +3,15 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {inject, observer} from "mobx-react";
 
 import {withStyles} from "@material-ui/core/styles";
-import {CssBaseline} from "@material-ui/core";
-
-import axios from "axios";
-
+import {CssBaseline} from "@material-ui/core"; 
+import axios from "axios"
 import TopBar from "./components/TopBar";
 import SideMenu from "./components/SideMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
 import * as store from "./stores/AuthStore";
+import Dashbord from './components/dashboard/Dashboard';
 
 
 const style = () => ({
@@ -83,6 +82,7 @@ class App extends React.Component {
 
         return (
             <div className={classes.root}>
+     
                 <Router>
                     <CssBaseline />
 
@@ -94,7 +94,7 @@ class App extends React.Component {
                         <SideMenu mobileOpen={this.state.mobileOpen}
                                   setMobileOpen={this.setMobileOpen}
                                   isLoggedIn={loginState === store.State.Authenticated} />
-
+                      
                         {loginState === store.State.Authenticated ? (
                             <React.Fragment>
                               <Switch>
@@ -107,6 +107,8 @@ class App extends React.Component {
                         )}
                   </Route>
                 </Router>
+                
+
             </div>
         );
     }

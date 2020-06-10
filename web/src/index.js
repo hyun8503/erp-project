@@ -23,6 +23,7 @@ ReactDOM.render(
                 horizontal: 'right',
             }}>
                 <App />
+                
             </SnackbarProvider>
         </ThemeProvider>
     </MobxProvider>
