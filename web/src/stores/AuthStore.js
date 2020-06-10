@@ -10,6 +10,7 @@ export const State = {
 
 export const LocalStorageTokenKey = '_BASKITOP_AUTHENTICATION_TOKEN_';
 
+
 const EmptyLogin = {
     id: '',
     password: '',
@@ -22,6 +23,7 @@ const EmptyUser = {
     createdDatetime: '',
     updatedDatetime: '',
 };
+
 
 export default class AuthStore {
     @observable login = Object.assign({}, EmptyLogin);
