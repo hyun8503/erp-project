@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 import {
     Divider,
@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import ComputerIcon from '@material-ui/icons/Computer';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 129;
 const logoHeight = 22;
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SideMenu(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const { mobileOpen, setMobileOpen, isLoggedIn } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout } = props;
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -67,17 +68,57 @@ export default function SideMenu(props) {
     const drawer = (
         <div className={classes.menu}>
             <List>
-                <ListSubheader inset>관리</ListSubheader>
+                <ListSubheader inset>레포트</ListSubheader>
 
-                <Link to="/home" className={classes.link}>
+                <NavLink to="/home" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="홈"></ListItemText>
+                        <ListItemText primary="레포트 제출" />
                     </ListItem>
-                </Link>
+                </NavLink>
+                <NavLink to={"/"} className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="레포트 검색" />
+                    </ListItem>
+                </NavLink>
             </List>
-
             <Divider />
+            <List>
+                <ListSubheader inset>시스템 관리</ListSubheader>
+
+                <NavLink to="/management/report" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="보고서 템플릿 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/platform" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="플랫폼 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/role" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="역할 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/user" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="사용자 관리" />
+                    </ListItem>
+                </NavLink>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button onClick={() => doLogout()}>
+                    <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                    <ListItemText primary="로그아웃" />
+                </ListItem>
+            </List>
         </div>
     );
 
