@@ -1,20 +1,25 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
-import {Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Toolbar} from "@material-ui/core";
+import {
+    Divider,
+    Drawer,
+    Hidden,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    ListSubheader,
+    Toolbar
+} from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import ComputerIcon from '@material-ui/icons/Computer';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 129;
 const logoHeight = 22;
 
 const useStyles = makeStyles((theme) => ({
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: theme.drawerWidth,
-            flexShrink: 0,
-        },
-    },
     appBar: {
         width: theme.drawerWidth,
         paddingLeft: 0,
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
     },
     drawerPaper: {
+        marginTop: '64px',
         width: theme.drawerWidth,
         height: '100%',
         border: 'none',
@@ -53,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SideMenu(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const { mobileOpen, setMobileOpen, isLoggedIn } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout } = props;
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -62,24 +68,63 @@ export default function SideMenu(props) {
     const drawer = (
         <div className={classes.menu}>
             <List>
-                <ListSubheader inset>관리</ListSubheader>
+                <ListSubheader inset>레포트</ListSubheader>
 
-                <Link to="/home" className={classes.link}>
+                <NavLink to="/home" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="홈"></ListItemText>
+                        <ListItemText primary="레포트 제출" />
                     </ListItem>
-                </Link>
+                </NavLink>
+                <NavLink to={"/"} className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="레포트 검색" />
+                    </ListItem>
+                </NavLink>
             </List>
-
             <Divider />
+            <List>
+                <ListSubheader inset>시스템 관리</ListSubheader>
+
+                <NavLink to="/management/report" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="보고서 템플릿 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/platform" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="플랫폼 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/role" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="역할 관리" />
+                    </ListItem>
+                </NavLink>
+                <NavLink to="/management/user" className={classes.link}>
+                    <ListItem button>
+                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemText primary="사용자 관리" />
+                    </ListItem>
+                </NavLink>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button onClick={() => doLogout()}>
+                    <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                    <ListItemText primary="로그아웃" />
+                </ListItem>
+            </List>
         </div>
     );
 
     return (
-        <nav className={classes.drawer} aria-label="mailbox folders">
+        <React.Fragment>
             <Hidden smUp implementation="css">
-
                 <Drawer variant="temporary"
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={mobileOpen}
@@ -111,11 +156,6 @@ export default function SideMenu(props) {
 
                         open
                 >
-                    <Toolbar className={classes.toolbar}>
-                        {/*<Link to='/' className={classes.link}>*/}
-                        {/*    <img src="/images/aether_white.png" alt="AetherIT" className={classes.logo}/>*/}
-                        {/*</Link>*/}
-                    </Toolbar>
                     {isLoggedIn ? (
                         drawer
                     ) : (
@@ -123,6 +163,6 @@ export default function SideMenu(props) {
                     )}
                 </Drawer>
             </Hidden>
-        </nav>
+        </React.Fragment>
     );
 };

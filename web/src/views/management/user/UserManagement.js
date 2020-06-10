@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 
 import {Paper, Typography} from "@material-ui/core";
-import SideMenu from "../components/SideMenu";
+import SideMenu from "../../../components/SideMenu";
 import Grid from "@material-ui/core/Grid";
 import {inject, observer} from "mobx-react";
 
@@ -37,11 +37,8 @@ const styles = theme => ({
 
 @inject("authStore")
 @observer
-class Home extends React.Component {
+class UserManagement extends React.Component {
     componentDidMount() {
-        this.props.enqueueSnackbar("Welcome", {
-            variant: 'info'
-        });
     }
 
     render() {
@@ -59,7 +56,7 @@ class Home extends React.Component {
                 <Grid className={classes.mainContainer} container justify={"center"}>
                     <Paper className={classes.mainContent}>
                         <Typography variant="h4" component="h2">
-                            Home
+                            사용자 관리
                         </Typography>
                     </Paper>
                 </Grid>
@@ -68,4 +65,4 @@ class Home extends React.Component {
     }
 };
 
-export default withSnackbar(withRouter(withStyles(styles) (Home)));
+export default withSnackbar(withRouter(withStyles(styles) (UserManagement)));

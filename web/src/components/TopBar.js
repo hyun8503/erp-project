@@ -10,10 +10,10 @@ const logoWidth = 120;
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${theme.drawerWidth}px)`,
-            marginLeft: theme.drawerWidth,
-        },
+        // [theme.breakpoints.up('sm')]: {
+        //     width: `calc(100% - ${theme.drawerWidth}px)`,
+        //     marginLeft: theme.drawerWidth,
+        // },
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -41,7 +41,7 @@ export default function TopBar(props) {
     };
 
     return (
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar position="fixed" className={classes.appBar} elevation={0}>
             <Toolbar>
                 <IconButton
                     color="inherit"

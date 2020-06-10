@@ -3,15 +3,18 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {inject, observer} from "mobx-react";
 
 import {withStyles} from "@material-ui/core/styles";
-import {CssBaseline} from "@material-ui/core"; 
-import axios from "axios"
+import {CssBaseline} from "@material-ui/core";
+
+import axios from "axios";
+
 import TopBar from "./components/TopBar";
-import SideMenu from "./components/SideMenu";
-import ScrollToTop from "./components/ScrollToTop";
 import Home from "./views/Home";
 import SignIn from "./views/SignIn";
+import PlatformManagement from "./views/management/platform/PlatformManagement";
+import ReportManagement from "./views/management/report/ReportManagement";
+import RoleManagement from "./views/management/role/RoleManagement";
+import UserManagement from "./views/management/user/UserManagement";
 import * as store from "./stores/AuthStore";
-import Dashbord from './components/dashboard/Dashboard';
 
 
 const style = () => ({
@@ -82,33 +85,30 @@ class App extends React.Component {
 
         return (
             <div className={classes.root}>
-     
                 <Router>
                     <CssBaseline />
 
-                    <Route path="/" component={ScrollToTop}>
+                    {/*<Route path="/" component={ScrollToTop}>*/}
                         <TopBar mobileOpen={this.state.mobileOpen}
                                 setMobileOpen={this.setMobileOpen}
                                 isLoggedIn={loginState === store.State.Authenticated}
                                 doLogout={() => this.props.authStore.doLogout()} />
-                        <SideMenu mobileOpen={this.state.mobileOpen}
-                                  setMobileOpen={this.setMobileOpen}
-                                  isLoggedIn={loginState === store.State.Authenticated} />
-                      
                         {loginState === store.State.Authenticated ? (
                             <React.Fragment>
-                              <Switch>
-                                <Route exact path="/" component={Home} />
-                                <Route exact path="/home" component={Home} />
-                              </Switch>
+                                <Switch>
+                                    <Route exact path="/" component={Home} />
+                                    <Route exact path="/home" component={Home} />
+                                    <Route exact path="/management/platform" component={PlatformManagement} />
+                                    <Route exact path="/management/report" component={ReportManagement} />
+                                    <Route exact path="/management/role" component={RoleManagement} />
+                                    <Route exact path="/management/user" component={UserManagement} />
+                                </Switch>
                             </React.Fragment>
                         ) : (
                             <Route path="/" component={SignIn} />
                         )}
-                  </Route>
+                  {/*</Route>*/}
                 </Router>
-                
-
             </div>
         );
     }
