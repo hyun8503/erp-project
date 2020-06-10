@@ -4,15 +4,15 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 
 import {Paper, Typography} from "@material-ui/core";
-import SideMenu from "../components/SideMenu";
+import SideMenu from "../../components/SideMenu";
 import Grid from "@material-ui/core/Grid";
 import {inject, observer} from "mobx-react";
+import {DropzoneArea} from "material-ui-dropzone";
 
 
 const styles = theme => ({
     wrap: {
         display: 'flex',
-        flexDirection: 'column',
         marginTop: '64px',
         width: '100%',
         height: '100%',
@@ -27,6 +27,7 @@ const styles = theme => ({
     appBarSpacer: theme.mixins.toolbar,
     mainContent: {
         display: 'flex',
+        flexDirection: 'column',
         maxWidth: '1200px',
         width: '100%',
         height: '100%',
@@ -39,19 +40,8 @@ const styles = theme => ({
 
 @inject("authStore")
 @observer
-class Home extends React.Component {
+class ReportSubmit extends React.Component {
     componentDidMount() {
-        this.props.enqueueSnackbar("Welcome", {
-            variant: 'info'
-        });
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-    }
-
-    componentWillUnmount() {
-
     }
 
     render() {
@@ -65,14 +55,28 @@ class Home extends React.Component {
                     isLoggedIn = {true}
                     doLogout = {() => this.props.authStore.doLogout()}
                 />
-                {/*<div className={classes.appBarSpacer} />*/}
-                <Grid container justify={"center"} className={classes.mainContainer} >
+                <div className={classes.appBarSpacer} />
+                <Grid className={classes.mainContainer} container justify={"center"}>
                     <Paper className={classes.mainContent}>
-                        <Typography variant="h4" component="h2">
-                            Home
-                        </Typography>
+                        <Grid item xs={12}>
+                            <Typography variant="h4" component="h2">
+                                레포트 제출
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} style={{marginTop: '16px'}}>
+                            <DropzoneArea
+                                onChange={(files) => console.log(files)}
+                                showFileNamesInPreview={true}
+                                showPreviews={true}
+                                showPreviewsInDropzone={false}
+                                previewGridProps={{item: {xs: 2}}}
+                                //previewGridProps={{container: {'component': 'div'}, item: {'component': 'div'}}}
+                                //previewGridClasses={{container: "testPreView"}}
+                            />
+                        </Grid>
+                        <Grid container className={"testPreView"}>
 
-
+                        </Grid>
                     </Paper>
                 </Grid>
             </div>
@@ -80,4 +84,4 @@ class Home extends React.Component {
     }
 };
 
-export default withSnackbar(withRouter(withStyles(styles) (Home)));
+export default withSnackbar(withRouter(withStyles(styles) (ReportSubmit)));

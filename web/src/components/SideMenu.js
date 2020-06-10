@@ -70,7 +70,7 @@ export default function SideMenu(props) {
             <List>
                 <ListSubheader inset>레포트</ListSubheader>
 
-                <NavLink to="/home" className={classes.link}>
+                <NavLink to="/report/submit" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="레포트 제출" />
