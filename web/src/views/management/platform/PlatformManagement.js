@@ -30,6 +30,7 @@ const styles = theme => ({
         marginTop: '64px',
         width: '100%',
         height: '100%',
+        minHeight: `calc(100vh - ${theme.footerHeight}px - 64px)`
     },
     mainContainer: {
         paddingLeft: `calc(${theme.drawerWidth}px + ${theme.spacing(3)}px)`,

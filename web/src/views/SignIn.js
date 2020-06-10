@@ -17,6 +17,7 @@ const style = theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        minHeight: `calc(100vh - ${theme.footerHeight}px - 64px - ${theme.spacing(8)}px)`
     },
     lockOpenAvatar: {
         margin: theme.spacing(1),
