@@ -65,13 +65,13 @@ class AddRoleDialog extends React.Component {
                     <FormControlLabel
                         value="start"
                         control={<Checkbox color="primary" />}
-                        label="역할관리"
+                        label="사용자관리"
                         labelPlacement="end"
                         />
                     <FormControlLabel
                         value="start"
                         control={<Checkbox color="primary" />}
-                        label="사용자관리"
+                        label="역할 관리"
                         labelPlacement="end"
                         />
                     </FormGroup>
