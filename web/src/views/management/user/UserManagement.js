@@ -3,23 +3,13 @@ import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {Paper, Typography, Button, TextField, Select} from "@material-ui/core";
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-
-
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
+import AddUserDialog from "./dialog/AddUserDialog";
 
 
 const styles = theme => ({
@@ -123,36 +113,10 @@ const styles = theme => ({
 
 
 
- @inject("authStore")
+@inject("authStore", "userStore")
  @observer
 class UserManagement extends React.Component {
-
-   state = {
-        open: false,
-        select : "none"
-   }
-
-   
-   handleChange() {
-    this.setState({
-    select: "직영"
-    });   
-    }
-   
-   
-    handleOpen() {
-    this.setState({
-    open: true
-    });   
-    }
-    
-    handleClose() {   
-    this.setState({ 
-    open: false
-    }); 
-    }
-
-
+  
     componentDidMount() {
     }
      
@@ -196,12 +160,9 @@ class UserManagement extends React.Component {
                            <FormControl 
                              style={{width:200}}
                              variant="outlined" className={classes.formControl}>
-                                {/* <InputLabel id="demo-simple-select-outlined-label">사용자 종류</InputLabel> */}
                                <Select
-                                 labelId="demo-simple-select-outlined-label"
-                                 id="demo-simple-select-outlined"
-                                 value="none"
-                                 onChange="{handleChange}">
+                                 defaultValue="none"
+                                 onChange={()=>{}}>
                                     <MenuItem value="none" disabled>
                                     <em>플랫폼 유형</em>
                                     </MenuItem>
@@ -213,17 +174,14 @@ class UserManagement extends React.Component {
                            <FormControl 
                              style={{width:200}}
                              variant="outlined" className={classes.formControl}>
-                                {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
                                <Select
-                                 labelId="demo-simple-select-outlined-label"
-                                 id="demo-simple-select-outlined"
-                                 value="none"
-                                 onChange="{handleChange}">
+                                 defaultValue="none"
+                                 onChange={()=>{}}>
                                     <MenuItem value="none" disabled>
                                     <em>역할 유형</em>
                                     </MenuItem>
-                                    <MenuItem value={"직영"}>직영</MenuItem>
-                                    <MenuItem value={"비직영"}>비직영</MenuItem>
+                                    <MenuItem value={"보고서제출"}>보고서제출</MenuItem>
+                                    <MenuItem value={"보고서검색"}>보고서검색</MenuItem>
                                 </Select>
                            </FormControl> 
 
@@ -236,110 +194,16 @@ class UserManagement extends React.Component {
                             </FormControl>
 
                             <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.handleOpen.bind(this)}>등록</Button>
-                                <Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>        
-                                    <DialogTitle>사용자 추가</DialogTitle>
-                                    <DialogContent> 
-                                        <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                            <TextField style={{width:530}} id="outlined-basic" label="사용자 ID" variant="outlined" />
-                                        </FormControl>
-
-                                        <FormControl style={{width:530}} className={classes.formControl} noValidate autoComplete="off">
-                                            <TextField id="outlined-basic" label="비밀번호" 
-                                                labelPlacement="start" variant="outlined" />
-                                        </FormControl>  
-
-                                        <FormControl variant="outlined" className={classes.formControl}>   
-                                            <Select
-                                                style={{width:530}} 
-                                                value="none"
-                                                onChange={this.handleChange.bind(this)}>
-                                                {/* 여기 상태 고치기 */}
-
-                                                <MenuItem value="none" disabled>
-                                                <em>플랫폼 유형</em>
-                                                </MenuItem>
-                                                <MenuItem value={"직영"}>직영</MenuItem>
-                                                <MenuItem value={"비직영"}>비직영</MenuItem>
-                                            </Select>
-                                        </FormControl> 
-
-                                        <FormGroup style={{border:'1px solid gray'}} className={classes.formGroup} aria-label="position">
-                                          <FormControl className={classes.formControl} noValidate autoComplete="off">   
-                                            <FormControl 
-                                                style={{display: 'inline-block'}}
-                                                className={classes.formControl}
-                                                variant="outlined">
-                                                {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
-                                                <Select
-                                                className={classes.select}
-                                                labelId="demo-simple-select-outlined-label"
-                                                id="demo-simple-select-outlined"
-                                                value="none"
-                                                onChange="{handleChange}">
-                                                    <MenuItem value="none" disabled>
-                                                    <em>역할 유형</em>
-                                                    </MenuItem>
-                                                    <MenuItem value={"직영"}>직영</MenuItem>
-                                                    <MenuItem value={"비직영"}>비직영</MenuItem>
-                                                </Select>
-                                               <TextField className={classes.textField} id="outlined-basic" label="사용자 이름" variant="outlined" />
-                                                <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                                          </FormControl>
-                                          <FormGroup aria-label="position" row>
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="보고서제출"
-                                                    labelPlacement="end"
-                                                />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="보고서검색"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="보고서형식관리"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼관리"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="역할관리"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="사용자관리"
-                                                    labelPlacement="end"
-                                                    />
-                                                </FormGroup>
-                                        </FormControl>
-                                        </FormGroup>
-
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button variant="contained" color="primary">추가</Button>
-                                        <Button variant="outlined" color="primary" onClick={this.handleClose.bind(this)}>닫기</Button>
-                                    </DialogActions>
-                                </Dialog>
-
-
-
+                            <Button className={classes.button}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => this.props.userStore.changeIsAddUserDialog(true)}>
+                                    등록
+                                </Button>
                         </Grid>
                         </Grid>
 
-                        <Grid item xs={12}>
+                      <Grid item xs={12}>
                         <MaterialTable
                                style={{marginTop: '16px', boxShadow: 'none'}}
                                options={{
@@ -371,7 +235,7 @@ class UserManagement extends React.Component {
                                     {title: '사용자 ID', field: 'platformName'},
                                     {
                                         title: '소속 플랫폼', field: 'platformType',
-                                        lookup: { '플랫폼1': '플랫폼1', '비 직접': '비직영' },
+                                        lookup: { '플랫폼1': '플랫폼1', '플랫폼2': '플랫폼2' },
                                       },
                                     {
                                         title: '역할',
@@ -407,9 +271,10 @@ class UserManagement extends React.Component {
                             }}
                             />
                        
-                        </Grid>
+                      </Grid>
                     </Paper>
                 </Grid>
+                <AddUserDialog/>
             </div>
         );
     }

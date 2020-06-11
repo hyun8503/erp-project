@@ -3,10 +3,10 @@ import {action, observable} from "mobx";
 
 export default class PlatformStore {
     @observable isAddPlatformDialog = false;
-
+    
     @action initStore = () => {
-        this.isAddPlatformDialog = false;
+        this.isAddPlatformDialog = false;     
     }
-
     @action changeIsAddPlatformDialog = (value) => this.isAddPlatformDialog = value;
+   
 }
