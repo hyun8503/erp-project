@@ -7,13 +7,13 @@ import {Paper, Typography} from "@material-ui/core";
 import SideMenu from "../../components/SideMenu";
 import Grid from "@material-ui/core/Grid";
 import {inject, observer} from "mobx-react";
-import {DropzoneArea} from "material-ui-dropzone";
 import moment from "moment";
 import Card from '@material-ui/core/Card';
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Button from '@material-ui/core/Button';
+import CardActions from "@material-ui/core/CardActions";
 
 const styles = theme => ({
     wrap: {
@@ -82,53 +82,57 @@ class ReportSubmit extends React.Component {
                                 현재 날짜: {moment().format("YYYY-MM-DD")}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                            <DropzoneArea
-                                onChange={(files) => this.props.reportSubmitStore.changeUploadFileList(files)}
-                                showFileNamesInPreview={true}
-                                showPreviews={true}
-                                showPreviewsInDropzone={false}
-                                previewGridProps={{item: {xs: 2}}}
-                            />
-                        </Grid>
-
-                        {this.props.reportSubmitStore.uploadFileList.length > 0 ?
-                            <Grid container item xs={12} justify={"flex-end"} spacing={1} style={{marginTop: '8px'}}>
-                                {/*<Grid item>*/}
-                                {/*    <Button variant={"contained"} color={"secondary"}>취소</Button>*/}
-                                {/*</Grid>*/}
-                                <Grid item>
-                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.changeIsCardListRender(true)}>등록</Button>
-                                </Grid>
-                            </Grid>
-                            : ""}
 
                         <Grid container className={classes.cardGrid} spacing={3}>
-                            {this.props.reportSubmitStore.isCardListRender && this.props.reportSubmitStore.uploadFileList.length > 0 ?
-                                this.props.reportSubmitStore.uploadFileList.map((item, index) => {
-                                    return (
-                                        <Grid item xs={3} key={"upload-file"+index}>
-                                            <Card>
-                                                <CardActionArea>
-                                                    <CardMedia
-                                                        className={classes.cardMedia}
-                                                        image={"/images/excel.png"}
-                                                        title={"hoho"}
-                                                    />
-                                                    <CardContent>
-                                                        <Typography variant={"subtitle1"}>
-                                                            {item.name}
-                                                        </Typography>
-                                                        <Typography variant={"body2"}>
-                                                            업데이트: {moment(item.lastModified).format("YYYY-MM-DD")}
-                                                        </Typography>
-                                                    </CardContent>
-                                                </CardActionArea>
-                                            </Card>
-                                        </Grid>
-                                    )
-                                })
-                                : ""}
+                            <Grid item xs={3}>
+                                <Card>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image={"/images/excel.png"}
+                                            title={"hoho"}
+                                        />
+                                        <CardContent>
+                                            <Typography variant={"subtitle1"}>
+                                                test1
+                                            </Typography>
+                                            <Typography variant={"body2"}>
+                                                업데이트: {moment().format("YYYY-MM-DD")}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                        <Button size="large" color="primary">
+                                            제출
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+
+                            <Grid item xs={3}>
+                                <Card>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image={"/images/excel.png"}
+                                            title={"hoho"}
+                                        />
+                                        <CardContent>
+                                            <Typography variant={"subtitle1"}>
+                                                test2
+                                            </Typography>
+                                            <Typography variant={"body2"}>
+                                                업데이트: {moment().format("YYYY-MM-DD")}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                        <Button size="large" color="primary">
+                                            제출
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
                         </Grid>
                     </Paper>
                 </Grid>

@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 120;
 
@@ -57,14 +56,6 @@ export default function TopBar(props) {
                         데이터 관리 시스템
                     </Link>
                 </Typography>
-
-                { isLoggedIn ? (
-                    <IconButton color="inherit" onClick={doLogout}>
-                        <ExitToAppIcon />
-                    </IconButton>
-                ) : (
-                    ''
-                )}
             </Toolbar>
         </AppBar>
     );
