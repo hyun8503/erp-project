@@ -15,6 +15,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "mobx-utils": "^5.5.5",
+    "moment": "^2.26.0",
     "notistack": "^0.9.8",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

@@ -76,7 +76,7 @@ export default function SideMenu(props) {
                         <ListItemText primary="레포트 제출" />
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/"} className={classes.link}>
+                <NavLink to={"/report/list"} className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
                         <ListItemText primary="레포트 검색" />

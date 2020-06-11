@@ -2,12 +2,7 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Paper, Typography, Button, TextField, Select} from "@material-ui/core";
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {Button, Paper, Select, TextField, Typography} from "@material-ui/core";
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 
+import AddPlatformDialog from "./dialog/AddPlatformDialog";
 
 const styles = theme => ({
     wrap: {
@@ -50,29 +46,29 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     formControl: {
-     //   autoWidth : true,
+        //   autoWidth : true,
         margin: theme.spacing(1),
         minWidth: 100,
-      },
-      selectEmpty: {
+    },
+    selectEmpty: {
         marginTop: theme.spacing(1),
-      },
+    },
 
-      button:{
+    button: {
         marginTop: theme.spacing(2),
         margin: theme.spacing(1),
     },
     hidden: {
         display: 'none'
-        }
+    }
 
 
 });
 
 
 
- @inject("authStore")
- @observer
+@inject("authStore", "platformStore")
+@observer
 class PlatformManagement extends React.Component {
 
    state = {
@@ -139,84 +135,90 @@ class PlatformManagement extends React.Component {
                         </Grid>
 
 
-                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                           <FormControl 
-                             style={{width:200}}
-                             variant="outlined" className={classes.formControl}>
-                                {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
-                               <Select
-                                 labelId="demo-simple-select-outlined-label"
-                                 id="demo-simple-select-outlined"
-                                 value="none"
-                                 onChange="{handleChange}">
-                                    <MenuItem value="none" disabled>
-                                    <em>플랫폼 유형</em>
-                                    </MenuItem>
-                                    <MenuItem value={"직영"}>직영</MenuItem>
-                                    <MenuItem value={"비직영"}>비직영</MenuItem>
-                                </Select>
-                           </FormControl> 
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <FormControl
+                                    style={{width: 200}}
+                                    variant="outlined" className={classes.formControl}>
+                                    {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
+                                    <Select
+                                        labelId="demo-simple-select-outlined-label"
+                                        id="demo-simple-select-outlined"
+                                        //value="none"
+                                        defaultValue={"none"}
+                                        onChange={() => {}}>
+                                        <MenuItem value="none" disabled>
+                                            <em>플랫폼 유형</em>
+                                        </MenuItem>
+                                        <MenuItem value={"직영"}>직영</MenuItem>
+                                        <MenuItem value={"비직영"}>비직영</MenuItem>
+                                    </Select>
+                                </FormControl>
 
 
-                            <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                 <TextField 
-                                 style={{width:400}}
-                                 id="outlined-basic" label="플랫폼 이름" variant="outlined" />
-                            </FormControl>
+                                <FormControl className={classes.formControl} noValidate autoComplete="off">
+                                    <TextField
+                                        style={{width: 400}}
+                                        id="outlined-basic" label="플랫폼 이름" variant="outlined"/>
+                                </FormControl>
 
-                            <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.handleOpen.bind(this)}>등록</Button>
-                                <Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>        
-                                    <DialogTitle>플랫폼 추가</DialogTitle>
-                                    <DialogContent>                                                         
-                                        <FormControl variant="outlined" className={classes.formControl}>   
-                                            <Select
-                                                labelId="demo-simple-select-outlined-label"
-                                                id="demo-simple-select-outlined"
-                                                value="none"
-                                                onChange={this.handleChange.bind(this)}>
-                                                {/* 여기 상태 고치기 */}
+                                <Button className={classes.button} variant="contained" color="primary">검색</Button>
+                                {/*<Button className={classes.button} variant="contained" color="primary"*/}
+                                {/*        onClick={this.handleOpen.bind(this)}>등록</Button>*/}
+                                <Button className={classes.button}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => this.props.platformStore.changeIsAddPlatformDialog(true)}>
+                                    등록
+                                </Button>
+                                {/*<Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>*/}
+                                {/*    <DialogTitle>플랫폼 추가</DialogTitle>*/}
+                                {/*    <DialogContent>*/}
+                                {/*        <FormControl variant="outlined" className={classes.formControl}>*/}
+                                {/*            <Select*/}
+                                {/*                labelId="demo-simple-select-outlined-label"*/}
+                                {/*                id="demo-simple-select-outlined"*/}
+                                {/*                value="none"*/}
+                                {/*                onChange={this.handleChange.bind(this)}>*/}
+                                {/*                /!* 여기 상태 고치기 *!/*/}
 
-                                                <MenuItem value="none" disabled>
-                                                <em>플랫폼 유형</em>
-                                                </MenuItem>
-                                                <MenuItem value={"직영"}>직영</MenuItem>
-                                                <MenuItem value={"비직영"}>비직영</MenuItem>
-                                            </Select>
-                                        </FormControl> 
-                                        <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                        <TextField id="outlined-basic" label="플랫폼 이름" variant="outlined" />
-                                        </FormControl>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button variant="contained" color="primary">추가</Button>
-                                        <Button variant="outlined" color="primary" onClick={this.handleClose.bind(this)}>닫기</Button>
-                                    </DialogActions>
-                                </Dialog>
-
-
-
+                                {/*                <MenuItem value="none" disabled>*/}
+                                {/*                    <em>플랫폼 유형</em>*/}
+                                {/*                </MenuItem>*/}
+                                {/*                <MenuItem value={"직영"}>직영</MenuItem>*/}
+                                {/*                <MenuItem value={"비직영"}>비직영</MenuItem>*/}
+                                {/*            </Select>*/}
+                                {/*        </FormControl>*/}
+                                {/*        <FormControl className={classes.formControl} noValidate autoComplete="off">*/}
+                                {/*            <TextField id="outlined-basic" label="플랫폼 이름" variant="outlined"/>*/}
+                                {/*        </FormControl>*/}
+                                {/*    </DialogContent>*/}
+                                {/*    <DialogActions>*/}
+                                {/*        <Button variant="contained" color="primary">추가</Button>*/}
+                                {/*        <Button variant="outlined" color="primary"*/}
+                                {/*                onClick={this.handleClose.bind(this)}>닫기</Button>*/}
+                                {/*    </DialogActions>*/}
+                                {/*</Dialog>*/}
+                            </Grid>
                         </Grid>
-                        </Grid>
 
                         <Grid item xs={12}>
-                        <MaterialTable
-                               style={{marginTop: '16px', boxShadow: 'none'}}
-                               options={{
-                                   search: false,
-                                   showTitle: false,
-                                   toolbar: false,actionsColumnIndex: -1,
-                                   pageSize: 10,
-                                   pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
-                                   headerStyle: {
-                                       backgroundColor: '#fafafa',
-                                       color: 'rgba(51, 51, 51, 0.56)',
-                                       borderTop: '1px solid #eee',
-                                       padding: 8,
-                                     }
-                                   }}
-                                 localization={{
+                            <MaterialTable
+                                style={{marginTop: '16px', boxShadow: 'none'}}
+                                options={{
+                                    search: false,
+                                    showTitle: false,
+                                    toolbar: false, actionsColumnIndex: -1,
+                                    pageSize: 10,
+                                    pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
+                                    headerStyle: {
+                                        backgroundColor: '#fafafa',
+                                        color: 'rgba(51, 51, 51, 0.56)',
+                                        borderTop: '1px solid #eee',
+                                        padding: 8,
+                                    }
+                                }}
+                                localization={{
                                     header: {
                                         actions: '',
                                     },
@@ -232,45 +234,46 @@ class PlatformManagement extends React.Component {
                                     {title: '플랫폼 이름', field: 'platformName'},
                                     {
                                         title: '플랫폼 유형', field: 'platformType',
-                                        lookup: { '직접 판매': '직영', '비 직접': '비직영' },
-                                      },
+                                        lookup: {'직접 판매': '직영', '비 직접': '비직영'},
+                                    },
                                     {
                                         title: '운영 중',
                                         field: 'status',
-                                        lookup: { '1': '운영 중', '2': '비 운영 중' },
-                                      },
-                               
-                                ]}
-                            data={tableDummyData}
-                               editable={{
-                                onRowUpdate: (newData, oldData) => 
-                                 new Promise((resolve, reject) => {
-                                  setTimeout(() => {
-                                    // const dataUpdate = [...this.state.data];
-                                    //  const index = oldData.tableData.id;
-                                    //    dataUpdate[index] = newData;
-                                    //     this.setData([...dataUpdate]);
+                                        lookup: {'1': '운영 중', '2': '비 운영 중'},
+                                    },
 
-                                       resolve();
-                                    }, 1000)
-                                }),
-                                onRowDelete: oldData =>
-                                 new Promise((resolve, reject) => {
-                                 setTimeout(() => {
-                                    // const dataDelete = [...this.state.data];
-                                    // const index = oldData.tableData.id;
-                                    // dataDelete.splice(index, 1);
-                                    // this.setData([...dataDelete]);
-                                    
-                                    resolve()
-                                    }, 1000)
-                                }),
-                            }}
+                                ]}
+                                data={tableDummyData}
+                                editable={{
+                                    onRowUpdate: (newData, oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                // const dataUpdate = [...this.state.data];
+                                                //  const index = oldData.tableData.id;
+                                                //    dataUpdate[index] = newData;
+                                                //     this.setData([...dataUpdate]);
+
+                                                resolve();
+                                            }, 1000)
+                                        }),
+                                    onRowDelete: oldData =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                // const dataDelete = [...this.state.data];
+                                                // const index = oldData.tableData.id;
+                                                // dataDelete.splice(index, 1);
+                                                // this.setData([...dataDelete]);
+
+                                                resolve()
+                                            }, 1000)
+                                        }),
+                                }}
                             />
-                       
+
                         </Grid>
                     </Paper>
                 </Grid>
+                <AddPlatformDialog/>
             </div>
         );
     }
