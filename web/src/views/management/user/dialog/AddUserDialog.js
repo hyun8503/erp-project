@@ -18,6 +18,17 @@ const styles = (theme) => ({
         margin: theme.spacing(1),
         minWidth: 100,
     },
+    textField: {
+        margin: theme.spacing(1),
+      },
+      select: {
+        margin: theme.spacing(1),
+      },
+      formGroup: {
+        justifyCenter: 'center',
+        marginTop: theme.spacing(2),
+      },
+    
 });
 
 @inject("userStore")
@@ -95,7 +106,7 @@ class AddUserDialog extends React.Component {
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="보고서형식관리"
+                                                    label="보고서형식"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
@@ -107,15 +118,16 @@ class AddUserDialog extends React.Component {
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="역할관리"
+                                                    label="사용자관리"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="사용자관리"
+                                                    label="역할 관리"
                                                     labelPlacement="end"
                                                     />
+                                                
                                                 </FormGroup>
                                         </FormControl>
                                         </FormGroup>

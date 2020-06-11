@@ -245,7 +245,7 @@ class RoleManagement extends React.Component {
                                     { title: '플랫폼관리', field: 'roleType4',
                                       lookup: lookup4,
                                     },
-                                    { title: '역할관리', field: 'roleType5',
+                                    { title: '역할 관리', field: 'roleType5',
                                       lookup: lookup5,
                                     },
                                     { title: '사용자관리', field: 'roleType6',
