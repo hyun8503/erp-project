@@ -4,18 +4,13 @@ import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
 import {Paper, Typography, Button, TextField, Select} from "@material-ui/core";
 
-import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-
 
 
 import MaterialTable from "material-table";
@@ -82,7 +77,16 @@ class PlatformManagement extends React.Component {
 
    state = {
         open: false,
+        select : "none"
    }
+
+   
+   handleChange() {
+    this.setState({
+    select: "직영"
+    });   
+    }
+   
    
     handleOpen() {
     this.setState({
@@ -105,16 +109,16 @@ class PlatformManagement extends React.Component {
         const { classes } = this.props;
       
         const tableDummyData = [
-            {platformName: '플랫폼1', platformType: '직접 판매', status: ''},
-            {platformName: '플랫폼2', platformType: '직접 판매', status: ''},
-            {platformName: '플랫폼3', platformType: '직접 판매', status: ''},
-            {platformName: '플랫폼4', platformType: '직접 판매', status: ''},
-            {platformName: '플랫폼5', platformType: '직접 판매', status: ''},
-            {platformName: '플랫폼6', platformType: '비 직접', status: ''},
-            {platformName: '플랫폼7', platformType: '비 직접', status: ''},
-            {platformName: '플랫폼8', platformType: '비 직접', status: ''},
-            {platformName: '플랫폼9', platformType: '비 직접', status: ''},
-            {platformName: '플랫폼10', platformType: '직접 판매', status: ''}
+            {platformName: '플랫폼1', platformType: '직접 판매', status: '1'},
+            {platformName: '플랫폼2', platformType: '직접 판매', status: '1'},
+            {platformName: '플랫폼3', platformType: '직접 판매', status: '1'},
+            {platformName: '플랫폼4', platformType: '직접 판매', status: '1'},
+            {platformName: '플랫폼5', platformType: '직접 판매', status: '1'},
+            {platformName: '플랫폼6', platformType: '비 직접', status: '2'},
+            {platformName: '플랫폼7', platformType: '비 직접', status: '2'},
+            {platformName: '플랫폼8', platformType: '비 직접', status: '2'},
+            {platformName: '플랫폼9', platformType: '비 직접', status: '2'},
+            {platformName: '플랫폼10', platformType: '직접 판매', status: '2'}
         ]
 
         return (
@@ -135,60 +139,60 @@ class PlatformManagement extends React.Component {
                         </Grid>
 
 
-                        <Grid container spacing={3}>
-                          <Grid item xs={12}>
-                            <FormControl 
-                            style={{width:200}}
-                            variant="outlined" className={classes.formControl}>
+                     <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                           <FormControl 
+                             style={{width:200}}
+                             variant="outlined" className={classes.formControl}>
                                 {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
                                <Select
                                  labelId="demo-simple-select-outlined-label"
                                  id="demo-simple-select-outlined"
-                                 value="{this.state.select}"
+                                 value="none"
                                  onChange="{handleChange}">
+                                    <MenuItem value="none" disabled>
+                                    <em>플랫폼 유형</em>
+                                    </MenuItem>
+                                    <MenuItem value={"직영"}>직영</MenuItem>
+                                    <MenuItem value={"비직영"}>비직영</MenuItem>
+                                </Select>
+                           </FormControl> 
 
-                            <MenuItem value="none" disabled>
-                            <em>플랫폼 종류</em>
-                             </MenuItem>
-                             <MenuItem value={10}>직영</MenuItem>
-                             <MenuItem value={20}>비직영</MenuItem>
-                               </Select>
-                             </FormControl> 
 
-
-                             <FormControl className={classes.formControl} noValidate autoComplete="off">
+                            <FormControl className={classes.formControl} noValidate autoComplete="off">
                                  <TextField 
                                  style={{width:400}}
                                  id="outlined-basic" label="플랫폼 이름" variant="outlined" />
-                             </FormControl>
+                            </FormControl>
 
-                             <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                             <Button className={classes.button} variant="contained" color="primary" onClick={this.handleOpen.bind(this)}>등록</Button>
-                              <Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>
-                              <DialogTitle>플랫폼 추가</DialogTitle>
-                                <DialogContent>                               
-                                <FormControl 
-                            style={{width:200}}
-                            variant="outlined" className={classes.formControl}>
-                                {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
-                               <Select
-                                 labelId="demo-simple-select-outlined-label"
-                                 id="demo-simple-select-outlined"
-                                 value="{this.state.select}"
-                                 onChange="{handleChange}">
+                            <Button className={classes.button} variant="contained" color="primary" >검색</Button>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={this.handleOpen.bind(this)}>등록</Button>
+                                <Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>        
+                                    <DialogTitle>플랫폼 추가</DialogTitle>
+                                    <DialogContent>                                                         
+                                        <FormControl variant="outlined" className={classes.formControl}>   
+                                            <Select
+                                                labelId="demo-simple-select-outlined-label"
+                                                id="demo-simple-select-outlined"
+                                                value="none"
+                                                onChange={this.handleChange.bind(this)}>
+                                                {/* 여기 상태 고치기 */}
 
-                            <MenuItem value="none" disabled>
-                            <em>플랫폼 종류</em>
-                             </MenuItem>
-                             <MenuItem value={10}>직영</MenuItem>
-                             <MenuItem value={20}>비직영</MenuItem>
-                               </Select>
-                             </FormControl> 
-                               </DialogContent>
-                               <DialogActions>
-                                   <Button variant="contained" color="primary">추가</Button>
-                                   <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
-                                </DialogActions>
+                                                <MenuItem value="none" disabled>
+                                                <em>플랫폼 유형</em>
+                                                </MenuItem>
+                                                <MenuItem value={"직영"}>직영</MenuItem>
+                                                <MenuItem value={"비직영"}>비직영</MenuItem>
+                                            </Select>
+                                        </FormControl> 
+                                        <FormControl className={classes.formControl} noValidate autoComplete="off">
+                                        <TextField id="outlined-basic" label="플랫폼 이름" variant="outlined" />
+                                        </FormControl>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button variant="contained" color="primary">추가</Button>
+                                        <Button variant="outlined" color="primary" onClick={this.handleClose.bind(this)}>닫기</Button>
+                                    </DialogActions>
                                 </Dialog>
 
 
@@ -197,23 +201,22 @@ class PlatformManagement extends React.Component {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <MaterialTable
-                                style={{marginTop: '16px', boxShadow: 'none'}}
-                                options={{
-                                    search: false,
-                                    showTitle: false,
-                                    toolbar: false,
-                                    actionsColumnIndex: -1,
-                                    pageSize: 10,
-                                    pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
-                                    headerStyle: {
-                                        backgroundColor: '#fafafa',
-                                        color: 'rgba(51, 51, 51, 0.56)',
-                                        borderTop: '1px solid #eee',
-                                        padding: 8,
-                                    }
-                                }}
-                                localization={{
+                        <MaterialTable
+                               style={{marginTop: '16px', boxShadow: 'none'}}
+                               options={{
+                                   search: false,
+                                   showTitle: false,
+                                   toolbar: false,actionsColumnIndex: -1,
+                                   pageSize: 10,
+                                   pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
+                                   headerStyle: {
+                                       backgroundColor: '#fafafa',
+                                       color: 'rgba(51, 51, 51, 0.56)',
+                                       borderTop: '1px solid #eee',
+                                       padding: 8,
+                                     }
+                                   }}
+                                 localization={{
                                     header: {
                                         actions: '',
                                     },
@@ -227,11 +230,44 @@ class PlatformManagement extends React.Component {
                                 }}
                                 columns={[
                                     {title: '플랫폼 이름', field: 'platformName'},
-                                    {title: '플랫폼 유형', field: 'platformType'},
-                                    {title: '운영 중', field: 'status'},
+                                    {
+                                        title: '플랫폼 유형', field: 'platformType',
+                                        lookup: { '직접 판매': '직영', '비 직접': '비직영' },
+                                      },
+                                    {
+                                        title: '운영 중',
+                                        field: 'status',
+                                        lookup: { '1': '운영 중', '2': '비 운영 중' },
+                                      },
+                               
                                 ]}
-                                data={tableDummyData}
+                            data={tableDummyData}
+                               editable={{
+                                onRowUpdate: (newData, oldData) => 
+                                 new Promise((resolve, reject) => {
+                                  setTimeout(() => {
+                                    // const dataUpdate = [...this.state.data];
+                                    //  const index = oldData.tableData.id;
+                                    //    dataUpdate[index] = newData;
+                                    //     this.setData([...dataUpdate]);
+
+                                       resolve();
+                                    }, 1000)
+                                }),
+                                onRowDelete: oldData =>
+                                 new Promise((resolve, reject) => {
+                                 setTimeout(() => {
+                                    // const dataDelete = [...this.state.data];
+                                    // const index = oldData.tableData.id;
+                                    // dataDelete.splice(index, 1);
+                                    // this.setData([...dataDelete]);
+                                    
+                                    resolve()
+                                    }, 1000)
+                                }),
+                            }}
                             />
+                       
                         </Grid>
                     </Paper>
                 </Grid>
