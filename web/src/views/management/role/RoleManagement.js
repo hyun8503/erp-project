@@ -102,8 +102,8 @@ const styles = theme => ({
 
 
 
- @inject("authStore", "roleStore")
- @observer
+@inject("authStore", "roleStore")
+@observer
 class RoleManagement extends React.Component {
 
     componentDidMount() {
@@ -115,7 +115,7 @@ class RoleManagement extends React.Component {
       
         const tableDummyData = [
             {
-                roleName: '플랫폼1',
+                roleName: '역할1',
                 roleList: [
                     "보고서 제출",
                     "보고서 검색",
@@ -126,7 +126,7 @@ class RoleManagement extends React.Component {
                 ]
             },
             {
-                roleName: '플랫폼2',
+                roleName: '역할2',
                 roleList: [
                     "보고서 제출",
                     "보고서 검색",
@@ -136,7 +136,7 @@ class RoleManagement extends React.Component {
                 ]
             },
             {
-                roleName: '플랫폼3',
+                roleName: '역할3',
                 roleList: [
                     "보고서 제출",
                     "플랫폼 관리",
@@ -145,7 +145,7 @@ class RoleManagement extends React.Component {
                 ]
             },
             {
-                roleName: '플랫폼4',
+                roleName: '역할4',
                 roleList: [
                     "보고서 검색",
                     "보고서 형식",
@@ -155,7 +155,7 @@ class RoleManagement extends React.Component {
                 ]
             },
             {
-                roleName: '플랫폼5',
+                roleName: '역할5',
                 roleList: [
                     "보고서 제출",
                     "보고서 검색",

@@ -85,14 +85,17 @@ class ReportManagement extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <DropzoneArea
-                                onChange={(files) => this.props.reportSubmitStore.changeUploadFileList(files)}
-                                showFileNamesInPreview={true}
-                                showPreviews={true}
-                                showPreviewsInDropzone={false}
-                                previewGridProps={{item: {xs: 2}}}
-                                filesObjects={[]}
-                            />
+                            {this.props.reportSubmitStore.isDropZoneAreaRender ?
+                                <DropzoneArea
+                                    onChange={(files) => this.props.reportSubmitStore.changeUploadFileList(files)}
+                                    maxFileSize={30000000}
+                                    showFileNamesInPreview={true}
+                                    showPreviews={true}
+                                    showPreviewsInDropzone={false}
+                                    previewGridProps={{item: {xs: 2}}}
+                                    dropzoneText={"파일을 드래그 하거나 여기를 클릭하세요"}
+                                />
+                                : ""}
                         </Grid>
 
                         {this.props.reportSubmitStore.uploadFileList.length > 0 ?
