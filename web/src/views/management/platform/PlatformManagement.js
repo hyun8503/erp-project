@@ -46,7 +46,6 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     formControl: {
-        //   autoWidth : true,
         margin: theme.spacing(1),
         minWidth: 100,
     },
@@ -70,32 +69,6 @@ const styles = theme => ({
 @inject("authStore", "platformStore")
 @observer
 class PlatformManagement extends React.Component {
-
-   state = {
-        open: false,
-        select : "none"
-   }
-
-   
-   handleChange() {
-    this.setState({
-    select: "직영"
-    });   
-    }
-   
-   
-    handleOpen() {
-    this.setState({
-    open: true
-    });   
-    }
-    
-    handleClose() {   
-    this.setState({ 
-    open: false
-    }); 
-    }
-
 
     componentDidMount() {
     }
@@ -140,16 +113,10 @@ class PlatformManagement extends React.Component {
                                 <FormControl
                                     style={{width: 200}}
                                     variant="outlined" className={classes.formControl}>
-                                    {/* <InputLabel id="demo-simple-select-outlined-label">플랫폼 종류</InputLabel> */}
-                                    <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        //value="none"
+                                    <Select 
                                         defaultValue={"none"}
-                                        onChange={() => {}}>
-                                        <MenuItem value="none" disabled>
-                                            <em>플랫폼 유형</em>
-                                        </MenuItem>
+                                        onChange={()=>{}}>
+                                        <MenuItem value="none" disabled><em>플랫폼 유형</em></MenuItem>
                                         <MenuItem value={"직영"}>직영</MenuItem>
                                         <MenuItem value={"비직영"}>비직영</MenuItem>
                                     </Select>
@@ -162,43 +129,17 @@ class PlatformManagement extends React.Component {
                                         id="outlined-basic" label="플랫폼 이름" variant="outlined"/>
                                 </FormControl>
 
-                                <Button className={classes.button} variant="contained" color="primary">검색</Button>
-                                {/*<Button className={classes.button} variant="contained" color="primary"*/}
-                                {/*        onClick={this.handleOpen.bind(this)}>등록</Button>*/}
+                                <Button className={classes.button} 
+                                        variant="contained" 
+                                        color="primary">
+                                    검색
+                                </Button>
                                 <Button className={classes.button}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.platformStore.changeIsAddPlatformDialog(true)}>
                                     등록
                                 </Button>
-                                {/*<Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>*/}
-                                {/*    <DialogTitle>플랫폼 추가</DialogTitle>*/}
-                                {/*    <DialogContent>*/}
-                                {/*        <FormControl variant="outlined" className={classes.formControl}>*/}
-                                {/*            <Select*/}
-                                {/*                labelId="demo-simple-select-outlined-label"*/}
-                                {/*                id="demo-simple-select-outlined"*/}
-                                {/*                value="none"*/}
-                                {/*                onChange={this.handleChange.bind(this)}>*/}
-                                {/*                /!* 여기 상태 고치기 *!/*/}
-
-                                {/*                <MenuItem value="none" disabled>*/}
-                                {/*                    <em>플랫폼 유형</em>*/}
-                                {/*                </MenuItem>*/}
-                                {/*                <MenuItem value={"직영"}>직영</MenuItem>*/}
-                                {/*                <MenuItem value={"비직영"}>비직영</MenuItem>*/}
-                                {/*            </Select>*/}
-                                {/*        </FormControl>*/}
-                                {/*        <FormControl className={classes.formControl} noValidate autoComplete="off">*/}
-                                {/*            <TextField id="outlined-basic" label="플랫폼 이름" variant="outlined"/>*/}
-                                {/*        </FormControl>*/}
-                                {/*    </DialogContent>*/}
-                                {/*    <DialogActions>*/}
-                                {/*        <Button variant="contained" color="primary">추가</Button>*/}
-                                {/*        <Button variant="outlined" color="primary"*/}
-                                {/*                onClick={this.handleClose.bind(this)}>닫기</Button>*/}
-                                {/*    </DialogActions>*/}
-                                {/*</Dialog>*/}
                             </Grid>
                         </Grid>
 
@@ -248,22 +189,12 @@ class PlatformManagement extends React.Component {
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {
                                             setTimeout(() => {
-                                                // const dataUpdate = [...this.state.data];
-                                                //  const index = oldData.tableData.id;
-                                                //    dataUpdate[index] = newData;
-                                                //     this.setData([...dataUpdate]);
-
                                                 resolve();
                                             }, 1000)
                                         }),
                                     onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
                                             setTimeout(() => {
-                                                // const dataDelete = [...this.state.data];
-                                                // const index = oldData.tableData.id;
-                                                // dataDelete.splice(index, 1);
-                                                // this.setData([...dataDelete]);
-
                                                 resolve()
                                             }, 1000)
                                         }),

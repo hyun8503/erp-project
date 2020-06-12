@@ -2,25 +2,14 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Paper, Typography, Button, TextField, Select} from "@material-ui/core";
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import MenuItem from '@material-ui/core/MenuItem';
+import {Button, Paper, TextField, Typography} from "@material-ui/core";
 import FormControl from '@material-ui/core/FormControl';
-
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
-
+import AddRoleDialog from "./dialog/AddRoleDialog";
+import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
     wrap: {
@@ -53,7 +42,6 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     formControl: {
-     //   autoWidth : true,
         margin: theme.spacing(1),
         minWidth: 100,
       },
@@ -114,35 +102,9 @@ const styles = theme => ({
 
 
 
- @inject("authStore")
+ @inject("authStore", "roleStore")
  @observer
 class RoleManagement extends React.Component {
-
-   state = {
-        open: false,
-        select : "none"
-   }
-
-   
-   handleChange() {
-    this.setState({
-    select: "직영"
-    });   
-    }
-   
-   
-    handleOpen() {
-    this.setState({
-    open: true
-    });   
-    }
-    
-    handleClose() {   
-    this.setState({ 
-    open: false
-    }); 
-    }
-
 
     componentDidMount() {
     }
@@ -152,16 +114,56 @@ class RoleManagement extends React.Component {
         const { classes } = this.props;
       
         const tableDummyData = [
-            {platformName: '플랫폼1', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼2', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼3', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼4', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼5', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼6', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼7', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼8', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼9', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼10', platformType: '직접 판매', status: '2'}
+            {
+                roleName: '플랫폼1',
+                roleList: [
+                    "보고서 제출",
+                    "보고서 검색",
+                    "보고서 형식",
+                    "플랫폼 관리",
+                    "역할 관리",
+                    "사용자 관리"
+                ]
+            },
+            {
+                roleName: '플랫폼2',
+                roleList: [
+                    "보고서 제출",
+                    "보고서 검색",
+                    "보고서 형식",
+                    "플랫폼 관리",
+                    "역할 관리",
+                ]
+            },
+            {
+                roleName: '플랫폼3',
+                roleList: [
+                    "보고서 제출",
+                    "플랫폼 관리",
+                    "역할 관리",
+                    "사용자 관리"
+                ]
+            },
+            {
+                roleName: '플랫폼4',
+                roleList: [
+                    "보고서 검색",
+                    "보고서 형식",
+                    "플랫폼 관리",
+                    "역할 관리",
+                    "사용자 관리"
+                ]
+            },
+            {
+                roleName: '플랫폼5',
+                roleList: [
+                    "보고서 제출",
+                    "보고서 검색",
+                    "보고서 형식",
+                    "역할 관리",
+                    "사용자 관리"
+                ]
+            },
         ]
 
         return (
@@ -182,91 +184,41 @@ class RoleManagement extends React.Component {
                         </Grid>
 
 
-                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                 <TextField 
-                                 style={{width:400}}
-                                 id="outlined-basic" label="역할 이름" variant="outlined" />
-                            </FormControl>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <FormControl className={classes.formControl} noValidate autoComplete="off">
+                                    <TextField
+                                        style={{width: 400}}
+                                        id="outlined-basic" label="역할 이름" variant="outlined"/>
+                                </FormControl>
 
-                            <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.handleOpen.bind(this)}>등록</Button>
-                                <Dialog open={this.state.open} onClose={this.handleClose.bind(this)}>        
-                                    <DialogTitle>권한관리</DialogTitle>
-                                    <DialogContent>                                                         
-                                        <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                        <TextField id="outlined-basic" label="역할 이름" variant="outlined" />
+                                <Button className={classes.button} variant="contained" color="primary">검색</Button>
+                                <Button className={classes.button}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => this.props.roleStore.changeIsAddRoleDialog(true)}>
+                                    등록
+                                </Button>
 
-                                          <FormGroup aria-label="position" row>
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="보고서제출"
-                                                labelPlacement="end"
-                                            />
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="보고서검색"
-                                                labelPlacement="end"
-                                                />
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="보고서형식관리"
-                                                labelPlacement="end"
-                                                />
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="플랫폼관리"
-                                                labelPlacement="end"
-                                                />
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="역할관리"
-                                                labelPlacement="end"
-                                                />
-                                            <FormControlLabel
-                                                value="start"
-                                                control={<Checkbox color="primary" />}
-                                                label="사용자관리"
-                                                labelPlacement="end"
-                                                />
-                                            </FormGroup>
-                                        </FormControl>
-
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button variant="contained" color="primary">추가</Button>
-                                        <Button variant="outlined" color="primary" onClick={this.handleClose.bind(this)}>닫기</Button>
-                                    </DialogActions>
-                                </Dialog>
-
-
-
-                        </Grid>
+                            </Grid>
                         </Grid>
 
                         <Grid item xs={12}>
-                        <MaterialTable
-                               style={{marginTop: '16px', boxShadow: 'none'}}
-                               options={{
-                                   search: false,
-                                   showTitle: false,
-                                   toolbar: false,actionsColumnIndex: -1,
-                                   pageSize: 10,
-                                   pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
-                                   headerStyle: {
-                                       backgroundColor: '#fafafa',
-                                       color: 'rgba(51, 51, 51, 0.56)',
-                                       borderTop: '1px solid #eee',
-                                       padding: 8,
-                                     }
-                                   }}
-                                 localization={{
+                            <MaterialTable
+                                style={{marginTop: '16px', boxShadow: 'none'}}
+                                options={{
+                                    search: false,
+                                    showTitle: false,
+                                    toolbar: false, actionsColumnIndex: -1,
+                                    pageSize: 10,
+                                    pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
+                                    headerStyle: {
+                                        backgroundColor: '#fafafa',
+                                        color: 'rgba(51, 51, 51, 0.56)',
+                                        borderTop: '1px solid #eee',
+                                    }
+                                }}
+                                localization={{
                                     header: {
                                         actions: '',
                                     },
@@ -279,42 +231,40 @@ class RoleManagement extends React.Component {
                                     },
                                 }}
                                 columns={[
-                                    { title: '역할 이름', field: 'platformName' },
-                                    { title: '권한', field: 'platformType',
-                                      lookup: { '직접 판매': '직영', '비 직접': '비직영' },
-                                    },
-                               
+                                    {title: '역할 이름', field: 'roleName', cellStyle: {minWidth: '150px'}},
+                                    {
+                                        title: '역할',
+                                        field: 'roleList',
+                                        cellStyle: {minWidth: '800px'},
+                                        render: rowData => {
+                                            return rowData.roleList.map((item) => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} variant="outlined" size="small" color="primary" label={item}/>)
+                                        },
+                                        editComponent: props => {
+                                            return props.rowData.roleList.map(item => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} clickable variant="outlined" size="small" color="primary" label={item} onDelete={() => {}} />)
+                                        }
+                                    }
                                 ]}
-                            data={tableDummyData}
-                               editable={{
-                                onRowUpdate: (newData, oldData) => 
-                                 new Promise((resolve, reject) => {
-                                  setTimeout(() => {
-                                    // const dataUpdate = [...this.state.data];
-                                    //  const index = oldData.tableData.id;
-                                    //    dataUpdate[index] = newData;
-                                    //     this.setData([...dataUpdate]);
-
-                                       resolve();
-                                    }, 1000)
-                                }),
-                                onRowDelete: oldData =>
-                                 new Promise((resolve, reject) => {
-                                 setTimeout(() => {
-                                    // const dataDelete = [...this.state.data];
-                                    // const index = oldData.tableData.id;
-                                    // dataDelete.splice(index, 1);
-                                    // this.setData([...dataDelete]);
-                                    
-                                    resolve()
-                                    }, 1000)
-                                }),
-                            }}
+                                data={tableDummyData}
+                                editable={{
+                                    onRowUpdate: (newData, oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                resolve();
+                                            }, 1000)
+                                        }),
+                                    onRowDelete: oldData =>
+                                        new Promise((resolve, reject) => {
+                                            setTimeout(() => {
+                                                resolve();
+                                            }, 1000)
+                                        }),
+                                }}
                             />
-                       
+
                         </Grid>
                     </Paper>
-                </Grid>
+                  </Grid>
+                <AddRoleDialog/>
             </div>
         );
     }

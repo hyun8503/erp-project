@@ -1,18 +1,22 @@
 import {action, observable} from "mobx";
 
-
 export default class ReportSubmitStore {
     @observable uploadFileList = [];
-    @observable isCardListRender = false;
+    @observable fileList = [];
 
     @action initStore = () => {
         this.uploadFileList = [];
-        this.isCardListRender = false;
+        this.fileList = [];
     }
 
     @action changeUploadFileList = (files) => {
         this.uploadFileList = files;
-        this.isCardListRender = false;
     };
+
+    @action addFileList = () => {
+        this.fileList = this.fileList.concat(this.uploadFileList);
+        this.uploadFileList = [];
+    }
+
     @action changeIsCardListRender = (value) => this.isCardListRender = value;
 }

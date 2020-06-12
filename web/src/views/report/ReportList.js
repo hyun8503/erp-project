@@ -85,11 +85,13 @@ class ReportList extends React.Component {
                             <Grid item xs={12} sm={3}>
                                 <TextField
                                     select
-                                    label={"플랫폼 선택"}
                                     variant={"outlined"}
-                                    defaultValue={"all"}
+                                    defaultValue={"none"}
                                     fullWidth
                                 >
+                                    <MenuItem value="none" disabled>
+                                        <em>플랫폼 유형</em>
+                                    </MenuItem>
                                     <MenuItem value={"all"}>전체</MenuItem>
                                     <MenuItem value={"1"}>플랫폼1</MenuItem>
                                     <MenuItem value={"2"}>플랫폼2</MenuItem>
@@ -129,8 +131,8 @@ class ReportList extends React.Component {
                                 </Card>
                             </Grid>
 
-                            {this.props.reportSubmitStore.uploadFileList.length > 0 ?
-                                this.props.reportSubmitStore.uploadFileList.map((item, index) => {
+                            {this.props.reportSubmitStore.fileList.length > 0 ?
+                                this.props.reportSubmitStore.fileList.map((item, index) => {
                                     return (
                                         <Grid item xs={3}>
                                             <Card key={"upload-file"+index}>
