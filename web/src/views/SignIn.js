@@ -1,3 +1,4 @@
+import ReCAPTCHA from "react-google-recaptcha";
 import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
@@ -8,7 +9,9 @@ import {Avatar, Button, CircularProgress, Container, TextField, Typography} from
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import * as store from "../stores/AuthStore";
+import Grid from "@material-ui/core/Grid";
 
+import KEY from "../config/key.json";
 
 const style = theme => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -39,6 +42,12 @@ const style = theme => ({
 @inject('authStore')
 @observer
 class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.recaptchaRef = React.createRef();
+    }
+
     handleChangeId = (e) => {
         this.props.authStore.changeLoginId(e.target.value);
     }
@@ -57,9 +66,12 @@ class SignIn extends React.Component {
         this.props.authStore.doLogin();
     }
 
+    onSubmit = () => this.props.onSubmit(this.recaptchaRef.getValue())
+
     render() {
         const { classes } = this.props;
         const { loginState, login } = this.props.authStore;
+
 
         return (
             <Container component="main" maxWidth="xs">
@@ -97,6 +109,13 @@ class SignIn extends React.Component {
                                     fullWidth >
                                 {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
                             </Button>
+                            <Grid container item xs={12} justify={"center"}>
+                                <ReCAPTCHA
+                                    ref={this.recaptchaRef}
+                                    sitekey={KEY.recaptcha}
+                                    onChange={(data) => console.log(data)}
+                                />
+                            </Grid>
                         </div>
                     </div>
             </Container>
