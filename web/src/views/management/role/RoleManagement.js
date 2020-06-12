@@ -166,44 +166,6 @@ class RoleManagement extends React.Component {
             },
         ]
 
-        // const lookup1 = {
-        //     1: <Chip variant="outlined" size="small" label="보고서제출" clickable color="primary" onDelete={() => {}} />,
-        //     2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}} />,
-        // }
-        // const lookup2 = {
-        //     1: <Chip variant="outlined" size="small" label="보고서검색" clickable color="primary" onDelete={() => {}}/>,
-        //     2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}}/>,
-        // }
-        //
-        // const lookup3 = {
-        //   1: <Chip variant="outlined" size="small" label="보고서형식" clickable color="primary" onDelete={() => {}}/>,
-        //   2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}}/>,
-        // }
-        // const lookup4 = {
-        //   1: <Chip variant="outlined" size="small" label="플랫폼관리" clickable color="primary" onDelete={() => {}} />,
-        //   2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}} />,
-        // }
-        // const lookup5 = {
-        //   1: <Chip variant="outlined" size="small" label="역할 관리" clickable color="primary" onDelete={() => {}} />,
-        //   2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}}/>,
-        // }
-        // const lookup6 = {
-        //   1: <Chip variant="outlined" size="small" label="사용자관리" clickable color="primary" onDelete={() => {}} />,
-        //   2: <Chip variant="outlined" size="small" label="권한 없음" clickable color="secondary" onDelete={() => {}} />,
-        // }
-
-// const lookup = {
-//   1: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="보고서제출" clickable color="primary" onDelete={() => {}} deleteIcon={<DoneIcon />}/>, 
-//   2: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="보고서검색" clickable color="primary" onDelete={() => {}} deleteIcon={<DoneIcon />}/>,
-//   3: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="보고서형식" clickable color="primary" onDelete={() => {}} deleteIcon={<DoneIcon />}/>,
-//   4: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="플랫폼관리" clickable color="primary" onDelete={() => {}} deleteIcon={<DoneIcon />}/>,
-//   5: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="역할 관리" clickable color="primary" onDelete={() => {}} deleteIcon={<DoneIcon />}/>,
-//   6: <Chip variant="outlined" size="small" icon={<FaceIcon />} label="사용자관리" clickable color="pronDelete={() => {}} deleteIcon={<DoneIcon />}/>   
-// }
-
-
-
-
         return (
             <div className={classes.wrap}>
                 <SideMenu
@@ -287,22 +249,12 @@ class RoleManagement extends React.Component {
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {
                                             setTimeout(() => {
-                                                // const dataUpdate = [...this.state.data];
-                                                //  const index = oldData.tableData.id;
-                                                //    dataUpdate[index] = newData;
-                                                //     this.setData([...dataUpdate]);
-
                                                 resolve();
                                             }, 1000)
                                         }),
                                     onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
                                             setTimeout(() => {
-                                                // const dataDelete = [...this.state.data];
-                                                // const index = oldData.tableData.id;
-                                                // dataDelete.splice(index, 1);
-                                                // this.setData([...dataDelete]);
-
                                                 resolve();
                                             }, 1000)
                                         }),

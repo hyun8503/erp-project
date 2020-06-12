@@ -51,11 +51,11 @@ class AddUserDialog extends React.Component {
                 <DialogTitle>사용자 추가</DialogTitle>
                     <DialogContent> 
                         <FormControl className={classes.formControl}>
-                            <TextField style={{width:530}} id="outlined-basic" label="사용자 ID" variant="outlined" />
+                            <TextField style={{width:530}} id="userId" label="사용자 ID" variant="outlined" />
                         </FormControl>
 
                         <FormControl style={{width:530}} className={classes.formControl} noValidate autoComplete="off">
-                            <TextField id="outlined-basic" label="비밀번호" 
+                            <TextField id="password" label="비밀번호" 
                             variant="outlined" />
                         </FormControl>  
 

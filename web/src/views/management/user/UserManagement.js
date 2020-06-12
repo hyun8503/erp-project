@@ -198,22 +198,12 @@ class UserManagement extends React.Component {
                                 onRowUpdate: (newData, oldData) => 
                                  new Promise((resolve, reject) => {
                                   setTimeout(() => {
-                                    // const dataUpdate = [...this.state.data];
-                                    //  const index = oldData.tableData.id;
-                                    //    dataUpdate[index] = newData;
-                                    //     this.setData([...dataUpdate]);
-
-                                       resolve();
+                                    resolve();
                                     }, 1000)
                                 }),
                                 onRowDelete: oldData =>
                                  new Promise((resolve, reject) => {
-                                 setTimeout(() => {
-                                    // const dataDelete = [...this.state.data];
-                                    // const index = oldData.tableData.id;
-                                    // dataDelete.splice(index, 1);
-                                    // this.setData([...dataDelete]);
-                                    
+                                 setTimeout(() => {                                    
                                     resolve()
                                     }, 1000)
                                 }),
