@@ -56,7 +56,7 @@ class AddUserDialog extends React.Component {
 
                         <FormControl style={{width:530}} className={classes.formControl} noValidate autoComplete="off">
                             <TextField id="outlined-basic" label="비밀번호" 
-                            labelPlacement="start" variant="outlined" />
+                            variant="outlined" />
                         </FormControl>  
 
                         <FormControl variant="outlined" className={classes.formControl}>   
