@@ -1,6 +1,6 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {Button, Select, TextField} from "@material-ui/core";
+import {Button, Select, TextField, Container} from "@material-ui/core";
 import {inject, observer} from "mobx-react";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -25,8 +25,11 @@ const styles = (theme) => ({
         margin: theme.spacing(1),
       },
       formGroup: {
-        justifyCenter: 'center',
         marginTop: theme.spacing(2),
+      },
+      container: {
+        justifyContent: 'center',
+
       },
     
 });
@@ -68,8 +71,8 @@ class AddUserDialog extends React.Component {
                                 <MenuItem value={"비직영"}>비직영</MenuItem>
                              </Select>
                         </FormControl> 
-
-                                        <FormGroup style={{border:'1px solid gray'}} className={classes.formGroup} aria-label="position">
+                                 
+                                        <FormGroup style={{border:'1px solid gray'}} className={classes.formGroup}>
                                           <FormControl className={classes.formControl} noValidate autoComplete="off">   
                                             <FormControl 
                                                 style={{display: 'inline-block'}}
@@ -77,10 +80,8 @@ class AddUserDialog extends React.Component {
                                                 variant="outlined">
                                                 <Select
                                                 className={classes.select}
-                                                labelId="demo-simple-select-outlined-label"
-                                                id="demo-simple-select-outlined"
-                                                value="none"
-                                                onChange="{handleChange}">
+                                                defaultValue={"none"}
+                                                onChange={() => {}}>
                                                     <MenuItem value="none" disabled>
                                                     <em>역할 유형</em>
                                                     </MenuItem>
@@ -90,6 +91,7 @@ class AddUserDialog extends React.Component {
                                                <TextField className={classes.textField} id="outlined-basic" label="사용자 이름" variant="outlined" />
                                                 <Button className={classes.button} variant="contained" color="primary" >검색</Button>
                                           </FormControl>
+                                          <Container className={classes.container}>
                                           <FormGroup aria-label="position" row>
                                                 <FormControlLabel
                                                     value="start"
@@ -127,8 +129,8 @@ class AddUserDialog extends React.Component {
                                                     label="역할 관리"
                                                     labelPlacement="end"
                                                     />
-                                                
-                                                </FormGroup>
+                                            </FormGroup>
+                                            </Container>
                                         </FormControl>
                                         </FormGroup>
 

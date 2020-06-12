@@ -46,7 +46,6 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     formControl: {
-        //   autoWidth : true,
         margin: theme.spacing(1),
         minWidth: 100,
     },

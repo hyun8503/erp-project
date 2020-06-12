@@ -34,8 +34,6 @@ class AddPlatformDialog extends React.Component {
                 <DialogContent>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
                             defaultValue={"none"}
                             onChange={(event) => {}}>
                             <MenuItem value="none" disabled>

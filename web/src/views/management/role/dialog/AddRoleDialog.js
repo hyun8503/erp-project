@@ -1,6 +1,6 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {Button, Select, TextField} from "@material-ui/core";
+import {Button, TextField, Container} from "@material-ui/core";
 import {inject, observer} from "mobx-react";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -36,45 +36,46 @@ class AddRoleDialog extends React.Component {
             <DialogContent>                                                         
                 <FormControl className={classes.formControl} noValidate autoComplete="off">
                 <TextField id="outlined-basic" label="역할 이름" variant="outlined" />
-
-                  <FormGroup aria-label="position" row>
+                <Container className={classes.container}>
+                  <FormGroup row>
                     <FormControlLabel
-                        value="start"
+                        value="보고서제출"
                         control={<Checkbox color="primary" />}
                         label="보고서제출"
                         labelPlacement="end"
                     />
                     <FormControlLabel
-                        value="start"
+                        value="보고서검색"
                         control={<Checkbox color="primary" />}
                         label="보고서검색"
                         labelPlacement="end"
                         />
                     <FormControlLabel
-                        value="start"
+                        value="보고서형식"
                         control={<Checkbox color="primary" />}
-                        label="보고서형식관리"
+                        label="보고서형식"
                         labelPlacement="end"
                         />
                     <FormControlLabel
-                        value="start"
+                        value="플랫폼관리"
                         control={<Checkbox color="primary" />}
                         label="플랫폼관리"
                         labelPlacement="end"
                         />
                     <FormControlLabel
-                        value="start"
+                        value="사용자관리"
                         control={<Checkbox color="primary" />}
                         label="사용자관리"
                         labelPlacement="end"
                         />
                     <FormControlLabel
-                        value="start"
+                        value="역할 관리"
                         control={<Checkbox color="primary" />}
                         label="역할 관리"
                         labelPlacement="end"
                         />
                     </FormGroup>
+                    </Container>
                 </FormControl>
 
             </DialogContent>
