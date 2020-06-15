@@ -248,15 +248,11 @@ class RoleManagement extends React.Component {
                                 editable={{
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {
-                                            setTimeout(() => {
                                                 resolve();
-                                            }, 1000)
                                         }),
                                     onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
-                                            setTimeout(() => {
                                                 resolve();
-                                            }, 1000)
                                         }),
                                 }}
                             />

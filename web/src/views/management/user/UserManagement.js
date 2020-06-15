@@ -196,16 +196,12 @@ class UserManagement extends React.Component {
                             data={tableDummyData}
                                editable={{
                                 onRowUpdate: (newData, oldData) => 
-                                 new Promise((resolve, reject) => {
-                                  setTimeout(() => {
-                                    resolve();
-                                    }, 1000)
+                                 new Promise((resolve, reject) => {                       
+                                    resolve();                           
                                 }),
                                 onRowDelete: oldData =>
-                                 new Promise((resolve, reject) => {
-                                 setTimeout(() => {                                    
+                                 new Promise((resolve, reject) => {                              
                                     resolve()
-                                    }, 1000)
                                 }),
                             }}
                             />
