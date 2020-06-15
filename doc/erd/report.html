@@ -1,0 +1,1103 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+table {width:100%;}
+th {background-color:#ccc;}
+div {margin-bottom:30px;}
+</style>
+</head>
+<body>
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] Users</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_users</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">login_id</td>
+<td colSpan="1">Login ID</td>
+<td colSpan="1">ID_LOGIN</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">login_password</td>
+<td colSpan="1">Login Password</td>
+<td colSpan="1">PASSWORD</td>
+<td colSpan="1">VARBINARY(250)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">type_code</td>
+<td colSpan="1">User Type</td>
+<td colSpan="1">CODE</td>
+<td colSpan="1">VARCHAR(20)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">'NORMAL'</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">status_code</td>
+<td colSpan="1">Status Code</td>
+<td colSpan="1">CODE</td>
+<td colSpan="1">VARCHAR(20)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">'NORMAL'</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">7</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[TEMPLATE] Report Templates</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_templates</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">template_id</td>
+<td colSpan="1">Template ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">template_name</td>
+<td colSpan="1">Template Name</td>
+<td colSpan="1">NAME</td>
+<td colSpan="1">VARCHAR(100)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[PLATFORM] Platforms</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_platforms</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">platform_id</td>
+<td colSpan="1">Platform ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">
+</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">platform_name</td>
+<td colSpan="1">Platform Name</td>
+<td colSpan="1">NAME</td>
+<td colSpan="1">VARCHAR(100)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">type_code</td>
+<td colSpan="1">Platform Type</td>
+<td colSpan="1">CODE</td>
+<td colSpan="1">VARCHAR(20)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] Roles</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_roles</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">role_id</td>
+<td colSpan="1">Role ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">role_name</td>
+<td colSpan="1">Role Name</td>
+<td colSpan="1">NAME</td>
+<td colSpan="1">VARCHAR(100)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] User Roles</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_user_roles</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">role_id</td>
+<td colSpan="1">Role ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] Permissions</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_permissions</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">permission_id</td>
+<td colSpan="1">Permission ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">permission_name</td>
+<td colSpan="1">Permission Name</td>
+<td colSpan="1">NAME</td>
+<td colSpan="1">VARCHAR(100)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[PLATFORM] Platform Reports</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_reports</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">report_id</td>
+<td colSpan="1">Report ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">report_month</td>
+<td colSpan="1">Report Month</td>
+<td colSpan="1">YEARMONTH</td>
+<td colSpan="1">VARCHAR(6)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">platform_id</td>
+<td colSpan="1">Platform ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">FK</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">template_id</td>
+<td colSpan="1">Template ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">FK</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[TEMPLATE] Template Publish History</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_template_publish_histories</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">publish_hist_id</td>
+<td colSpan="1">Publish History ID</td>
+<td colSpan="1">ID_HISTORY</td>
+<td colSpan="1">BIGINT</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">template_id</td>
+<td colSpan="1">Template ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">platform_id</td>
+<td colSpan="1">Platform ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">
+</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">report_month</td>
+<td colSpan="1">Report Month</td>
+<td colSpan="1">YEARMONTH</td>
+<td colSpan="1">VARCHAR(6)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">success_flag</td>
+<td colSpan="1">Success Flag</td>
+<td colSpan="1">YESNO</td>
+<td colSpan="1">VARCHAR(1)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">description</td>
+<td colSpan="1">Description</td>
+<td colSpan="1">N/A</td>
+<td colSpan="1">LONGTEXT</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">7</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] User Login History</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_user_login_histories</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">login_hist_id</td>
+<td colSpan="1">Login History ID</td>
+<td colSpan="1">ID_HISTORY</td>
+<td colSpan="1">BIGINT</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">os</td>
+<td colSpan="1">Client OS</td>
+<td colSpan="1">VALUE_TEXT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">UNKNOWN</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">browser</td>
+<td colSpan="1">Client Browser</td>
+<td colSpan="1">VALUE_TEXT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">UNKNOWN</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">ip_address</td>
+<td colSpan="1">Client IP Address</td>
+<td colSpan="1">IP_ADDRESS</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] Platform Reports History</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_report_histories</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">report_hist_id</td>
+<td colSpan="1">Report History ID</td>
+<td colSpan="1">ID_HISTORY</td>
+<td colSpan="1">BIGINT</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">report_month</td>
+<td colSpan="1">Report Month</td>
+<td colSpan="1">YEARMONTH</td>
+<td colSpan="1">VARCHAR(6)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">platform_id</td>
+<td colSpan="1">Platform ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">template_id</td>
+<td colSpan="1">Template ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">Reported User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] User Action History</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_user_action_histories</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">action_hist_id</td>
+<td colSpan="1">Action History ID</td>
+<td colSpan="1">ID_HISTORY</td>
+<td colSpan="1">BIGINT</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">Action User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">type_code</td>
+<td colSpan="1">Action Type</td>
+<td colSpan="1">CODE</td>
+<td colSpan="1">VARCHAR(20)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">status_code</td>
+<td colSpan="1">Action Status</td>
+<td colSpan="1">CODE</td>
+<td colSpan="1">VARCHAR(20)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">5</td>
+<td colSpan="1">description</td>
+<td colSpan="1">Action Description</td>
+<td colSpan="1">N/A</td>
+<td colSpan="1">LONGTEXT</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">6</td>
+<td colSpan="1">ip_address</td>
+<td colSpan="1">Client IP Address</td>
+<td colSpan="1">IP_ADDRESS</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">7</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] Role Permissions</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_role_permissions</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">role_id</td>
+<td colSpan="1">Role ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">permission_id</td>
+<td colSpan="1">Permission ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+<div>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">엔티티 타입명</th>
+<td colSpan="2">[USER] User Platforms</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성일</th>
+<td colSpan="2">2020  6 12</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블명</th>
+<td colSpan="2">erp_user_platforms</td>
+<th colSpan="2" style="background-color: #CCCCCC;">작성자</th>
+<td colSpan="2">eXERD</td>
+</tr>
+<tr>
+<th colSpan="2" style="background-color: #CCCCCC;">테이블 설명</th>
+<td colSpan="6">&nbsp;</td>
+</tr>
+</table>
+<table border=1 cellspacing="0" bordercolor="#000000">
+<tr>
+<th colSpan="1" style="background-color: #CCCCCC;">번호</th>
+<th colSpan="1" style="background-color: #CCCCCC;">컬럼명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">속성명</th>
+<th colSpan="1" style="background-color: #CCCCCC;">도메인</th>
+<th colSpan="1" style="background-color: #CCCCCC;">데이터 타입</th>
+<th colSpan="1" style="background-color: #CCCCCC;">NULL 여부</th>
+<th colSpan="1" style="background-color: #CCCCCC;">기본값</th>
+<th colSpan="1" style="background-color: #CCCCCC;">KEY</th>
+</tr>
+<tr>
+<td colSpan="1">1</td>
+<td colSpan="1">user_id</td>
+<td colSpan="1">User ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">2</td>
+<td colSpan="1">platform_id</td>
+<td colSpan="1">Platform ID</td>
+<td colSpan="1">ID_OBJECT</td>
+<td colSpan="1">VARCHAR(50)</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">&nbsp;</td>
+<td colSpan="1">PK, FK</td>
+</tr>
+<tr>
+<td colSpan="1">3</td>
+<td colSpan="1">created_date</td>
+<td colSpan="1">Created Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+<tr>
+<td colSpan="1">4</td>
+<td colSpan="1">modified_date</td>
+<td colSpan="1">Modified Date</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">DATETIME</td>
+<td colSpan="1">NOT NULL</td>
+<td colSpan="1">CURRENT_TIMESTAMP</td>
+<td colSpan="1">&nbsp;</td>
+</tr>
+</table>
+</div>
+<p />
+</body>
+</html>

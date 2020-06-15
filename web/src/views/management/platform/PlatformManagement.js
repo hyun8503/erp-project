@@ -7,7 +7,6 @@ import {Button, Paper, Select, TextField, Typography} from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 
-
 import MaterialTable from "material-table";
 import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
@@ -69,7 +68,6 @@ const styles = theme => ({
 @inject("authStore", "platformStore")
 @observer
 class PlatformManagement extends React.Component {
-
     componentDidMount() {
     }
      
@@ -107,13 +105,12 @@ class PlatformManagement extends React.Component {
                             </Typography>
                         </Grid>
 
-
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <FormControl
                                     style={{width: 200}}
                                     variant="outlined" className={classes.formControl}>
-                                    <Select 
+                                    <Select
                                         defaultValue={"none"}
                                         onChange={()=>{}}>
                                         <MenuItem value="none" disabled><em>플랫폼 유형</em></MenuItem>
@@ -129,8 +126,8 @@ class PlatformManagement extends React.Component {
                                         id="outlined-basic" label="플랫폼 이름" variant="outlined"/>
                                 </FormControl>
 
-                                <Button className={classes.button} 
-                                        variant="contained" 
+                                <Button className={classes.button}
+                                        variant="contained"
                                         color="primary">
                                     검색
                                 </Button>
@@ -149,7 +146,8 @@ class PlatformManagement extends React.Component {
                                 options={{
                                     search: false,
                                     showTitle: false,
-                                    toolbar: false, actionsColumnIndex: -1,
+                                    toolbar: false,
+                                    actionsColumnIndex: -1,
                                     pageSize: 10,
                                     pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
                                     headerStyle: {
