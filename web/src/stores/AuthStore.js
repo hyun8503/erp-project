@@ -53,7 +53,7 @@ export default class AuthStore {
             const param = this.login;
             const response = yield axios.post('/api/v1/authentications/signin', param);
             const token = response.data.token;
-            const user = response.data.user;
+            const user = response.data.user;    
 
             localStorage.setItem(LocalStorageTokenKey, token);
 
