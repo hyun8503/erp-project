@@ -13,6 +13,7 @@ import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 
 import AddPlatformDialog from "./dialog/AddPlatformDialog";
+import * as PlatformType from "../../../type/PlatformType";
 
 const styles = theme => ({
     wrap: {
@@ -69,24 +70,12 @@ const styles = theme => ({
 @observer
 class PlatformManagement extends React.Component {
     componentDidMount() {
+        this.props.platformStore.getPlatformList();
     }
      
 
     render() {
         const { classes } = this.props;
-      
-        const tableDummyData = [
-            {platformName: '플랫폼1', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼2', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼3', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼4', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼5', platformType: '직접 판매', status: '1'},
-            {platformName: '플랫폼6', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼7', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼8', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼9', platformType: '비 직접', status: '2'},
-            {platformName: '플랫폼10', platformType: '직접 판매', status: '2'}
-        ]
 
         return (
             <div className={classes.wrap}>
@@ -172,17 +161,25 @@ class PlatformManagement extends React.Component {
                                 columns={[
                                     {title: '플랫폼 이름', field: 'platformName'},
                                     {
-                                        title: '플랫폼 유형', field: 'platformType',
-                                        lookup: {'직접 판매': '직영', '비 직접': '비직영'},
+                                        title: '플랫폼 유형', field: 'typeCode',
+                                        lookup: {[PlatformType.type.Direct]: '직영', [PlatformType.type.NonDirect]: '비직영'},
                                     },
                                     {
                                         title: '운영 중',
                                         field: 'status',
                                         lookup: {'1': '운영 중', '2': '비 운영 중'},
                                     },
-
                                 ]}
-                                data={tableDummyData}
+                                data={
+                                    !!this.props.platformStore.platformList ?
+                                        this.props.platformStore.platformList.map((item) => {
+                                            return {
+                                                platformName: item.platformName,
+                                                typeCode: item.typeCode,
+                                                status: 1,
+                                            }
+                                        }) : []
+                                }
                                 editable={{
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {

@@ -10,6 +10,7 @@
     <typeAliases>
         <typeAlias type="io.sderp.ws.model.User" alias="User" />
         <typeAlias type="io.sderp.ws.model.support.UserType" alias="UserType" />
+        <typeAlias type="io.sderp.ws.model.Platform" alias="Platform" />
     </typeAliases>
 
     <typeHandlers>
@@ -18,5 +19,6 @@
 
     <mappers>
         <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />
+        <mapper resource="mybatis/mapper/mariadb/PlatformMapper.xml" />
     </mappers>
 </configuration>

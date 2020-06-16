@@ -9,6 +9,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
 import {inject, observer} from "mobx-react";
 
+import * as PlatformType from "../../../../type/PlatformType";
+
 const styles = (theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -34,21 +36,27 @@ class AddPlatformDialog extends React.Component {
                 <DialogContent>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <Select
-                            defaultValue={"none"}
-                            onChange={(event) => {}}>
+                            value={this.props.platformStore.addSelectedPlatformType}
+                            onChange={(event) => this.props.platformStore.changeSelectedPlatformType(event.target.value)}>
                             <MenuItem value="none" disabled>
                                 <em>플랫폼 유형</em>
                             </MenuItem>
-                            <MenuItem value={"직영"}>직영</MenuItem>
-                            <MenuItem value={"비직영"}>비직영</MenuItem>
+                            <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>
+                            <MenuItem value={PlatformType.type.NonDirect}>비직영</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl} noValidate autoComplete="off">
-                        <TextField id="outlined-basic" label="플랫폼 이름" variant="outlined"/>
+                        <TextField
+                            id="outlined-basic"
+                            label="플랫폼 이름"
+                            variant="outlined"
+                            value={this.props.platformStore.addPlatformName}
+                            onChange={(event) => this.props.platformStore.changeAddPlatformName(event.target.value)}
+                        />
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary">추가</Button>
+                    <Button variant="contained" color="primary" disabled={!this.props.platformStore.addPlatformName || this.props.platformStore.addingPlatform} onClick={() => this.props.platformStore.addPlatform()}>추가</Button>
                     <Button variant="outlined"
                             color="primary"
                             onClick={() => this.props.platformStore.changeIsAddPlatformDialog(false)}
