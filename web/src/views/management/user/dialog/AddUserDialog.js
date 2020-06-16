@@ -85,8 +85,12 @@ class AddUserDialog extends React.Component {
                                                     <MenuItem value="none" disabled>
                                                     <em>역할 유형</em>
                                                     </MenuItem>
-                                                    <MenuItem value={"직영"}>직영</MenuItem>
-                                                    <MenuItem value={"비직영"}>비직영</MenuItem>
+                                                    <MenuItem value={"역할1"}>역할1</MenuItem>
+                                                    <MenuItem value={"역할2"}>역할2</MenuItem>
+                                                    <MenuItem value={"역할3"}>역할3</MenuItem>
+                                                    <MenuItem value={"역할4"}>역할4</MenuItem>
+                                                    <MenuItem value={"역할5"}>역할5</MenuItem>
+                                                    <MenuItem value={"역할6"}>역할6</MenuItem>
                                                 </Select>
                                                <TextField className={classes.textField} id="outlined-basic" label="사용자 이름" variant="outlined" />
                                                 <Button className={classes.button} variant="contained" color="primary" >검색</Button>
@@ -96,37 +100,37 @@ class AddUserDialog extends React.Component {
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="보고서제출"
+                                                    label="플랫폼1"
                                                     labelPlacement="end"
                                                 />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="보고서검색"
+                                                    label="플랫폼2"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="보고서형식"
+                                                    label="플랫폼2"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="플랫폼관리"
+                                                    label="플랫폼3"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="사용자관리"
+                                                    label="플랫폼4"
                                                     labelPlacement="end"
                                                     />
                                                 <FormControlLabel
                                                     value="start"
                                                     control={<Checkbox color="primary" />}
-                                                    label="역할 관리"
+                                                    label="플랫폼5"
                                                     labelPlacement="end"
                                                     />
                                             </FormGroup>
