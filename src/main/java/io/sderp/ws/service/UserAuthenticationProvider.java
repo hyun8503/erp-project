@@ -19,8 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.sderp.ws.model.SimpleUser;
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.support.UserStatusType;
+
+
 
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
@@ -47,7 +50,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         if(user == null) {
             throw new UsernameNotFoundException("Username not found : " + userId);
         }
-
+        
         if(user.getStatusCode() == UserStatusType.Withdraw) {
             throw new DisabledException("User is not enabled : " + userId);
         }
