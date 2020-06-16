@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "project.base.application")
+@ConfigurationProperties(prefix = "sderp.application")
 @Data
 public class ApplicationProperties {
     private int networkConnTimeout;

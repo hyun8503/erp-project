@@ -8,9 +8,8 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="io.sderp.ws.model.BaseUser" alias="BaseUser" />
-
-        <typeAlias type="io.sderp.ws.model.support.BaseUserType" alias="BaseUserType" />
+        <typeAlias type="io.sderp.ws.model.User" alias="User" />
+        <typeAlias type="io.sderp.ws.model.support.UserType" alias="UserType" />
     </typeAliases>
 
     <typeHandlers>

@@ -12,8 +12,8 @@ export const LocalStorageTokenKey = '_BASKITOP_AUTHENTICATION_TOKEN_';
 
 
 const EmptyLogin = {
-    id: '',
-    password: '',
+    loginId: '',
+    loginPassword: '',
 };
 
 const EmptyUser = {
@@ -32,11 +32,11 @@ export default class AuthStore {
     @observable loginUser = Object.assign({}, EmptyUser);
 
     @action changeLoginId = (id) => {
-        this.login.id = id;
+        this.login.loginId = id;
     };
 
     @action changeLoginPassword = (password) => {
-        this.login.password = password;
+        this.login.loginPassword = password;
     };
 
     @action invalidateLogin = () => {
