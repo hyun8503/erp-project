@@ -2,6 +2,8 @@ package io.sderp.ws.service;
 
 import io.sderp.ws.model.SimpleUser;
 import io.sderp.ws.model.UserToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class AuthenticationService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -38,7 +41,6 @@ public class AuthenticationService {
 
     public SimpleUser getUser() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         return (SimpleUser) authentication.getDetails();
     }
 

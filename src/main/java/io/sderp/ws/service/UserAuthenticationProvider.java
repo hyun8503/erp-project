@@ -78,7 +78,8 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
                 .userId(user.getUserId())
                 .loginId(user.getLoginId())
                 .typeCode(user.getTypeCode())
-                .createDate(user.getCreatedDate())
+                .statusCode(user.getStatusCode())
+                .createdDate(user.getCreatedDate())
                 .modifiedDate(user.getModifiedDate())
                 .build();
     }

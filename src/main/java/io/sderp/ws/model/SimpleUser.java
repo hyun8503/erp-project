@@ -21,6 +21,6 @@ public class SimpleUser implements Serializable {
     private String loginId;
     private UserType typeCode;
     private UserStatusType statusCode;
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 }
