@@ -1,8 +1,8 @@
 package io.sderp.ws.service;
 
-import io.sderp.ws.model.SimpleUser;
-import io.sderp.ws.model.User;
-import io.sderp.ws.model.support.UserStatusType;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
