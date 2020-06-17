@@ -1,5 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS `sindh-erp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `sindh-erp`;
+CREATE SCHEMA IF NOT EXISTS `sindh_erp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `sindh_erp`;
 ##
 ## for Spring Session
 ##
