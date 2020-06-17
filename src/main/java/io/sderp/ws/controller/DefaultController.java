@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DefaultController {
-    @RequestMapping({"/", "/home"})
+    @RequestMapping({"/", "/home", "/management/**", "/report/**"})
     public String getUIResource() {
         return "forward:/index.html";
     }

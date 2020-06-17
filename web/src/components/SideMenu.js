@@ -68,47 +68,47 @@ export default function SideMenu(props) {
     const drawer = (
         <div className={classes.menu}>
             <List>
-                <ListSubheader inset>레포트</ListSubheader>
+                <ListSubheader inset>Report Management</ListSubheader>
 
                 <NavLink to="/report/submit" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="레포트 제출" />
+                        <ListItemText primary="Report" />
                     </ListItem>
                 </NavLink>
                 <NavLink to={"/report/list"} className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="레포트 검색" />
+                        <ListItemText primary="Search" />
                     </ListItem>
                 </NavLink>
             </List>
             <Divider />
             <List>
-                <ListSubheader inset>시스템 관리</ListSubheader>
+                <ListSubheader inset>System Managemen</ListSubheader>
 
                 <NavLink to="/management/report" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="보고서 템플릿 관리" />
+                        <ListItemText primary="Templates" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/platform" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="플랫폼 관리" />
+                        <ListItemText primary="Platforms" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/role" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="역할 관리" />
+                        <ListItemText primary="User Roles" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/user" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary="사용자 관리" />
+                        <ListItemText primary="Users" />
                     </ListItem>
                 </NavLink>
             </List>
@@ -116,7 +116,7 @@ export default function SideMenu(props) {
             <List>
                 <ListItem button onClick={() => doLogout()}>
                     <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-                    <ListItemText primary="로그아웃" />
+                    <ListItemText primary="Logout" />
                 </ListItem>
             </List>
         </div>
