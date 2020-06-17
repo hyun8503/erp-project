@@ -15,7 +15,8 @@ public class InformationController {
     private static final Logger logger = LoggerFactory.getLogger(InformationController.class);
     public static final String NAME = "io.sderp.ws";
     public static final String VERSION = "1.0-SNAPSHOT";
-    public static final String BUILD_ID = "20200616_2206";
+    public static final String BUILD_ID = "20200617_1549";
+
     public static final String BUILD_NUMBER = "0";
 
     public InformationController() {
