@@ -1,4 +1,4 @@
-import {action, observable} from "mobx";
+import {action, flow, observable} from "mobx";
 import * as PermissionType from "../type/PermissionType";
 
 export default class RoleStore {
@@ -58,4 +58,10 @@ export default class RoleStore {
             }
         }
     };
+
+    addRole = flow(function* () {
+        console.log(this.roleName);
+        console.log(this.addRoleList);
+
+    });
 }

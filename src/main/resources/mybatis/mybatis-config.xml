@@ -19,8 +19,8 @@
     </typeHandlers>
 
     <mappers>
-        <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />
-        <mapper resource="mybatis/mapper/mariadb/PlatformMapper.xml" />
-        <mapper resource="mybatis/mapper/mariadb/PermissionMapper.xml" />
+<!--        <mapper resource="mybatis/mapper/mariadb" />-->
+<!--        <mapper resource="mybatis/mapper/mariadb/PlatformMapper.xml" />-->
+<!--        <mapper resource="mybatis/mapper/mariadb/PermissionMapper.xml" />-->
     </mappers>
 </configuration>

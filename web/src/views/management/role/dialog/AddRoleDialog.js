@@ -117,7 +117,7 @@ class AddRoleDialog extends React.Component {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="primary" disabled={addBtnDisabled}>추가</Button>
+                <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.roleStore.addRole()}>추가</Button>
                 <Button variant="outlined" color="primary" 
                         onClick={() => this.props.roleStore.changeIsAddRoleDialog(false)}>닫기</Button>
             </DialogActions>
