@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 import AddRoleDialog from "./dialog/AddRoleDialog";
+import ConfirmDialog from "../../../components/ConfirmDialog";
 import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
@@ -261,6 +262,12 @@ class RoleManagement extends React.Component {
                     </Paper>
                   </Grid>
                 <AddRoleDialog/>
+                <ConfirmDialog
+                    open={this.props.roleStore.confirmDialogOpen}
+                    handleClose={this.props.roleStore.confirmDialogClose}
+                    handleConfirm={this.props.roleStore.confirmDialogHandle}
+                    message={this.props.roleStore.confirmDialogMsg}
+                />
             </div>
         );
     }

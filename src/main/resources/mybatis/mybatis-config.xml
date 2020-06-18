@@ -12,6 +12,7 @@
         <typeAlias type="io.sderp.ws.model.support.UserType" alias="UserType" />
         <typeAlias type="io.sderp.ws.model.Platform" alias="Platform" />
         <typeAlias type="io.sderp.ws.model.Permission" alias="Permission" />
+        <typeAlias type="io.sderp.ws.model.Role" alias="Role"/>
     </typeAliases>
 
     <typeHandlers>
