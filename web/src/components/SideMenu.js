@@ -1,5 +1,8 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import {
     Divider,
@@ -13,7 +16,6 @@ import {
     Toolbar
 } from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
-import ComputerIcon from '@material-ui/icons/Computer';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 129;
@@ -72,13 +74,13 @@ export default function SideMenu(props) {
 
                 <NavLink to="/report/submit" className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><PostAddIcon /></ListItemIcon>
                         <ListItemText primary="Report" />
                     </ListItem>
                 </NavLink>
                 <NavLink to={"/report/list"} className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><FindInPageIcon /></ListItemIcon>
                         <ListItemText primary="Search" />
                     </ListItem>
                 </NavLink>
@@ -89,25 +91,25 @@ export default function SideMenu(props) {
 
                 <NavLink to="/management/report" className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><SettingsIcon /></ListItemIcon>
                         <ListItemText primary="Templates" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/platform" className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><SettingsIcon /></ListItemIcon>
                         <ListItemText primary="Platforms" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/role" className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><SettingsIcon /></ListItemIcon>
                         <ListItemText primary="User Roles" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/user" className={classes.link}>
                     <ListItem button>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
+                        <ListItemIcon><SettingsIcon /></ListItemIcon>
                         <ListItemText primary="Users" />
                     </ListItem>
                 </NavLink>
