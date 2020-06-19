@@ -29,6 +29,15 @@
         FROM erp_roles
     </select>
 
+    <select id="selectRoleByName" parameterType="String" resultType="Role">
+        SELECT role_id,
+               role_name,
+               created_date,
+               modified_date
+        FROM erp_roles
+        WHERE role_name like CONCAT('%',#{roleName},'%')
+    </select>
+
     <select id="selectRole" parameterType="String" resultType="Role">
         SELECT role_id,
                role_name,

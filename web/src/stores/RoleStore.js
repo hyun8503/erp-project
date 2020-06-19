@@ -27,6 +27,12 @@ export default class RoleStore {
     @observable updatingRole = false;
     @observable updateRoleId = "";
 
+    @observable isDeleteDialog = false;
+    @observable deleteRoleId = "";
+    @observable deleting = false;
+
+    @observable searchRoleName = "";
+
     @action initStore = () => {
         this.isAddRoleDialog = false;
         this.roleName = '';
@@ -72,6 +78,11 @@ export default class RoleStore {
         this.updatingRole = false;
         this.updateRoleId = "";
     }
+
+    @action changeSearchRoleName = (value) => {
+        value = value ? value.trim() : value;
+        this.searchRoleName = value
+    };
 
     @action changeUpdateDialogRoleName = (value) => {
         value = value ? value.trim() : value;
@@ -130,6 +141,22 @@ export default class RoleStore {
         this.roleList = [];
         try {
             const response = yield axios.get(`/api/v1/roles`);
+            this.roleList = response.data;
+        } catch (err) {
+            console.log('getRoleList error');
+            console.log(err);
+            this.roleList = [];
+        }
+    });
+
+    searchRoleList = flow(function* () {
+        if(!this.searchRoleName) {
+            return null;
+        }
+
+        this.roleList = [];
+        try {
+            const response = yield axios.get(`/api/v1/roles/name/${this.searchRoleName}`);
             this.roleList = response.data;
         } catch (err) {
             console.log('getRoleList error');
@@ -209,5 +236,43 @@ export default class RoleStore {
                 this.initUpdateDialog();
             }
         }
-    })
+    });
+
+    deleteRole = flow(function* (roleId) {
+        this.deleting = true;
+        try {
+            yield axios.delete(`/api/v1/role/${roleId}`);
+            this.deleteDialogClose();
+            this.getRoleList();
+        } catch (err) {
+            console.log('deleteRole');
+            console.log(err);
+            if(err.response.data.code === ErrorType.code.RoleInUse) {
+                this.confirmDialogMsg = "역할이 이미 사용중입니다";
+                this.confirmDialogOpen = true;
+            } else {
+                this.deleteRoleId = "";
+                this.deleting = false;
+            }
+        }
+    });
+
+    @action deleteDialogConfirmHandle = () => {
+        this.deleteRole(this.deleteRoleId);
+    }
+
+    @action deleteDialogOpen = (roleId) => {
+        if(!roleId) {
+            return null;
+        }
+
+        this.deleteRoleId = roleId;
+        this.isDeleteDialog = true;
+    }
+
+    @action deleteDialogClose = () => {
+        this.deleteRoleId = "";
+        this.isDeleteDialog = false;
+        this.deleting = false;
+    }
 }

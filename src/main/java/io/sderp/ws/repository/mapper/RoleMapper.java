@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface RoleMapper {
     List<Role> selectAllRole();
+    List<Role> selectRoleByName(String name);
     Role selectRole(String roleId);
     List<RoleWithPermission> selectRoleWithPermission();
     long selectRoleNameCount(String roleName);

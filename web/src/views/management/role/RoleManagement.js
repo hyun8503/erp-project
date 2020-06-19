@@ -11,6 +11,7 @@ import {inject, observer} from "mobx-react";
 import AddRoleDialog from "./dialog/AddRoleDialog";
 import UpdateRoleDialog from "./dialog/UpdateRoleDialog";
 import ConfirmDialog from "../../../components/ConfirmDialog";
+import DeleteDialog from "./dialog/DeleteDialog";
 import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
@@ -115,60 +116,6 @@ class RoleManagement extends React.Component {
 
     render() {
         const { classes } = this.props;
-      
-        const tableDummyData = [
-            {
-                roleName: '역할1',
-                roleList: [
-                    "보고서 제출",
-                    "보고서 검색",
-                    "보고서 형식",
-                    "플랫폼 관리",
-                    "역할 관리",
-                    "사용자 관리"
-                ]
-            },
-            {
-                roleName: '역할2',
-                roleList: [
-                    "보고서 제출",
-                    "보고서 검색",
-                    "보고서 형식",
-                    "플랫폼 관리",
-                    "역할 관리",
-                ]
-            },
-            {
-                roleName: '역할3',
-                roleList: [
-                    "보고서 제출",
-                    "플랫폼 관리",
-                    "역할 관리",
-                    "사용자 관리"
-                ]
-            },
-            {
-                roleName: '역할4',
-                roleList: [
-                    "보고서 검색",
-                    "보고서 형식",
-                    "플랫폼 관리",
-                    "역할 관리",
-                    "사용자 관리"
-                ]
-            },
-            {
-                roleName: '역할5',
-                roleList: [
-                    "보고서 제출",
-                    "보고서 검색",
-                    "보고서 형식",
-                    "역할 관리",
-                    "사용자 관리"
-                ]
-            },
-        ]
-
         return (
             <div className={classes.wrap}>
                 <SideMenu
@@ -192,10 +139,15 @@ class RoleManagement extends React.Component {
                                 <FormControl className={classes.formControl} noValidate autoComplete="off">
                                     <TextField
                                         style={{width: 400}}
-                                        id="outlined-basic" label="역할 이름" variant="outlined"/>
+                                        id="outlined-basic"
+                                        label="역할 이름"
+                                        variant="outlined"
+                                        value={this.props.roleStore.searchRoleName}
+                                        onChange={(event) => this.props.roleStore.changeSearchRoleName(event.target.value)}
+                                    />
                                 </FormControl>
 
-                                <Button className={classes.button} variant="contained" color="primary">검색</Button>
+                                <Button className={classes.button} variant="contained" color="primary" onClick={() => this.props.roleStore.searchRoleList()}>검색</Button>
                                 <Button className={classes.button}
                                         variant="contained"
                                         color="primary"
@@ -258,7 +210,7 @@ class RoleManagement extends React.Component {
                                     {
                                         icon: 'delete',
                                         tooltip: 'delete role',
-                                        onClick: (event, rowData) => this.props.roleStore.getUpdateRole(rowData.roleId)
+                                        onClick: (event, rowData) => this.props.roleStore.deleteDialogOpen(rowData.roleId)
                                     }
                                 ]}
                                 data={this.props.roleStore.roleList.length > 0 ? this.props.roleStore.roleList.map((item) => {
@@ -280,6 +232,7 @@ class RoleManagement extends React.Component {
                     handleConfirm={this.props.roleStore.confirmDialogHandle}
                     message={this.props.roleStore.confirmDialogMsg}
                 />
+                <DeleteDialog/>
             </div>
         );
     }

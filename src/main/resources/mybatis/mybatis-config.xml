@@ -15,6 +15,7 @@
         <typeAlias type="io.sderp.ws.model.Permission" alias="Permission" />
         <typeAlias type="io.sderp.ws.model.Role" alias="Role"/>
         <typeAlias type="io.sderp.ws.model.RoleWithPermission" alias="RoleWithPermission"/>
+        <typeAlias type="io.sderp.ws.model.UserRole" alias="UserRole"/>
     </typeAliases>
 
     <typeHandlers>

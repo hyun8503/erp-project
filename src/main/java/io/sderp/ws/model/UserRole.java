@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRoles {
+public class UserRole {
     private String userId;
 
     private String roleId;

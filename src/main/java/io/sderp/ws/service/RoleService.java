@@ -11,6 +11,7 @@ import io.sderp.ws.model.support.PermissionType;
 import io.sderp.ws.repository.PermissionRepository;
 import io.sderp.ws.repository.RolePermissionRepository;
 import io.sderp.ws.repository.RoleRepository;
+import io.sderp.ws.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,14 @@ public class RoleService {
     private RoleRepository roleRepository;
     private RolePermissionRepository rolePermissionRepository;
     private PermissionRepository permissionRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
-    public RoleService(RoleRepository roleRepository, RolePermissionRepository rolePermissionRepository, PermissionRepository permissionRepository) {
+    public RoleService(RoleRepository roleRepository, RolePermissionRepository rolePermissionRepository, PermissionRepository permissionRepository, UserRoleRepository userRoleRepository) {
         this.roleRepository = roleRepository;
         this.rolePermissionRepository = rolePermissionRepository;
         this.permissionRepository = permissionRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public RoleListParam selectRolePermission(String roleId) {
@@ -47,6 +50,20 @@ public class RoleService {
     public List<RoleListParam> selectAllRole() {
         List<RoleListParam> roleListParam = new ArrayList<>();
         List<Role> roleList = roleRepository.selectAllRole();
+        for (Role role: roleList) {
+            List<Permission> permissionList = permissionRepository.selectPermissionByRole(role.getRoleId());
+            roleListParam.add(RoleListParam.builder()
+                    .role(role)
+                    .permissionList(permissionList)
+                    .build());
+        }
+
+        return roleListParam;
+    }
+
+    public List<RoleListParam> selectRoleByName(String name) {
+        List<RoleListParam> roleListParam = new ArrayList<>();
+        List<Role> roleList = roleRepository.selectRoleByName(name);
         for (Role role: roleList) {
             List<Permission> permissionList = permissionRepository.selectPermissionByRole(role.getRoleId());
             roleListParam.add(RoleListParam.builder()
@@ -83,6 +100,7 @@ public class RoleService {
 
         roleRepository.updateRole(role);
         rolePermissionRepository.deleteRolePermission(role.getRoleId());
+
         for (Permission permission : permissionList) {
             rolePermissionRepository.insertRolePermission(role.getRoleId(), permission.getPermissionName());
         }
@@ -90,8 +108,16 @@ public class RoleService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteRole(String roleId) {
-        roleRepository.deleteRole(roleId);
+        userRoleInUseCheck(roleId);
         rolePermissionRepository.deleteRolePermission(roleId);
+        roleRepository.deleteRole(roleId);
+    }
+
+    private void userRoleInUseCheck(String roleId) {
+        long count = userRoleRepository.selectUserRoleCount(roleId);
+        if(count != 0) {
+            throw new BaseException(ErrorCode.RoleInUse, HttpStatus.BAD_REQUEST, "role in use");
+        }
     }
 
     private void insertRolePermission(String roleId, List<PermissionType> permissionList) {
