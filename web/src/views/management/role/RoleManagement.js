@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 import AddRoleDialog from "./dialog/AddRoleDialog";
+import UpdateRoleDialog from "./dialog/UpdateRoleDialog";
 import ConfirmDialog from "../../../components/ConfirmDialog";
 import Chip from '@material-ui/core/Chip';
 
@@ -252,12 +253,12 @@ class RoleManagement extends React.Component {
                                     {
                                         icon: 'edit',
                                         tooltip: 'update role',
-                                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                        onClick: (event, rowData) => this.props.roleStore.getUpdateRole(rowData.roleId)
                                     },
                                     {
                                         icon: 'delete',
                                         tooltip: 'delete role',
-                                        onClick: (event, rowData) => window.confirm("You want to delete " + rowData.name),
+                                        onClick: (event, rowData) => this.props.roleStore.getUpdateRole(rowData.roleId)
                                     }
                                 ]}
                                 data={this.props.roleStore.roleList.length > 0 ? this.props.roleStore.roleList.map((item) => {
@@ -272,6 +273,7 @@ class RoleManagement extends React.Component {
                     </Paper>
                   </Grid>
                 <AddRoleDialog/>
+                <UpdateRoleDialog/>
                 <ConfirmDialog
                     open={this.props.roleStore.confirmDialogOpen}
                     handleClose={this.props.roleStore.confirmDialogClose}

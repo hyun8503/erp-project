@@ -33,6 +33,17 @@ public class RoleController {
         return new ResponseEntity<>(roleService.selectAllRole(), HttpStatus.OK);
     }
 
+    @GetMapping("/role/{roleId}")
+    public ResponseEntity<RoleListParam> selectRole(HttpServletRequest httpRequest, @PathVariable String roleId) {
+        return new ResponseEntity<>(roleService.selectRolePermission(roleId), HttpStatus.OK);
+    }
+
+    @PutMapping("/role")
+    public ResponseEntity<RoleListParam> updateRole(HttpServletRequest httpRequest, @RequestBody RoleListParam roleListParam) {
+        roleService.updateRole(roleListParam);
+        return new ResponseEntity<>(roleListParam, HttpStatus.OK);
+    }
+
     @PostMapping("/role")
     public ResponseEntity<Object> insertRole(HttpServletRequest httpRequest, @RequestBody AddRoleParam param) {
         roleService.insertRole(param);

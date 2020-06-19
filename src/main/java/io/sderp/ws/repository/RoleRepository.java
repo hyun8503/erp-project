@@ -20,7 +20,10 @@ public class RoleRepository {
     public int insertRole(Role role) {
         return mapper.insertRole(role);
     }
+    public int updateRole(Role role) { return mapper.updateRole(role); }
+    public int deleteRole(String roleId) { return mapper.deleteRole(roleId); }
 
+    public Role selectRole(String roleId) { return mapper.selectRole(roleId); }
     public List<Role> selectAllRole() { return mapper.selectAllRole(); }
     public long selectRoleNameCount(String roleName) {
         return mapper.selectRoleNameCount(roleName);

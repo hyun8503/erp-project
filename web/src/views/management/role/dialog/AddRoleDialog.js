@@ -45,7 +45,7 @@ class AddRoleDialog extends React.Component {
                                     <Checkbox
                                         color="primary"
                                         name={PermissionType.type.ReportSubmit}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.ReportSubmit]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.ReportSubmit]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
@@ -57,7 +57,7 @@ class AddRoleDialog extends React.Component {
                                     <Checkbox
                                         color="primary"
                                         name={PermissionType.type.ReportSearch}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.ReportSearch]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.ReportSearch]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
@@ -69,7 +69,7 @@ class AddRoleDialog extends React.Component {
                                     <Checkbox
                                         color="primary"
                                         name={PermissionType.type.ReportTemplate}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.ReportTemplate]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.ReportTemplate]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
@@ -81,7 +81,7 @@ class AddRoleDialog extends React.Component {
                                     <Checkbox
                                         color="primary"
                                         name={PermissionType.type.PlatformManagement}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.PlatformManagement]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.PlatformManagement]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
@@ -92,7 +92,7 @@ class AddRoleDialog extends React.Component {
                                 control={
                                     <Checkbox
                                         name={PermissionType.type.UserManagement}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.UserManagement]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.UserManagement]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                         color="primary"
                                     />
@@ -105,7 +105,7 @@ class AddRoleDialog extends React.Component {
                                     <Checkbox
                                         color="primary"
                                         name={PermissionType.type.RoleManagement}
-                                        checked={this.props.roleStore.addRoleCheckList[PermissionType.type.RoleManagement]}
+                                        checked={this.props.roleStore.addRolePermissionList[PermissionType.type.RoleManagement]}
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }

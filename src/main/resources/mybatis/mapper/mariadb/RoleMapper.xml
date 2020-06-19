@@ -55,6 +55,17 @@
                 #{modifiedDate}
             )
     </insert>
+    
+    <update id="updateRole" parameterType="Role">
+        UPDATE erp_roles
+        SET role_name = #{roleName},
+            modified_date = #{modifiedDate}
+        WHERE role_id = #{roleId}
+    </update>
+
+    <delete id="deleteRole" parameterType="String">
+        DELETE FROM erp_roles WHERE role_id = #{roleId}
+    </delete>
 </mapper>
 
 

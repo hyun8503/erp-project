@@ -24,6 +24,11 @@
                 #{now}
             )
     </insert>
+
+    <delete id="deleteRolePermission" parameterType="String">
+        DELETE FROM erp_role_permissions
+        WHERE role_id = #{roleId}
+    </delete>
 </mapper>
 
 

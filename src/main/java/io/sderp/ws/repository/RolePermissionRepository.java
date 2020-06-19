@@ -19,4 +19,8 @@ public class RolePermissionRepository {
     public void insertRolePermission(String roleId, PermissionType type) {
         mapper.insertRolePermission(roleId, type, LocalDateTime.now());
     }
+
+    public int deleteRolePermission(String roleId) {
+        return mapper.deleteRolePermission(roleId);
+    }
 }

@@ -34,6 +34,16 @@ public class RoleService {
         this.permissionRepository = permissionRepository;
     }
 
+    public RoleListParam selectRolePermission(String roleId) {
+        Role role = roleRepository.selectRole(roleId);
+        List<Permission> permissionList = permissionRepository.selectPermissionByRole(roleId);
+
+        return RoleListParam.builder()
+                .role(role)
+                .permissionList(permissionList)
+                .build();
+    }
+
     public List<RoleListParam> selectAllRole() {
         List<RoleListParam> roleListParam = new ArrayList<>();
         List<Role> roleList = roleRepository.selectAllRole();
@@ -63,6 +73,25 @@ public class RoleService {
 
         roleRepository.insertRole(role);
         insertRolePermission(roleId, param.getPermissionList());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateRole(RoleListParam roleListParam) {
+        Role role = roleListParam.getRole();
+        List<Permission> permissionList = roleListParam.getPermissionList();
+        role.setModifiedDate(LocalDateTime.now());
+
+        roleRepository.updateRole(role);
+        rolePermissionRepository.deleteRolePermission(role.getRoleId());
+        for (Permission permission : permissionList) {
+            rolePermissionRepository.insertRolePermission(role.getRoleId(), permission.getPermissionName());
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRole(String roleId) {
+        roleRepository.deleteRole(roleId);
+        rolePermissionRepository.deleteRolePermission(roleId);
     }
 
     private void insertRolePermission(String roleId, List<PermissionType> permissionList) {
