@@ -17,6 +17,8 @@ public class PermissionRepository {
     }
 
     public List<Permission> selectAllPermission() {return  mapper.selectAllPermission();}
+    public List<Permission> selectPermissionByRole(String roleId) { return mapper.selectPermissionByRole(roleId);}
+    public Permission selectPermission(String id) { return mapper.selectPermission(id); }
     public int insertPermission(Permission permission) {
         return mapper.insertPermission(permission);
     }

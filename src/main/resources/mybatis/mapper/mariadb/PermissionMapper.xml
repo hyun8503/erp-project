@@ -15,6 +15,24 @@
         FROM erp_permissions
     </select>
 
+    <select id="selectPermission" parameterType="String" resultMap="PermissionResultMap">
+        SELECT permission_id,
+               permission_name,
+               created_date,
+               modified_date
+        FROM erp_permissions
+        WHERE permission_id = #{id}
+    </select>
+
+    <select id="selectPermissionByRole" parameterType="String" resultType="Permission">
+        SELECT erp_permissions.permission_id,
+               erp_permissions.permission_name,
+               erp_permissions.created_date,
+               erp_permissions.modified_date
+        FROM erp_role_permissions JOIN erp_permissions ON erp_role_permissions.permission_id = erp_permissions.permission_id
+        WHERE role_id = #{roleId}
+    </select>
+
     <insert id="insertPermission" parameterType="Permission">
         INSERT INTO erp_permissions
             (

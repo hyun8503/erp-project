@@ -108,6 +108,7 @@ const styles = theme => ({
 class RoleManagement extends React.Component {
 
     componentDidMount() {
+        this.props.roleStore.getRoleList();
     }
      
 
@@ -200,7 +201,6 @@ class RoleManagement extends React.Component {
                                         onClick={() => this.props.roleStore.changeIsAddRoleDialog(true)}>
                                     등록
                                 </Button>
-
                             </Grid>
                         </Grid>
 
@@ -232,32 +232,42 @@ class RoleManagement extends React.Component {
                                     },
                                 }}
                                 columns={[
-                                    {title: '역할 이름', field: 'roleName', cellStyle: {minWidth: '150px'}},
+                                    {
+                                        title: '역할 이름',
+                                        field: 'roleName',
+                                        cellStyle: {minWidth: '150px'}},
                                     {
                                         title: '역할',
-                                        field: 'roleList',
+                                        //field: 'roleList',
                                         cellStyle: {minWidth: '800px'},
                                         render: rowData => {
-                                            return rowData.roleList.map((item) => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} variant="outlined" size="small" color="primary" label={item}/>)
+                                            return rowData.permissionList.map((item) => <Chip key={item.permissionId} style={{marginRight: '4px'}} variant="outlined" size="small" color="primary" label={item.permissionName}/>)
                                         },
                                         editComponent: props => {
-                                            return props.rowData.roleList.map(item => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} clickable variant="outlined" size="small" color="primary" label={item} onDelete={() => {}} />)
+                                            //return props.rowData.roleList.map(item => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} clickable variant="outlined" size="small" color="primary" label={item} onDelete={() => {}} />)
                                         }
                                     }
                                 ]}
-                                data={tableDummyData}
-                                editable={{
-                                    onRowUpdate: (newData, oldData) =>
-                                        new Promise((resolve, reject) => {
-                                                resolve();
-                                        }),
-                                    onRowDelete: oldData =>
-                                        new Promise((resolve, reject) => {
-                                                resolve();
-                                        }),
-                                }}
+                                actions={[
+                                    {
+                                        icon: 'edit',
+                                        tooltip: 'update role',
+                                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                    },
+                                    {
+                                        icon: 'delete',
+                                        tooltip: 'delete role',
+                                        onClick: (event, rowData) => window.confirm("You want to delete " + rowData.name),
+                                    }
+                                ]}
+                                data={this.props.roleStore.roleList.length > 0 ? this.props.roleStore.roleList.map((item) => {
+                                    return {
+                                        roleId: item.role.roleId,
+                                        roleName: item.role.roleName,
+                                        permissionList: item.permissionList,
+                                    }
+                                }) : []}
                             />
-
                         </Grid>
                     </Paper>
                   </Grid>

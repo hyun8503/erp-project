@@ -1,15 +1,16 @@
 package io.sderp.ws.controller;
 
 import io.sderp.ws.controller.param.AddRoleParam;
+import io.sderp.ws.controller.param.RoleListParam;
+import io.sderp.ws.model.RoleWithPermission;
 import io.sderp.ws.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,9 +22,20 @@ public class RoleController {
         this.roleService = roleService;
     }
 
+    @GetMapping("/role-with-permission")
+    public ResponseEntity<List<RoleWithPermission>> selectRoleWithPermission(HttpServletRequest httpRequest) {
+        return new ResponseEntity<>(roleService.selectRoleWithPermission(), HttpStatus.OK);
+        //roleService
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<List<RoleListParam>> selectAllRole(HttpServletRequest httpRequest) {
+        return new ResponseEntity<>(roleService.selectAllRole(), HttpStatus.OK);
+    }
+
     @PostMapping("/role")
     public ResponseEntity<Object> insertRole(HttpServletRequest httpRequest, @RequestBody AddRoleParam param) {
         roleService.insertRole(param);
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

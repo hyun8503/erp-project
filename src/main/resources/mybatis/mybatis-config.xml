@@ -5,6 +5,7 @@
         <setting name="cacheEnabled"     value="true"/>
         <setting name="useGeneratedKeys" value="true"/>
         <setting name="defaultExecutorType" value="REUSE"/>
+        <setting name ="mapUnderscoreToCamelCase" value="true" />
     </settings>
 
     <typeAliases>
@@ -13,6 +14,7 @@
         <typeAlias type="io.sderp.ws.model.Platform" alias="Platform" />
         <typeAlias type="io.sderp.ws.model.Permission" alias="Permission" />
         <typeAlias type="io.sderp.ws.model.Role" alias="Role"/>
+        <typeAlias type="io.sderp.ws.model.RoleWithPermission" alias="RoleWithPermission"/>
     </typeAliases>
 
     <typeHandlers>
@@ -20,8 +22,10 @@
     </typeHandlers>
 
     <mappers>
-<!--        <mapper resource="mybatis/mapper/mariadb" />-->
+<!--        <mapper resource="mybatis/mapper/mariadb/RoleMapper.xml" />-->
 <!--        <mapper resource="mybatis/mapper/mariadb/PlatformMapper.xml" />-->
 <!--        <mapper resource="mybatis/mapper/mariadb/PermissionMapper.xml" />-->
+<!--        <mapper resource="mybatis/mapper/mariadb/RolePermissionMapper.xml" />-->
+<!--        <mapper resource="mybatis/mapper/mariadb/UserMapper.xml" />-->
     </mappers>
 </configuration>

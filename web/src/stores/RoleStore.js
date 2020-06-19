@@ -18,6 +18,7 @@ export default class RoleStore {
     @observable addingRole = false;
     @observable confirmDialogOpen = false;
     @observable confirmDialogMsg = "";
+    @observable roleList = [];
 
     @action initStore = () => {
         this.isAddRoleDialog = false;
@@ -34,6 +35,7 @@ export default class RoleStore {
         this.addingRole = false;
         this.confirmDialogOpen = false;
         this.confirmDialogMsg = "";
+        this.roleList = [];
     }
 
     @action initAddRoleDialog = () => {
@@ -82,6 +84,18 @@ export default class RoleStore {
         this.confirmDialogMsg = "";
     }
 
+    getRoleList = flow(function* () {
+        this.roleList = [];
+        try {
+            const response = yield axios.get(`/api/v1/roles`);
+            this.roleList = response.data;
+        } catch (err) {
+            console.log('getRoleList error');
+            console.log(err);
+            this.roleList = [];
+        }
+    });
+
     addRole = flow(function* () {
         this.addingRole = true;
         try {
@@ -92,6 +106,7 @@ export default class RoleStore {
 
             this.addingRole = false;
             this.initAddRoleDialog();
+            this.getRoleList();
         } catch (err) {
             console.log('add role error');
             console.log(err);

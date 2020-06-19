@@ -29,14 +29,7 @@ public class PermissionService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void insertPermissionList(List<Permission> permissionList) {
-        for (Permission permission : permissionList) {
-            permissionRepository.insertPermission(permission);
-        }
-    }
-
-    public List<Permission> getInitPermissionList() {
+    private List<Permission> getInitPermissionList() {
         List<Permission> permissionList = new ArrayList<Permission>();
         LocalDateTime now = LocalDateTime.now();
         PermissionType[] types = PermissionType.values();
@@ -50,5 +43,16 @@ public class PermissionService {
         }
 
         return permissionList;
+    }
+
+    public Permission selectPermission(String id) {
+        return permissionRepository.selectPermission(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void insertPermissionList(List<Permission> permissionList) {
+        for (Permission permission : permissionList) {
+            permissionRepository.insertPermission(permission);
+        }
     }
 }

@@ -1,14 +1,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.sderp.ws.repository.mapper.RoleMapper">
-<!--    <resultMap id="PermissionResultMap" type="Permission">-->
-<!--        <id property="permissionId"                           column="permission_id" />-->
-<!--        <result property="permissionName"                     column="permission_name" />-->
-<!--        <result property="createdDate"                        column="created_date" />-->
-<!--        <result property="modifiedDate"                       column="modified_date" />-->
-<!--    </resultMap>-->
+    <resultMap id="RoleWithPermissionResultMap" type="RoleWithPermission">
+        <association property="role" column="role_id" javaType="Role" select="io.sderp.ws.repository.mapper.RoleMapper.selectRole"/>
+        <association property="permission" column="permission_id" javaType="Permission" select="io.sderp.ws.repository.mapper.PermissionMapper.selectPermission"/>
+    </resultMap>
+
+    <resultMap id="RoleResultMap" type="Role">
+        <id property="roleId"               column="role_id"/>
+        <result property="roleName"         column="role_name"/>
+        <result property="createdDate"      column="created_date"/>
+        <result property="modifiedDate"     column="modified_date"/>
+    </resultMap>
+
+    <select id="selectRoleWithPermission" resultMap="RoleWithPermissionResultMap">
+        SELECT role_id, permission_id, created_date
+        FROM erp_role_permissions;
+    </select>
 
     <select id="selectRoleNameCount" parameterType="String" resultType="long">
         SELECT COUNT(1) FROM erp_roles WHERE role_name = #{roleName}
+    </select>
+
+    <select id="selectAllRole" resultType="Role">
+        SELECT role_id,
+               role_name,
+               created_date,
+               modified_date
+        FROM erp_roles
+    </select>
+
+    <select id="selectRole" parameterType="String" resultType="Role">
+        SELECT role_id,
+               role_name,
+               created_date,
+               modified_date
+        FROM erp_roles
+        WHERE role_id = #{roleId}
     </select>
 
     <insert id="insertRole" parameterType="Role">

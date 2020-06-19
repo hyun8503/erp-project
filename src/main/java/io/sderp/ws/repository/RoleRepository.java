@@ -1,9 +1,12 @@
 package io.sderp.ws.repository;
 
 import io.sderp.ws.model.Role;
+import io.sderp.ws.model.RoleWithPermission;
 import io.sderp.ws.repository.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class RoleRepository {
@@ -18,7 +21,11 @@ public class RoleRepository {
         return mapper.insertRole(role);
     }
 
+    public List<Role> selectAllRole() { return mapper.selectAllRole(); }
     public long selectRoleNameCount(String roleName) {
         return mapper.selectRoleNameCount(roleName);
+    }
+    public List<RoleWithPermission> selectRoleWithPermission() {
+        return mapper.selectRoleWithPermission();
     }
 }
