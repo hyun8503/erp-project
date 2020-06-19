@@ -151,6 +151,7 @@ export default class RoleStore {
 
     searchRoleList = flow(function* () {
         if(!this.searchRoleName) {
+            this.getRoleList();
             return null;
         }
 
