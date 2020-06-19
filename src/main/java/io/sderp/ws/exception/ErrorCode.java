@@ -1,5 +1,5 @@
 package io.sderp.ws.exception;
 
 public enum ErrorCode {
-    Unknown, NotAcceptableId, CanNotFoundUser, RoleNameDuplicate
+    Unknown, NotAcceptableId, CanNotFoundUser, RoleNameDuplicate, PlatformNameDuplicate
 }

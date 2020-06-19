@@ -1,5 +1,6 @@
 export const code = {
     NotAcceptableId: "NotAcceptableId",
     CanNotFoundUser: "CanNotFoundUser",
-    RoleNameDuplicate: "RoleNameDuplicate"
+    RoleNameDuplicate: "RoleNameDuplicate",
+    PlatformNameDuplicate: "PlatformNameDuplicate"
 }
