@@ -179,39 +179,39 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.6</version>
-                <configuration>
-                    <workingDirectory>./web</workingDirectory>
-                    <installDirectory>./web</installDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install-node-and-yarn</id>
-                        <goals>
-                            <goal>install-node-and-yarn</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <nodeVersion>v10.15.0</nodeVersion>
-                            <yarnVersion>v1.13.0</yarnVersion>
-                        </configuration>
-                    </execution>
+<!--            <plugin>-->
+<!--                <groupId>com.github.eirslett</groupId>-->
+<!--                <artifactId>frontend-maven-plugin</artifactId>-->
+<!--                <version>1.6</version>-->
+<!--                <configuration>-->
+<!--                    <workingDirectory>./web</workingDirectory>-->
+<!--                    <installDirectory>./web</installDirectory>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>install-node-and-yarn</id>-->
+<!--                        <goals>-->
+<!--                            <goal>install-node-and-yarn</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <configuration>-->
+<!--                            <nodeVersion>v10.15.0</nodeVersion>-->
+<!--                            <yarnVersion>v1.13.0</yarnVersion>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
 
-                    <execution>
-                        <id>yarn-build</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>build</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--                    <execution>-->
+<!--                        <id>yarn-build</id>-->
+<!--                        <goals>-->
+<!--                            <goal>yarn</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <configuration>-->
+<!--                            <arguments>build</arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -268,20 +268,20 @@
                         </configuration>
                     </execution>
 
-                    <execution>
-                        <id>copy-web-resources</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <phase>prepare-package</phase>
-                        <configuration>
-                            <target>
-                                <copy todir="${project.build.directory}/classes/static">
-                                    <fileset dir="${project.basedir}/web/build"/>
-                                </copy>
-                            </target>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>copy-web-resources</id>-->
+<!--                        <goals>-->
+<!--                            <goal>run</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>prepare-package</phase>-->
+<!--                        <configuration>-->
+<!--                            <target>-->
+<!--                                <copy todir="${project.build.directory}/classes/static">-->
+<!--                                    <fileset dir="${project.basedir}/web/build"/>-->
+<!--                                </copy>-->
+<!--                            </target>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                 </executions>
             </plugin>
 

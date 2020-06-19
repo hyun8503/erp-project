@@ -14,6 +14,7 @@ import {inject, observer} from "mobx-react";
 
 import AddPlatformDialog from "./dialog/AddPlatformDialog";
 import * as PlatformType from "../../../type/PlatformType";
+import ConfirmDialog from "../../../components/ConfirmDialog";
 
 const styles = theme => ({
     wrap: {
@@ -101,23 +102,34 @@ class PlatformManagement extends React.Component {
                                     variant="outlined" className={classes.formControl}>
                                     <Select
                                         defaultValue={"none"}
-                                        onChange={()=>{}}>
-                                        <MenuItem value="none" disabled><em>플랫폼 유형</em></MenuItem>
-                                        <MenuItem value={"직영"}>직영</MenuItem>
-                                        <MenuItem value={"비직영"}>비직영</MenuItem>
+                                        value={this.props.platformStore.searchPlatformType}
+                                        onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
+                                        <MenuItem value={PlatformType.type.None} disabled><em>플랫폼 유형</em></MenuItem>
+                                        <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>
+                                        <MenuItem value={PlatformType.type.NonDirect}>비직영</MenuItem>
                                     </Select>
                                 </FormControl>
 
 
-                                <FormControl className={classes.formControl} noValidate autoComplete="off">
+                                <FormControl className={classes.formControl}
+                                             noValidate
+                                             autoComplete="off"
+                                >
                                     <TextField
                                         style={{width: 400}}
-                                        id="outlined-basic" label="플랫폼 이름" variant="outlined"/>
+                                        id="outlined-basic"
+                                        label="플랫폼 이름"
+                                        variant="outlined"
+                                        value={this.props.platformStore.searchName}
+                                        onChange={(event) => this.props.platformStore.changeSearchName(event.target.value)}
+                                    />
                                 </FormControl>
 
                                 <Button className={classes.button}
                                         variant="contained"
-                                        color="primary">
+                                        color="primary"
+                                        onClick={() => this.props.platformStore.searchPlatform()}
+                                >
                                     검색
                                 </Button>
                                 <Button className={classes.button}
@@ -164,30 +176,30 @@ class PlatformManagement extends React.Component {
                                         title: '플랫폼 유형', field: 'typeCode',
                                         lookup: {[PlatformType.type.Direct]: '직영', [PlatformType.type.NonDirect]: '비직영'},
                                     },
-                                    {
-                                        title: '운영 중',
-                                        field: 'status',
-                                        lookup: {'1': '운영 중', '2': '비 운영 중'},
-                                    },
                                 ]}
                                 data={
                                     !!this.props.platformStore.platformList ?
                                         this.props.platformStore.platformList.map((item) => {
                                             return {
+                                                platformId: item.platformId,
                                                 platformName: item.platformName,
                                                 typeCode: item.typeCode,
-                                                status: 1,
                                             }
                                         }) : []
                                 }
                                 editable={{
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {
+                                                console.log(newData);
+                                                console.log(oldData);
+                                                this.props.platformStore.updatePlatform(newData);
                                                 resolve();
                                         }),
                                     onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
-                                                resolve();
+                                            console.log(oldData);
+                                            this.props.platformStore.deletePlatform(oldData.platformId);
+                                            resolve();
                                         }),
                                 }}
                             />
@@ -195,6 +207,13 @@ class PlatformManagement extends React.Component {
                         </Grid>
                     </Paper>
                 </Grid>
+
+                <ConfirmDialog
+                    open={this.props.platformStore.confirmDialogOpen}
+                    handleClose={this.props.platformStore.confirmDialogClose}
+                    handleConfirm={this.props.platformStore.confirmDialogHandle}
+                    message={this.props.platformStore.confirmDialogMsg}
+                />
                 <AddPlatformDialog/>
             </div>
         );

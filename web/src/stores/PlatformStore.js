@@ -1,6 +1,8 @@
 import {action, flow, observable} from "mobx";
 import axios from "axios";
 import * as PlatformType from "../type/PlatformType";
+import * as ErrorType from "../type/ErrorType";
+import * as PermissionType from "../type/PermissionType";
 
 export default class PlatformStore {
     @observable isAddPlatformDialog = false;
@@ -10,6 +12,11 @@ export default class PlatformStore {
     @observable addPlatformName = "";
     @observable addPlatformError = false;
     @observable addingPlatform = false;
+    @observable searchName = "";
+    @observable searchPlatformType = PlatformType.type.None;
+    @observable confirmDialogOpen = false;
+    @observable confirmDialogMsg = "";
+    @observable deletePlatformError= false;
 
     @action initStore = () => {
         this.isAddPlatformDialog = false;
@@ -19,13 +26,63 @@ export default class PlatformStore {
         this.addPlatformName = "";
         this.addPlatformError = false;
         this.addingPlatform = false;
+        this.searchName = "";
+        this.searchPlatformType = PlatformType.type.None;
+        this.confirmDialogOpen = false;
+        this.confirmDialogMsg = "";
+        this.deletePlatformError= false;
+    }
+
+
+    @action initAddPlatformDialog = () => {
+        this.isAddRoleDialog = false;
+        this.platformName = '';
+        this.searchPlatformType = PlatformType.type.None;
+
+    }
+
+    @action changeSearchName = (value) => {
+        value = value ? value.trim() : value;
+        this.searchName = value;
+        console.log(value);
+    }
+    @action changeSearchPlatformType = (value) => {
+        this.searchPlatformType = value;
+        console.log(value);
     }
     @action changeIsAddPlatformDialog = (value) => this.isAddPlatformDialog = value;
     @action changeSelectedPlatformType = (value) => this.addSelectedPlatformType = value;
     @action changeAddPlatformName = (value) => {
         value = value ? value.trim() : value;
         this.addPlatformName = value
+        console.log(value);
     };
+
+    @action confirmDialogClose = () => {
+        this.confirmDialogOpen = false;
+    }
+
+    @action confirmDialogHandle = () => {
+        this.confirmDialogOpen = false;
+        this.confirmDialogMsg = "";
+    }
+
+    updatePlatform = flow(function* () {
+
+    })
+
+    deletePlatform = flow(function* (platformId) {
+        try {
+            const response = yield axios.delete(`/api/v1/platform/${platformId}`);
+            this.getPlatformList();
+            this.platformList = response.data;
+        } catch (err) {
+            console.log('deletePlatform');
+            console.log(err);
+            this.deletePlatformError = true;
+        }
+    })
+
 
     getPlatformList = flow(function* () {
         this.platformList = null;
@@ -36,6 +93,20 @@ export default class PlatformStore {
             console.log('getPlatformList');
             console.log(err);
             this.platformListError = true;
+        }
+    });
+
+    searchPlatform = flow(function* () {
+        if (!this.searchName && !this.searchPlatformType) {
+            return null;
+        }
+        this.platformList = [];
+        try {
+            const response = yield axios.get(`/api/v1/platform/${this.searchName}/type/${this.searchPlatformType}`);
+            this.platformList = response.data;
+        } catch (err) {
+            console.log('search platform error');
+            console.log(err);
         }
     });
 
@@ -56,10 +127,14 @@ export default class PlatformStore {
         } catch (err) {
             console.log('addPlatform error');
             console.log(err);
-            this.addPlatformError = true;
-            this.isAddPlatformDialog = false;
-            this.addPlatformName = "";
             this.addingPlatform = false;
+            if (err.response.data.code === ErrorType.code.PlatformNameDuplicate) {
+                this.confirmDialogMsg = "플랫폼 이름이 이미 존재합니다";
+                this.confirmDialogOpen = true;
+                console.log(err.response.data.code);
+            } else {
+                this.initAddPlatformDialog();
+            }
         }
     });
 }

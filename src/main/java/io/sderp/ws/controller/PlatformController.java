@@ -1,6 +1,7 @@
 package io.sderp.ws.controller;
 
 import io.sderp.ws.model.Platform;
+import io.sderp.ws.model.support.PlatformType;
 import io.sderp.ws.service.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +22,39 @@ public class PlatformController {
     }
 
     @GetMapping("/platforms")
-    public ResponseEntity<List<Platform>> getPlatformList(HttpServletRequest httpRequest) {
+    public ResponseEntity<List<Platform>> getPlatformList(HttpServletRequest request) {
         return new ResponseEntity<>(platformService.selectPlatformList(), HttpStatus.OK);
     }
 
+    @GetMapping("/platform/{name}/type/{type}")
+    public ResponseEntity<List<Platform>> getPlatform(HttpServletRequest request, @PathVariable String name, @PathVariable String type) {
+        PlatformType platformType = PlatformType.getInstance(type);
+        if(platformType == PlatformType.UnKnown) {
+            throw new RuntimeException("unknown platform type");
+        }
+
+        return new ResponseEntity<>(platformService.selectPlatformListByName(name, type), HttpStatus.OK);
+    }
+
     @PostMapping("/platform")
-    public ResponseEntity<Object> insertPlatform(HttpServletRequest httpRequest, @RequestBody Platform param) {
+    public ResponseEntity<Object> insertPlatform(HttpServletRequest request, @RequestBody Platform param) {
         platformService.insertPlatform(param);
         return new ResponseEntity<>(param, HttpStatus.OK);
     }
+
+
+    //플랫폼 수정 : 플랫폼아이디 , 이름 가져와서 변
+    @PutMapping(value = "/update")
+    public ResponseEntity<Object> updatePlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws Exception {
+        platformService.updatePalrform(param);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    //플랫폼 삭제
+    @DeleteMapping(value = "/platform/{platformId}")
+    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @PathVariable String platformId) throws Exception {
+        platformService.deletePlatform(platformId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
