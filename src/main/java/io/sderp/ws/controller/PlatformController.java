@@ -43,15 +43,15 @@ public class PlatformController {
     }
 
 
-    //플랫폼 수정 : 플랫폼아이디 , 이름 가져와서 변
-    @PutMapping(value = "/update")
+    //플랫폼 수정
+    @PutMapping("/platform")
     public ResponseEntity<Object> updatePlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws Exception {
-        platformService.updatePalrform(param);
-        return new ResponseEntity<>( HttpStatus.OK);
+        platformService.updatePlatform(param);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //플랫폼 삭제
-    @DeleteMapping(value = "/platform/{platformId}")
+    @DeleteMapping("/platform/{platformId}")
     public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @PathVariable String platformId) throws Exception {
         platformService.deletePlatform(platformId);
         return new ResponseEntity<>(HttpStatus.OK);

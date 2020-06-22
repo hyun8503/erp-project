@@ -15,6 +15,7 @@ import {inject, observer} from "mobx-react";
 import AddPlatformDialog from "./dialog/AddPlatformDialog";
 import * as PlatformType from "../../../type/PlatformType";
 import ConfirmDialog from "../../../components/ConfirmDialog";
+import DeleteDialog from "../role/dialog/DeleteDialog";
 
 const styles = theme => ({
     wrap: {
@@ -164,6 +165,7 @@ class PlatformManagement extends React.Component {
                                     },
                                     body: {
                                         emptyDataSourceMessage: '데이터가 없습니다',
+                                        editRow: { deleteText: '삭제하시겠습니까?'}
                                     },
                                     pagination: {
                                         labelRowsSelect: ' 개씩 보기',
@@ -187,21 +189,22 @@ class PlatformManagement extends React.Component {
                                             }
                                         }) : []
                                 }
+
+
                                 editable={{
                                     onRowUpdate: (newData, oldData) =>
                                         new Promise((resolve, reject) => {
-                                                console.log(newData);
-                                                console.log(oldData);
                                                 this.props.platformStore.updatePlatform(newData);
                                                 resolve();
                                         }),
-                                    onRowDelete: oldData =>
+                                     onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
-                                            console.log(oldData);
-                                            this.props.platformStore.deletePlatform(oldData.platformId);
+                                             this.props.platformStore.deletePlatform(oldData.platformId);
                                             resolve();
                                         }),
                                 }}
+
+
                             />
 
                         </Grid>
@@ -215,6 +218,7 @@ class PlatformManagement extends React.Component {
                     message={this.props.platformStore.confirmDialogMsg}
                 />
                 <AddPlatformDialog/>
+
             </div>
         );
     }

@@ -18,6 +18,11 @@ export default class PlatformStore {
     @observable confirmDialogMsg = "";
     @observable deletePlatformError= false;
 
+    @observable isDeleteDialog = false;
+    @observable deletePlatformId = "";
+    @observable deleting = false;
+
+
     @action initStore = () => {
         this.isAddPlatformDialog = false;
         this.platformList = null;
@@ -67,19 +72,49 @@ export default class PlatformStore {
         this.confirmDialogMsg = "";
     }
 
-    updatePlatform = flow(function* () {
 
-    })
 
-    deletePlatform = flow(function* (platformId) {
+
+
+
+
+    updatePlatform = flow(function* (newData) {
         try {
-            const response = yield axios.delete(`/api/v1/platform/${platformId}`);
+            const response = yield axios.put(`/api/v1/platform`,  {
+                platformId: newData.platformId,
+                platformName: newData.platformName,
+                typeCode: newData.typeCode,
+            });
+
             this.getPlatformList();
             this.platformList = response.data;
         } catch (err) {
+            console.log('updatePlatform');
+            console.log(err);
+           // this.updatePlatformError = true;
+        }
+
+    })
+
+
+
+
+    deletePlatform = flow(function* (platformId) {
+        this.deleting = true;
+        console.log(this.deleting);
+        try {
+             const response = yield axios.delete(`/api/v1/platform/${platformId}`);
+             this.getPlatformList();
+        } catch (err) {
             console.log('deletePlatform');
             console.log(err);
-            this.deletePlatformError = true;
+            if(err.response.data.code === ErrorType.code.PlatformInUse) {
+                this.confirmDialogMsg = "플랫이 이미 사용중입니다";
+                this.confirmDialogOpen = true;
+            } else {
+                this.deletePlatformId = "";
+                this.deleting = false;
+            }
         }
     })
 

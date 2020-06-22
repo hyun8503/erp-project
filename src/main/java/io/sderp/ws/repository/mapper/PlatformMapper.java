@@ -12,6 +12,7 @@ public interface PlatformMapper {
     List<Platform> selectPlatformList();
     void insertPlatform(Platform platform);
     long selectPlatformNameCount(String platformName);
-    Platform updatePlatform(Platform platform);
+    void updatePlatform(Platform platform);
     int deletePlatform(String platformId);
-    }
+    long platformInUse(String platformId);
+}

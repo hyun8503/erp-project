@@ -28,13 +28,12 @@ public class PlatformRepository {
     public long selectPlatformNameCount(String platformName) {
         return mapper.selectPlatformNameCount(platformName);
     }
-
-    public Platform updatePaltform(Platform platform) {
-        return mapper.updatePlatform(platform);
-    }
-
-
+    public void updatePlatform(Platform platform) { mapper.updatePlatform(platform); }
     public int deletePlatform(String platformId) {
         return mapper.deletePlatform(platformId);
+    }
+
+    public long platformInUse(String platformId) {
+        return mapper.platformInUse(platformId);
     }
 }

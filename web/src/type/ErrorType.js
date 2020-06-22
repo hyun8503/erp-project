@@ -3,5 +3,6 @@ export const code = {
     CanNotFoundUser: "CanNotFoundUser",
     RoleNameDuplicate: "RoleNameDuplicate",
     RoleInUse: "RoleInUse",
+    PlatformInUse: "PlatformInUse",
     PlatformNameDuplicate: "PlatformNameDuplicate"
 }

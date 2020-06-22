@@ -7,5 +7,6 @@ public enum ErrorCode {
 
     RoleNameDuplicate,
     RoleInUse,
+    PlatformInUse,
     PlatformNameDuplicate
 }

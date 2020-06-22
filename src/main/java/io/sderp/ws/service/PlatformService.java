@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +32,7 @@ public class PlatformService {
         return platformRepository.selectPlatformList();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void insertPlatform(Platform platform) {
         platformNameDuplicateCheck(platform.getPlatformName());
 
@@ -48,14 +50,20 @@ public class PlatformService {
         }
     }
 
-    public void updatePalrform(Platform platform) {
+    public void updatePlatform(Platform platform) {
         platform.setModifiedDate(LocalDateTime.now());
-        platformRepository.updatePaltform(platform);
-
+        platformRepository.updatePlatform(platform);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void deletePlatform(String platformId) {
-        platformRepository.deletePlatform(platformId);
+        long count = platformRepository.platformInUse(platformId);
+        if(count != 0){
+            throw new BaseException(ErrorCode.PlatformInUse, HttpStatus.BAD_REQUEST, "platform is in use");
+        }else{
+            platformRepository.deletePlatform(platformId);
+        }
+
     }
 
 }

@@ -53,8 +53,9 @@
 
     <update id="updatePlatform" parameterType="Platform">
 		UPDATE erp_platforms
-		SET    platform_name = #{paltform_name},
-               type_code = #{type_code},
+		SET    modified_date = #{modifiedDate},
+		       platform_name = #{platformName},
+               type_code = #{typeCode}
 		WHERE  platform_id = #{platformId}
 	</update>
 
@@ -63,6 +64,10 @@
 		FROM erp_platforms
 		WHERE  platform_id = #{platformId}
 	</delete>
+
+    <select id="platformInUse" parameterType="String" resultType="long">
+        SELECT COUNT(1) FROM erp_user_platforms WHERE platform_id = #{platformId}
+    </select>
 
 
 </mapper>
