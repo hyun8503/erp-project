@@ -1,0 +1,61 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.sderp.ws.repository.mapper.UserActionHistoryMapper">
+    <resultMap id="ActionHistoryResultMap" type="UserActionHistories">
+        <id property="actionHistId"                     column="action_hist_id" />
+        <result property="userId"                       column="user_id" />
+        <result property="typeCode"                     column="type_code" />
+        <result property="statusCode"                   column="status_code" />
+        <result property="ipAddress"                    column="ip_address" />
+        <result property="createdDate"                  column="created_date" />
+        <result property="description"                  column="description" />
+    </resultMap>
+
+    userId(userId)
+    .typeCode(UserActionHistoryType.Platform)
+    .statusCode(UserActionHistoryStatus.Create)
+    .description(paramJson)
+    .ipAddress(remoteAddr)
+    <insert id="insertActionHistory" parameterType="UserActionHistories" useGeneratedKeys="true">
+        INSERT INTO erp_user_action_histories
+            ( user_id,
+              type_code,
+              status_code,
+              description,
+              ip_address,
+              created_date
+
+            )
+        VALUES
+            (
+             #{userId},
+             #{typeCode},
+             #{statusCode},
+             #{description},
+             #{ipAddress},
+             #{createdDate}
+
+            )
+    </insert>
+
+    <insert id="updateActionHistory" parameterType="UserActionHistories" useGeneratedKeys="true">
+        INSERT INTO erp_user_action_histories
+            ( user_id,
+              type_code,
+              status_code,
+              ip_address,
+              created_date,
+              description
+            )
+        VALUES
+            (
+             #{userId},
+             #{typeCode},
+             #{statusCode},
+             #{ipAddress},
+             #{createdDate},
+             #{description}
+            )
+    </insert>
+</mapper>
+
+

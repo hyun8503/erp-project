@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.model.Platform;
 import io.sderp.ws.model.support.PlatformType;
+import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.PlatformService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +18,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/api/v1")
 public class PlatformController {
+    private static final Logger logger = LoggerFactory.getLogger(PlatformService.class);
     private PlatformService platformService;
+    private AuthenticationService authenticationService;
 
     @Autowired
-    public PlatformController(PlatformService platformService) {
+    public PlatformController(PlatformService platformService, AuthenticationService authenticationService) {
         this.platformService = platformService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("/platforms")
@@ -44,10 +51,11 @@ public class PlatformController {
     public ResponseEntity<Object> insertPlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String remoteAddr = httpRequest.getRemoteAddr();
-        String paramJsonStr = objectMapper.writeValueAsString(param);
+        String paramJson = objectMapper.writeValueAsString(param);
+        String userId = authenticationService.getUser().getLoginId();
 
-
-        platformService.insertPlatform(param);
+        logger.info("remoteAddr = {}, paramJson = {}, userId = {}", remoteAddr, paramJson, userId);
+        platformService.insertPlatform(param, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(param, HttpStatus.OK);
     }
 
@@ -57,9 +65,10 @@ public class PlatformController {
     public ResponseEntity<Object> updatePlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String remoteAddr = httpRequest.getRemoteAddr();
-        String paramJsonStr = objectMapper.writeValueAsString(param);
+        String paramJson = objectMapper.writeValueAsString(param);
+        String userId = authenticationService.getUser().getLoginId();
 
-        platformService.updatePlatform(param);
+        platformService.updatePlatform(param, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
