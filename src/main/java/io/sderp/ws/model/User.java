@@ -19,6 +19,7 @@ public class User {
     private String loginPassword;
     private UserType typeCode;
     private UserStatusType statusCode;
+    private String roleName;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 }

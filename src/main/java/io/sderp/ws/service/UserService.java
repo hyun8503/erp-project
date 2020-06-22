@@ -1,6 +1,8 @@
 package io.sderp.ws.service;
 
 import io.sderp.ws.controller.param.SignUpParam;
+import io.sderp.ws.exception.BaseException;
+import io.sderp.ws.exception.ErrorCode;
 import io.sderp.ws.exception.NotAcceptableIdException;
 import io.sderp.ws.model.User;
 import io.sderp.ws.model.UserPlatform;
@@ -13,6 +15,7 @@ import io.sderp.ws.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,12 +81,14 @@ public class UserService {
         return repository.selectUser(id);
     }
 
+    public List<User> selectAllUser() { return repository.selectAllUser(); }
     public List<User> getUsers(UserType type) {
         return repository.selectUsers(type);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public User signUp(SignUpParam signUpParam) {
+        loginIdDuplicateCheck(signUpParam.getUserId());
         List<String> platformIdList = signUpParam.getUserPlatformIdList();
         final String userId = UUID.randomUUID().toString();
         final User newUser = User.builder()
@@ -127,6 +132,13 @@ public class UserService {
         repository.insertUser(user);
 
         return user;
+    }
+
+    private void loginIdDuplicateCheck(String loginId) {
+        long count = repository.selectUserCount(loginId);
+        if(count != 0) {
+            throw new BaseException(ErrorCode.LOGIN_ID_IN_USE, HttpStatus.BAD_REQUEST, "login id in use");
+        }
     }
 
     private boolean isNotAcceptableId(String id) {

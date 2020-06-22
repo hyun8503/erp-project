@@ -4,5 +4,6 @@ export const code = {
     RoleNameDuplicate: "RoleNameDuplicate",
     RoleInUse: "RoleInUse",
     PlatformInUse: "PlatformInUse",
-    PlatformNameDuplicate: "PlatformNameDuplicate"
+    PlatformNameDuplicate: "PlatformNameDuplicate",
+    LoginIdInUse: "LOGIN_ID_IN_USE",
 }

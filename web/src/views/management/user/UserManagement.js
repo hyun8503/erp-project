@@ -51,24 +51,11 @@ const styles = theme => ({
 class UserManagement extends React.Component {
   
     componentDidMount() {
+        this.props.userStore.getUsers();
     }
-     
 
     render() {
         const { classes } = this.props;
-
-        const tableDummyData = [
-            {platformName: '사용자1', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자2', platformType: '플랫폼1', status: '2'},
-            {platformName: '사용자3', platformType: '플랫폼1', status: '3'},
-            {platformName: '사용자4', platformType: '플랫폼1', status: '4'},
-            {platformName: '사용자5', platformType: '플랫폼1', status: '5'},
-            {platformName: '사용자6', platformType: '플랫폼2', status: '6'},
-            {platformName: '사용자7', platformType: '플랫폼2', status: '2'},
-            {platformName: '사용자8', platformType: '플랫폼2', status: '2'},
-            {platformName: '사용자9', platformType: '플랫폼2', status: '2'},
-            {platformName: '사용자10', platformType: '플랫폼2', status: '2'}
-        ]
 
         return (
             <div className={classes.wrap}>
@@ -168,36 +155,33 @@ class UserManagement extends React.Component {
                                     },
                                 }}
                                 columns={[
-                                    {title: '사용자 ID', field: 'platformName'},
-                                    {
-                                        title: '소속 플랫폼', field: 'platformType',
-                                        lookup: {'플랫폼1': '플랫폼1', '플랫폼2': '플랫폼2'},
-                                    },
+                                    {title: '사용자 ID', field: 'loginId'},
                                     {
                                         title: '역할',
-                                        field: 'status',
-                                        lookup: {
-                                            '1': '역할1',
-                                            '2': '역할2',
-                                            '3': '역할3',
-                                            '4': '역할4',
-                                            '5': '역할5',
-                                            '6': '역할6'
-                                        },
+                                        field: 'roleName',
                                     },
 
                                 ]}
-                                data={tableDummyData}
-                                editable={{
-                                    onRowUpdate: (newData, oldData) =>
-                                        new Promise((resolve, reject) => {
-                                            resolve();
-                                        }),
-                                    onRowDelete: oldData =>
-                                        new Promise((resolve, reject) => {
-                                            resolve()
-                                        }),
-                                }}
+                                data={this.props.userStore.userList.length > 0 ?
+                                    this.props.userStore.userList.map((item) => {
+                                        return {
+                                            loginId: item.loginId,
+                                            roleName: item.roleName,
+                                        }
+                                    })
+                                    : []}
+                                actions={[
+                                    {
+                                        icon: 'edit',
+                                        tooltip: 'update user',
+                                        onClick: (event, rowData) => {}
+                                    },
+                                    {
+                                        icon: 'delete',
+                                        tooltip: 'delete user',
+                                        onClick: (event, rowData) => {}
+                                    }
+                                ]}
                             />
 
                         </Grid>

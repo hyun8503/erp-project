@@ -8,5 +8,6 @@ public enum ErrorCode {
     RoleNameDuplicate,
     RoleInUse,
     PlatformInUse,
-    PlatformNameDuplicate
+    PlatformNameDuplicate,
+    LOGIN_ID_IN_USE,
 }

@@ -14,6 +14,16 @@ export default class UserStore {
     @observable addUserSearchPlatformName = "";
     @observable addingUser = false;
 
+    @observable isModifyUserDialog = false;
+    @observable modifyUserRoleId = "none";
+    @observable modifyUserPlatformIdList = [];
+    @observable modifyUserSelectRoleList = [];
+    @observable modifyUserPlatformList = [];
+    @observable modifyUserSearchPlatformName = "";
+    @observable modifyingUser = false;
+
+    @observable userList = [];
+
 
     @action initStore = () => {
         this.isAddUserDialog = false;
@@ -29,6 +39,26 @@ export default class UserStore {
         this.addUserPlatformList = [];
         this.addUserSearchPlatformName = "";
         this.addingUser = false;
+    }
+
+    @action initModifyDialog = () => {
+        this.isModifyUserDialog = false;
+        this.modifyUserRoleId = "none";
+        this.modifyUserPlatformIdList = [];
+        this.modifyUserSelectRoleList = [];
+        this.modifyUserPlatformList = [];
+        this.modifyUserSearchPlatformName = "";
+        this.modifyingUser = false;
+    }
+
+    @action changeIsModifyUserDialog = (value) => {
+        this.isModifyUserDialog = value;
+        if(value) {
+            this.getRoleList();
+            this.getPlatformList();
+        } else {
+            this.initModifyDialog();
+        }
     }
 
     @action filterPlatformList = () => {
@@ -106,6 +136,18 @@ export default class UserStore {
         this.addUserPlatformList = yield platformAdapter.getPlatformList();
     });
 
+    getUsers = flow(function* () {
+        this.userList = [];
+        try {
+            const response = yield axios.get(`/api/v1/users`);
+            this.userList = response.data;
+            console.log(this.userList);
+        } catch (err) {
+            console.log('get Users error');
+            console.log(err);
+        }
+    })
+
     addUser = flow(function* () {
         this.addingUser = true;
         try {
@@ -113,7 +155,7 @@ export default class UserStore {
                 userId: this.addUserId,
                 userPwd: this.addUserPwd,
                 userRoleId: this.addUserRoleId,
-                userPlatformIdList: this.addUserPlatformIdList
+                userPlatformIdList: this.addUserPlatformIdList.filter((item) => item !== "all")
             }
 
             yield axios.post(`/api/v1/authentications/signUp`, data);

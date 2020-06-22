@@ -1,5 +1,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.sderp.ws.repository.mapper.UserMapper">
+    <resultMap id="UserWithRoleResultMap" type="RoleWithPermission">
+        <association property="role" column="role_id" javaType="Role" select="io.sderp.ws.repository.mapper.RoleMapper.selectRole"/>
+        <association property="permission" column="permission_id" javaType="Permission" select="io.sderp.ws.repository.mapper.PermissionMapper.selectPermission"/>
+    </resultMap>
+
     <resultMap id="UserResultMap" type="User">
         <id property="userId"                       column="user_id" />
         <result property="loginId"                  column="login_id" />
@@ -10,6 +15,20 @@
         <result property="modifiedDate"             column="modified_date" />
     </resultMap>
 
+    <select id="selectAllUser" resultType="User">
+        SELECT erp_users.user_id,
+               erp_users.login_id,
+               erp_users.type_code,
+               erp_users.status_code,
+               erp_users.created_date,
+               erp_users.modified_date,
+               erp_roles.role_name
+        FROM erp_users
+            JOIN erp_user_roles ON erp_users.user_id = erp_user_roles.user_id
+            JOIN erp_roles ON erp_user_roles.role_id = erp_roles.role_id
+        WHERE login_id != 'admin'
+    </select>
+
     <select id="selectUser" parameterType="String" resultMap="UserResultMap">
         SELECT user_id,
                login_id,
@@ -18,6 +37,12 @@
                status_code,
                created_date,
                modified_date
+        FROM erp_users
+        WHERE login_id = #{value}
+    </select>
+
+    <select id="selectUserCount" parameterType="String" resultType="long">
+        SELECT COUNT(1)
         FROM erp_users
         WHERE login_id = #{value}
     </select>
