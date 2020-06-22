@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.sderp.ws.repository.mapper.UserPlatformMapper">
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete
+		from erp_user_platforms
+		where user_id = #{userId}
+		  and platform_id = #{platformId}
+	</delete>
+	<insert id="insertUserPlatform" parameterType="UserPlatform">
+		insert into erp_user_platforms
+		    (
+                user_id,
+		        platform_id,
+		        created_date,
+                modified_date
+            )
+		values
+            (
+                #{userId},
+                #{platformId},
+                #{createdDate},
+		        #{modifiedDate}
+            )
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="UserPlatform">
+		update erp_user_platforms
+		set created_date  = #{createdDate},
+		    modified_date = #{modifiedDate}
+		where user_id = #{userId}
+		  and platform_id = #{platformId}
+	</update>
+	<select id="selectAll" resultType="UserPlatform">
+		select user_id, platform_id, created_date, modified_date
+		from erp_user_platforms
+	</select>
+</mapper>

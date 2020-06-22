@@ -1,15 +1,21 @@
 package io.sderp.ws.service;
 
+import io.sderp.ws.controller.param.SignUpParam;
 import io.sderp.ws.exception.NotAcceptableIdException;
 import io.sderp.ws.model.User;
+import io.sderp.ws.model.UserPlatform;
+import io.sderp.ws.model.UserRole;
 import io.sderp.ws.model.support.UserStatusType;
 import io.sderp.ws.model.support.UserType;
+import io.sderp.ws.repository.UserPlatformRepository;
 import io.sderp.ws.repository.UserRepository;
+import io.sderp.ws.repository.UserRoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -36,13 +42,17 @@ public class UserService {
         notAcceptableIdMap.put("logincheck", false);
     }
 
-    private UserRepository repository;
     private PasswordEncoder passwordEncoder;
+    private UserRepository repository;
+    private UserRoleRepository userRoleRepository;
+    private UserPlatformRepository userPlatformRepository;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserPlatformRepository userPlatformRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
+        this.userPlatformRepository = userPlatformRepository;
     }
 
     @PostConstruct
@@ -70,6 +80,38 @@ public class UserService {
 
     public List<User> getUsers(UserType type) {
         return repository.selectUsers(type);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public User signUp(SignUpParam signUpParam) {
+        List<String> platformIdList = signUpParam.getUserPlatformIdList();
+        final String userId = UUID.randomUUID().toString();
+        final User newUser = User.builder()
+                .userId(userId)
+                .loginId(signUpParam.getUserId())
+                .loginPassword(signUpParam.getUserPwd())
+                .statusCode(UserStatusType.Normal)
+                .typeCode(UserType.Normal)
+                .build();
+
+        final UserRole userRole = UserRole.builder()
+                .userId(userId)
+                .roleId(signUpParam.getUserRoleId())
+                .createdDate(LocalDateTime.now())
+                .build();
+
+        createNewUser(newUser);
+        userRoleRepository.insertUserRole(userRole);
+        for (String platformId : platformIdList) {
+            userPlatformRepository.insertUserPlatform(UserPlatform.builder()
+                    .userId(userId)
+                    .platformId(platformId)
+                    .createdDate(LocalDateTime.now())
+                    .modifiedDate(LocalDateTime.now())
+                    .build());
+        }
+
+        return newUser;
     }
 
     public User createNewUser(User user) {

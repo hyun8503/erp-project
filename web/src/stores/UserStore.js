@@ -1,4 +1,5 @@
 import {action, flow, observable} from "mobx";
+import axios from "axios";
 import RoleAdapter from "../adapter/RoleAdapter";
 import PlatformAdapter from "../adapter/PlatformAdapter";
 
@@ -10,6 +11,8 @@ export default class UserStore {
     @observable addUserPlatformIdList = [];
     @observable addUserSelectRoleList = [];
     @observable addUserPlatformList = [];
+    @observable addUserSearchPlatformName = "";
+    @observable addingUser = false;
 
 
     @action initStore = () => {
@@ -24,6 +27,23 @@ export default class UserStore {
         this.addUserPlatformIdList = [];
         this.addUserSelectRoleList = [];
         this.addUserPlatformList = [];
+        this.addUserSearchPlatformName = "";
+        this.addingUser = false;
+    }
+
+    @action filterPlatformList = () => {
+        this.addUserPlatformIdList = [];
+        if(this.addUserSearchPlatformName) {
+            const filterPlatformList = this.addUserPlatformList.filter((item) => item.platformName.indexOf(this.addUserSearchPlatformName) !== -1);
+            this.addUserPlatformList = filterPlatformList.length > 0 ? filterPlatformList : [];
+        } else {
+            this.getPlatformList();
+        }
+    }
+
+    @action changeAddUserSearchPlatformName = (value) => {
+        value = value ? value.trim() : value;
+        this.addUserSearchPlatformName = value;
     }
 
     @action changeIsAddUserDialog = (value) => {
@@ -48,10 +68,29 @@ export default class UserStore {
 
     @action changeAddUserRoleId = (value) => this.addUserRoleId = value;
     @action changeAddUserPlatformIdList = (value, checked) => {
-        if(value) {
-            this.addUserPlatformIdList.push(value);
-        } else {
+        if(this.addUserPlatformList.length === 0) {
+            return null;
+        }
 
+        if(checked) {
+            if(value === "all") {
+                this.addUserPlatformIdList = [];
+                this.addUserPlatformIdList.push("all");
+                this.addUserPlatformList.forEach((item) => {
+                    this.addUserPlatformIdList.push(item.platformId);
+                });
+            } else {
+                this.addUserPlatformIdList.push(value);
+            }
+        } else {
+            if(value === "all") {
+                this.addUserPlatformIdList = [];
+            } else {
+                const delIdx = this.addUserPlatformIdList.findIndex((item) => item === value);
+                if(delIdx !== -1) {
+                    this.addUserPlatformIdList.splice(delIdx, 1);
+                }
+            }
         }
     }
 
@@ -66,4 +105,24 @@ export default class UserStore {
         const platformAdapter = new PlatformAdapter();
         this.addUserPlatformList = yield platformAdapter.getPlatformList();
     });
+
+    addUser = flow(function* () {
+        this.addingUser = true;
+        try {
+            const data = {
+                userId: this.addUserId,
+                userPwd: this.addUserPwd,
+                userRoleId: this.addUserRoleId,
+                userPlatformIdList: this.addUserPlatformIdList
+            }
+
+            yield axios.post(`/api/v1/authentications/signUp`, data);
+            this.addingUser = false;
+            this.initAddDialog();
+        } catch (err) {
+            console.log('addUser');
+            console.log(err);
+            this.addingUser = false;
+        }
+    })
 }

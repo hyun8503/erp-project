@@ -6,7 +6,7 @@
 		where user_id = #{userId}
 		  and role_id = #{roleId}
 	</delete>
-	<insert id="insert" parameterType="UserRole">
+	<insert id="insertUserRole" parameterType="UserRole">
 		insert into erp_user_roles (user_id, role_id, created_date)
 		values (#{userId}, #{roleId}, #{createdDate})
 	</insert>

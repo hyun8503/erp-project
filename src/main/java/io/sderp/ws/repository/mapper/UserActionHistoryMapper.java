@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserActionHistoryMapper {
     void insertActionHistory(UserActionHistories userActionHistories);
-    void updateActionHistory(UserActionHistories userActionHistories);
 }

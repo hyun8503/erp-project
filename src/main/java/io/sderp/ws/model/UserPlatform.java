@@ -11,12 +11,9 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPlatforms {
+public class UserPlatform {
     private String userId;
-
     private String platformId;
-
     private LocalDateTime createdDate;
-
     private LocalDateTime modifiedDate;
 }

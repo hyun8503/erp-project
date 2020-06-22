@@ -1,8 +1,6 @@
 package io.sderp.ws.repository;
 
 import io.sderp.ws.model.UserActionHistories;
-import io.sderp.ws.model.support.UserActionHistoryStatus;
-import io.sderp.ws.model.support.UserActionHistoryType;
 import io.sderp.ws.repository.mapper.UserActionHistoryMapper;
 import io.sderp.ws.service.PlatformService;
 import org.slf4j.Logger;
@@ -27,11 +25,5 @@ public class UserActionHistoryRepository {
         userActionHistories.setCreatedDate(LocalDateTime.now());
         logger.info("remoteAddr = {}", userActionHistories);
         mapper.insertActionHistory(userActionHistories);
-    }
-
-    public void updateActionHistory(UserActionHistories userActionHistories) {
-
-
-        mapper.updateActionHistory(userActionHistories);
     }
 }

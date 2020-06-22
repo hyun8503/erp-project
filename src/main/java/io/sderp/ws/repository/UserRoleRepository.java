@@ -1,5 +1,6 @@
 package io.sderp.ws.repository;
 
+import io.sderp.ws.model.UserRole;
 import io.sderp.ws.repository.mapper.UserRoleMapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,9 @@ public class UserRoleRepository {
 
     public long selectUserRoleCount(String roleId) {
         return mapper.selectUserRoleCount(roleId);
+    }
+
+    public int insertUserRole(UserRole userRole) {
+        return mapper.insertUserRole(userRole);
     }
 }

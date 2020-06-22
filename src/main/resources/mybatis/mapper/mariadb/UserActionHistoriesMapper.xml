@@ -10,50 +10,24 @@
         <result property="description"                  column="description" />
     </resultMap>
 
-    userId(userId)
-    .typeCode(UserActionHistoryType.Platform)
-    .statusCode(UserActionHistoryStatus.Create)
-    .description(paramJson)
-    .ipAddress(remoteAddr)
     <insert id="insertActionHistory" parameterType="UserActionHistories" useGeneratedKeys="true">
         INSERT INTO erp_user_action_histories
-            ( user_id,
-              type_code,
-              status_code,
-              description,
-              ip_address,
-              created_date
-
+            (
+                user_id,
+                type_code,
+                status_code,
+                description,
+                ip_address,
+                created_date
             )
         VALUES
             (
-             #{userId},
-             #{typeCode},
-             #{statusCode},
-             #{description},
-             #{ipAddress},
-             #{createdDate}
-
-            )
-    </insert>
-
-    <insert id="updateActionHistory" parameterType="UserActionHistories" useGeneratedKeys="true">
-        INSERT INTO erp_user_action_histories
-            ( user_id,
-              type_code,
-              status_code,
-              ip_address,
-              created_date,
-              description
-            )
-        VALUES
-            (
-             #{userId},
-             #{typeCode},
-             #{statusCode},
-             #{ipAddress},
-             #{createdDate},
-             #{description}
+                 #{userId},
+                 #{typeCode},
+                 #{statusCode},
+                 #{description},
+                 #{ipAddress},
+                 #{createdDate}
             )
     </insert>
 </mapper>

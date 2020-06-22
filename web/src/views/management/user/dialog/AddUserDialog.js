@@ -44,6 +44,10 @@ class AddUserDialog extends React.Component {
 
     render() {
         const {classes} = this.props;
+        const addBtnDisabled = !(this.props.userStore.addUserPlatformIdList.length > 0 &&
+                               this.props.userStore.addUserId &&
+                               this.props.userStore.addUserPwd &&
+                               this.props.userStore.addUserRoleId)
 
         return (
             <Dialog 
@@ -100,17 +104,24 @@ class AddUserDialog extends React.Component {
                                         <TextField variant={"outlined"}
                                                    fullWidth
                                                    label={"플랫폼 이름"}
+                                                   value={this.props.userStore.addUserSearchPlatformName}
+                                                   onChange={(event) => this.props.userStore.changeAddUserSearchPlatformName(event.target.value)}
                                         />
                                     </Grid>
                                     <Grid container item xs={4} alignItems={"center"} justify={"flex-start"}>
-                                        <Button variant={"contained"} color={"primary"}>검색</Button>
+                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.userStore.filterPlatformList()} >검색</Button>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs={12}>
                                     <FormGroup aria-label="position" row>
                                         <FormControlLabel
                                             value="start"
-                                            control={<Checkbox color="primary"/>}
+                                            control={
+                                                <Checkbox color="primary"
+                                                          checked={this.props.userStore.addUserPlatformIdList.findIndex((value) => value === "all") !== -1}
+                                                          onChange={(event) => this.props.userStore.changeAddUserPlatformIdList("all", event.target.checked)}
+                                                />
+                                            }
                                             label="전체선택"
                                             labelPlacement="end"
                                         />
@@ -123,7 +134,7 @@ class AddUserDialog extends React.Component {
                                                         control={
                                                             <Checkbox
                                                                 color="primary"
-                                                                checked={this.props.userStore.addUserPlatformIdList.findIndex((item) => item === item.platformId) !== -1}
+                                                                checked={this.props.userStore.addUserPlatformIdList.findIndex((value) => value === item.platformId) !== -1}
                                                                 onChange={(event) => this.props.userStore.changeAddUserPlatformIdList(item.platformId, event.target.checked)}
                                                                 value={item.platformId}
                                                             />
@@ -141,7 +152,7 @@ class AddUserDialog extends React.Component {
 
                     </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary">추가</Button>
+                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.addUser()}>추가</Button>
                     <Button variant="outlined" color="primary"
                             onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 닫기</Button>
                 </DialogActions>
