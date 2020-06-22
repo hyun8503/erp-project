@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -44,6 +46,7 @@ public class PlatformController {
         String remoteAddr = httpRequest.getRemoteAddr();
         String paramJsonStr = objectMapper.writeValueAsString(param);
 
+
         platformService.insertPlatform(param);
         return new ResponseEntity<>(param, HttpStatus.OK);
     }
@@ -52,13 +55,22 @@ public class PlatformController {
     //플랫폼 수정
     @PutMapping("/platform")
     public ResponseEntity<Object> updatePlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String remoteAddr = httpRequest.getRemoteAddr();
+        String paramJsonStr = objectMapper.writeValueAsString(param);
+
         platformService.updatePlatform(param);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //플랫폼 삭제
     @DeleteMapping("/platform/{platformId}")
-    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest, @RequestBody Platform param, @PathVariable String platformId) throws Exception {
+    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @PathVariable String platformId) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map map = new HashMap<String, String>();
+        map.put("platformId", platformId);
+        String paramJson = objectMapper.writeValueAsString(map);
+
         platformService.deletePlatform(platformId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
