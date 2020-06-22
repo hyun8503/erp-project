@@ -63,7 +63,6 @@ public class PlatformService {
         }else{
             platformRepository.deletePlatform(platformId);
         }
-
     }
 
 }

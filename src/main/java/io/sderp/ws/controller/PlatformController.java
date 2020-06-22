@@ -52,7 +52,7 @@ public class PlatformController {
 
     //플랫폼 삭제
     @DeleteMapping("/platform/{platformId}")
-    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @PathVariable String platformId) throws Exception {
+    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest, @RequestBody Platform param, @PathVariable String platformId) throws Exception {
         platformService.deletePlatform(platformId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package io.sderp.ws.repository;
 
 import io.sderp.ws.model.Platform;
+import io.sderp.ws.model.UserActionHistories;
 import io.sderp.ws.model.support.PlatformType;
 import io.sderp.ws.repository.mapper.PlatformMapper;
 import org.springframework.beans.factory.annotation.Autowired;
