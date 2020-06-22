@@ -1,5 +1,7 @@
 package io.sderp.ws.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.model.Platform;
 import io.sderp.ws.model.support.PlatformType;
 import io.sderp.ws.service.PlatformService;
@@ -37,7 +39,11 @@ public class PlatformController {
     }
 
     @PostMapping("/platform")
-    public ResponseEntity<Object> insertPlatform(HttpServletRequest request, @RequestBody Platform param) {
+    public ResponseEntity<Object> insertPlatform(HttpServletRequest httpRequest, @RequestBody Platform param) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String remoteAddr = httpRequest.getRemoteAddr();
+        String paramJsonStr = objectMapper.writeValueAsString(param);
+
         platformService.insertPlatform(param);
         return new ResponseEntity<>(param, HttpStatus.OK);
     }

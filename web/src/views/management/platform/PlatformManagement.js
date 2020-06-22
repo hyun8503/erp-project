@@ -15,7 +15,6 @@ import {inject, observer} from "mobx-react";
 import AddPlatformDialog from "./dialog/AddPlatformDialog";
 import * as PlatformType from "../../../type/PlatformType";
 import ConfirmDialog from "../../../components/ConfirmDialog";
-import DeleteDialog from "../role/dialog/DeleteDialog";
 
 const styles = theme => ({
     wrap: {
@@ -74,7 +73,10 @@ class PlatformManagement extends React.Component {
     componentDidMount() {
         this.props.platformStore.getPlatformList();
     }
-     
+
+    componentWillUnmount() {
+        this.props.platformStore.initStore();
+    }
 
     render() {
         const { classes } = this.props;
@@ -104,6 +106,7 @@ class PlatformManagement extends React.Component {
                                     <Select
                                         defaultValue={"none"}
                                         value={this.props.platformStore.searchPlatformType}
+                                        //value={}
                                         onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
                                         <MenuItem value={PlatformType.type.None} disabled><em>플랫폼 유형</em></MenuItem>
                                         <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>

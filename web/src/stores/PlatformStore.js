@@ -2,11 +2,10 @@ import {action, flow, observable} from "mobx";
 import axios from "axios";
 import * as PlatformType from "../type/PlatformType";
 import * as ErrorType from "../type/ErrorType";
-import * as PermissionType from "../type/PermissionType";
 
 export default class PlatformStore {
     @observable isAddPlatformDialog = false;
-    @observable platformList = null;
+    @observable platformList = [];
     @observable platformListError = false;
     @observable addSelectedPlatformType = PlatformType.type.Direct;
     @observable addPlatformName = "";
@@ -25,7 +24,7 @@ export default class PlatformStore {
 
     @action initStore = () => {
         this.isAddPlatformDialog = false;
-        this.platformList = null;
+        this.platformList = [];
         this.platformListError = false;
         this.addSelectedPlatformType = PlatformType.type.Direct;
         this.addPlatformName = "";
@@ -118,9 +117,8 @@ export default class PlatformStore {
         }
     })
 
-
     getPlatformList = flow(function* () {
-        this.platformList = null;
+        this.platformList = [];
         try {
             const response = yield axios.get(`/api/v1/platforms`);
             this.platformList = response.data;
@@ -128,6 +126,7 @@ export default class PlatformStore {
             console.log('getPlatformList');
             console.log(err);
             this.platformListError = true;
+            this.platformList = [];
         }
     });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {Button, Select, TextField, Container} from "@material-ui/core";
+import {Button, Select, TextField} from "@material-ui/core";
 import {inject, observer} from "mobx-react";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,6 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import Grid from "@material-ui/core/Grid";
 
 
 const styles = (theme) => ({
@@ -46,106 +47,105 @@ class AddUserDialog extends React.Component {
 
         return (
             <Dialog 
-                open={this.props.userStore.isAddUserDialog} 
+                open={this.props.userStore.isAddUserDialog}
                 onClose={() => this.props.userStore.changeIsAddUserDialog(false)}>   
                 <DialogTitle>사용자 추가</DialogTitle>
-                    <DialogContent> 
-                        <FormControl className={classes.formControl}>
-                            <TextField style={{width:530}} id="userId" label="사용자 ID" variant="outlined" />
-                        </FormControl>
+                    <DialogContent>
+                        <Grid container spacing={1}>
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <TextField id="userId"
+                                               label="사용자 ID"
+                                               variant="outlined"
+                                               value={this.props.userStore.addUserId}
+                                               onChange={(event) => this.props.userStore.changeAddUserId(event.target.value)}/>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl noValidate autoComplete="off" fullWidth>
+                                    <TextField id="password"
+                                               label="비밀번호"
+                                               type={"password"}
+                                               variant="outlined"
+                                               value={this.props.userStore.addUserPwd}
+                                               onChange={(event) => this.props.userStore.changeAddUserPwd(event.target.value)}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl variant="outlined" fullWidth>
+                                    <Select
+                                        value={this.props.userStore.addUserRoleId}
+                                        onChange={(event) => this.props.userStore.changeAddUserRoleId(event.target.value)}
+                                    >
+                                        <MenuItem value="none" disabled>
+                                            <em>역할</em>
+                                        </MenuItem>
+                                        {this.props.userStore.addUserSelectRoleList.length > 0 ?
+                                            this.props.userStore.addUserSelectRoleList.map((item) => {
+                                                return (
+                                                    <MenuItem key={item.role.roleId} value={item.role.roleId}>{item.role.roleName}</MenuItem>
+                                                )
+                                            })
+                                            : ""}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
 
-                        <FormControl style={{width:530}} className={classes.formControl} noValidate autoComplete="off">
-                            <TextField id="password" label="비밀번호" 
-                            variant="outlined" />
-                        </FormControl>  
+                        <FormGroup style={{border: '1px solid gray'}} className={classes.formGroup}>
+                            <FormControl className={classes.formControl} noValidate autoComplete="off">
+                                <Grid container spacing={1}>
+                                    <Grid item xs={8}>
+                                        <TextField variant={"outlined"}
+                                                   fullWidth
+                                                   label={"플랫폼 이름"}
+                                        />
+                                    </Grid>
+                                    <Grid container item xs={4} alignItems={"center"} justify={"flex-start"}>
+                                        <Button variant={"contained"} color={"primary"}>검색</Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid container item xs={12}>
+                                    <FormGroup aria-label="position" row>
+                                        <FormControlLabel
+                                            value="start"
+                                            control={<Checkbox color="primary"/>}
+                                            label="전체선택"
+                                            labelPlacement="end"
+                                        />
+                                        {this.props.userStore.addUserPlatformList.length > 0 ?
+                                            this.props.userStore.addUserPlatformList.map((item) => {
+                                                return (
+                                                    <FormControlLabel
+                                                        key={item.platformId}
+                                                        value="start"
+                                                        control={
+                                                            <Checkbox
+                                                                color="primary"
+                                                                checked={this.props.userStore.addUserPlatformIdList.findIndex((item) => item === item.platformId) !== -1}
+                                                                onChange={(event) => this.props.userStore.changeAddUserPlatformIdList(item.platformId, event.target.checked)}
+                                                                value={item.platformId}
+                                                            />
+                                                        }
+                                                        label={item.platformName}
+                                                        labelPlacement="end"
+                                                    />
+                                                )
+                                            })
+                                            : ""}
+                                    </FormGroup>
+                                </Grid>
+                            </FormControl>
+                        </FormGroup>
 
-                        <FormControl variant="outlined" className={classes.formControl}>   
-                            <Select
-                                style={{width:530}} 
-                                defaultValue={"none"}
-                                onChange={() => {}}>
-                                <MenuItem value="none" disabled>
-                                 <em>플랫폼 유형</em>
-                                 </MenuItem>
-                                 <MenuItem value={"직영"}>직영</MenuItem>
-                                <MenuItem value={"비직영"}>비직영</MenuItem>
-                             </Select>
-                        </FormControl> 
-                                 
-                                        <FormGroup style={{border:'1px solid gray'}} className={classes.formGroup}>
-                                          <FormControl className={classes.formControl} noValidate autoComplete="off">   
-                                            <FormControl 
-                                                style={{display: 'inline-block'}}
-                                                className={classes.formControl}
-                                                variant="outlined">
-                                                <Select
-                                                className={classes.select}
-                                                defaultValue={"none"}
-                                                onChange={() => {}}>
-                                                    <MenuItem value="none" disabled>
-                                                    <em>역할 유형</em>
-                                                    </MenuItem>
-                                                    <MenuItem value={"역할1"}>역할1</MenuItem>
-                                                    <MenuItem value={"역할2"}>역할2</MenuItem>
-                                                    <MenuItem value={"역할3"}>역할3</MenuItem>
-                                                    <MenuItem value={"역할4"}>역할4</MenuItem>
-                                                    <MenuItem value={"역할5"}>역할5</MenuItem>
-                                                    <MenuItem value={"역할6"}>역할6</MenuItem>
-                                                </Select>
-                                               <TextField className={classes.textField} id="outlined-basic" label="사용자 이름" variant="outlined" />
-                                                <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                                          </FormControl>
-                                          <Container className={classes.container}>
-                                          <FormGroup aria-label="position" row>
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼1"
-                                                    labelPlacement="end"
-                                                />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼2"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼2"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼3"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼4"
-                                                    labelPlacement="end"
-                                                    />
-                                                <FormControlLabel
-                                                    value="start"
-                                                    control={<Checkbox color="primary" />}
-                                                    label="플랫폼5"
-                                                    labelPlacement="end"
-                                                    />
-                                            </FormGroup>
-                                            </Container>
-                                        </FormControl>
-                                        </FormGroup>
-
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button variant="contained" color="primary">추가</Button>
-                                        <Button variant="outlined" color="primary" 
-                                        onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 닫기</Button>
-                                    </DialogActions>
-                                </Dialog>
-
+                    </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="primary">추가</Button>
+                    <Button variant="outlined" color="primary"
+                            onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 닫기</Button>
+                </DialogActions>
+            </Dialog>
         )
     }
 }

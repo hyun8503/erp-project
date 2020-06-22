@@ -2,7 +2,7 @@ import React from "react";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import {Paper, Typography, Button, TextField, Select} from "@material-ui/core";
+import {Button, Paper, Select, TextField, Typography} from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import MaterialTable from "material-table";
@@ -42,18 +42,6 @@ const styles = theme => ({
         boxShadow: 'none',
         marginTop: theme.spacing(2),
     },
-      formControl: {
-        margin: theme.spacing(1),
-        minWidth: 100,
-      },
-      textField: {
-        margin: theme.spacing(1),
-      },
-      button:{
-        marginTop: theme.spacing(2),
-        margin: theme.spacing(1),
-    },    
-
 });
 
 
@@ -68,7 +56,7 @@ class UserManagement extends React.Component {
 
     render() {
         const { classes } = this.props;
-      
+
         const tableDummyData = [
             {platformName: '사용자1', platformType: '플랫폼1', status: '1'},
             {platformName: '사용자2', platformType: '플랫폼1', status: '2'},
@@ -85,90 +73,89 @@ class UserManagement extends React.Component {
         return (
             <div className={classes.wrap}>
                 <SideMenu
-                    mobileOpen = {false}
-                    setMobileOpen = {() => {}}
-                    isLoggedIn = {true}
-                    doLogout = {() => this.props.authStore.doLogout()}
+                    mobileOpen={false}
+                    setMobileOpen={() => {
+                    }}
+                    isLoggedIn={true}
+                    doLogout={() => this.props.authStore.doLogout()}
                 />
-                <div className={classes.appBarSpacer} />
+                <div className={classes.appBarSpacer}/>
                 <Grid className={classes.mainContainer} container justify={"center"}>
                     <Paper className={classes.mainContent}>
-                        <Grid item xs={12}>
+                        <Grid container item xs={12}>
                             <Typography variant="h4" component="h2">
                                 사용자 관리
                             </Typography>
                         </Grid>
 
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={3}>
+                                <FormControl variant="outlined" fullWidth>
+                                    <Select
+                                        defaultValue="none"
+                                        onChange={() => {
+                                        }}>
+                                        <MenuItem value="none" disabled>
+                                            <em>역할 유형</em>
+                                        </MenuItem>
+                                        <MenuItem value={"직영"}>역할1</MenuItem>
+                                        <MenuItem value={"비직영"}>역할2</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                           <FormControl 
-                             style={{width:200}}
-                             variant="outlined" className={classes.formControl}>
-                               <Select
-                                 defaultValue="none"
-                                 onChange={()=>{}}>
-                                    <MenuItem value="none" disabled>
-                                    <em>플랫폼 유형</em>
-                                    </MenuItem>
-                                    <MenuItem value={"직영"}>직영</MenuItem>
-                                    <MenuItem value={"비직영"}>비직영</MenuItem>
-                                </Select>
-                           </FormControl> 
+                            <Grid item xs={12} md={3}>
+                                <FormControl variant="outlined" fullWidth>
+                                    <Select
+                                        defaultValue="none"
+                                        onChange={() => {
+                                        }}>
+                                        <MenuItem value="none" disabled>
+                                            <em>플랫폼</em>
+                                        </MenuItem>
+                                        <MenuItem value={"역할1"}>플랫폼1</MenuItem>
+                                        <MenuItem value={"역할2"}>플랫폼2</MenuItem>
+                                        <MenuItem value={"역할3"}>플랫폼3</MenuItem>
+                                        <MenuItem value={"역할4"}>플랫폼4</MenuItem>
+                                        <MenuItem value={"역할5"}>플랫폼5</MenuItem>
+                                        <MenuItem value={"역할6"}>플랫폼6</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                           <FormControl 
-                             style={{width:200}}
-                             variant="outlined" className={classes.formControl}>
-                               <Select
-                                 defaultValue="none"
-                                 onChange={()=>{}}>
-                                    <MenuItem value="none" disabled>
-                                    <em>역할 유형</em>
-                                    </MenuItem>
-                                    <MenuItem value={"보고서제출"}>보고서제출</MenuItem>
-                                    <MenuItem value={"보고서검색"}>보고서검색</MenuItem>
-                                    <MenuItem value={"보고서형식"}>보고서형식</MenuItem>
-                                    <MenuItem value={"플랫폼관리"}>플랫폼관리</MenuItem>
-                                    <MenuItem value={"사용자관리"}>사용자관리</MenuItem>
-                                    <MenuItem value={"역할 관리"}>역할 관리</MenuItem>
-                                </Select>
-                           </FormControl> 
-
-
-
-                            <FormControl className={classes.formControl} noValidate autoComplete="off">
-                                 <TextField 
-                                 style={{width:400}}
-                                 id="outlined-basic" label="사용자 이름" variant="outlined" />
-                            </FormControl>
-
-                            <Button className={classes.button} variant="contained" color="primary" >검색</Button>
-                            <Button className={classes.button}
+                            <Grid item xs={12} md={3}>
+                                <FormControl noValidate autoComplete="off" fullWidth>
+                                    <TextField id="outlined-basic" label="사용자 ID" variant="outlined"/>
+                                </FormControl>
+                            </Grid>
+                            <Grid container item xs={12} sm={12} md={3} alignItems={"center"} justify={"flex-start"}>
+                                <Button variant="contained" color="primary">검색</Button>
+                                <Button style={{marginLeft: '8px'}}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.userStore.changeIsAddUserDialog(true)}>
                                     등록
                                 </Button>
-                        </Grid>
+                            </Grid>
                         </Grid>
 
-                      <Grid item xs={12}>
-                        <MaterialTable
-                               style={{marginTop: '16px', boxShadow: 'none'}}
-                               options={{
-                                   search: false,
-                                   showTitle: false,
-                                   toolbar: false,actionsColumnIndex: -1,
-                                   pageSize: 10,
-                                   pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
-                                   headerStyle: {
-                                       backgroundColor: '#fafafa',
-                                       color: 'rgba(51, 51, 51, 0.56)',
-                                       borderTop: '1px solid #eee',
-                                       padding: 8,
-                                     }
-                                   }}
-                                 localization={{
+                        <Grid item xs={12}>
+                            <MaterialTable
+                                style={{marginTop: '16px', boxShadow: 'none'}}
+                                options={{
+                                    search: false,
+                                    showTitle: false,
+                                    toolbar: false, actionsColumnIndex: -1,
+                                    pageSize: 10,
+                                    pageSizeOptions: [5, 10, 15, 20, 25, 30, 40, 50],
+                                    headerStyle: {
+                                        backgroundColor: '#fafafa',
+                                        color: 'rgba(51, 51, 51, 0.56)',
+                                        borderTop: '1px solid #eee',
+                                        padding: 8,
+                                    }
+                                }}
+                                localization={{
                                     header: {
                                         actions: '',
                                     },
@@ -184,29 +171,36 @@ class UserManagement extends React.Component {
                                     {title: '사용자 ID', field: 'platformName'},
                                     {
                                         title: '소속 플랫폼', field: 'platformType',
-                                        lookup: { '플랫폼1': '플랫폼1', '플랫폼2': '플랫폼2' },
-                                      },
+                                        lookup: {'플랫폼1': '플랫폼1', '플랫폼2': '플랫폼2'},
+                                    },
                                     {
                                         title: '역할',
                                         field: 'status',
-                                        lookup: { '1': '보고서제출', '2': '보고서검색', '3': '보고서형식', '4': '플랫폼관리','5': '사용자관리', '6': '역할 관리' },
-                                      },
-                               
+                                        lookup: {
+                                            '1': '역할1',
+                                            '2': '역할2',
+                                            '3': '역할3',
+                                            '4': '역할4',
+                                            '5': '역할5',
+                                            '6': '역할6'
+                                        },
+                                    },
+
                                 ]}
-                            data={tableDummyData}
-                               editable={{
-                                onRowUpdate: (newData, oldData) => 
-                                 new Promise((resolve, reject) => {                       
-                                    resolve();                           
-                                }),
-                                onRowDelete: oldData =>
-                                 new Promise((resolve, reject) => {                              
-                                    resolve()
-                                }),
-                            }}
+                                data={tableDummyData}
+                                editable={{
+                                    onRowUpdate: (newData, oldData) =>
+                                        new Promise((resolve, reject) => {
+                                            resolve();
+                                        }),
+                                    onRowDelete: oldData =>
+                                        new Promise((resolve, reject) => {
+                                            resolve()
+                                        }),
+                                }}
                             />
-                       
-                      </Grid>
+
+                        </Grid>
                     </Paper>
                 </Grid>
                 <AddUserDialog/>

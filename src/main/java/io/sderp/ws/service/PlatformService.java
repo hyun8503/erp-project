@@ -3,7 +3,6 @@ package io.sderp.ws.service;
 import io.sderp.ws.exception.BaseException;
 import io.sderp.ws.exception.ErrorCode;
 import io.sderp.ws.model.Platform;
-import io.sderp.ws.model.support.PlatformType;
 import io.sderp.ws.repository.PlatformRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +39,7 @@ public class PlatformService {
         platform.setCreatedDate(LocalDateTime.now());
         platform.setModifiedDate(LocalDateTime.now());
         platformRepository.insertPlatform(platform);
+        
     }
 
 
