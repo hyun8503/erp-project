@@ -12,6 +12,7 @@ import {inject, observer} from "mobx-react";
 import AddUserDialog from "./dialog/AddUserDialog";
 import ModifyUserDialog from "./dialog/ModifyUserDialog";
 import DeleteDialog from "./dialog/DeleteDialog";
+import ConfirmDialog from "../../../components/ConfirmDialog";
 
 
 const styles = theme => ({
@@ -193,6 +194,12 @@ class UserManagement extends React.Component {
                 <AddUserDialog/>
                 <ModifyUserDialog/>
                 <DeleteDialog/>
+                <ConfirmDialog
+                    open={this.props.userStore.confirmDialogOpen}
+                    handleClose={this.props.userStore.confirmDialogClose}
+                    handleConfirm={this.props.userStore.confirmDialogHandle}
+                    message={this.props.userStore.confirmDialogMsg}
+                />
             </div>
         );
     }

@@ -2,6 +2,7 @@ import {action, flow, observable} from "mobx";
 import axios from "axios";
 import RoleAdapter from "../adapter/RoleAdapter";
 import PlatformAdapter from "../adapter/PlatformAdapter";
+import * as ErrorType from "../type/ErrorType";
 
 export default class UserStore {
     @observable isAddUserDialog = false;
@@ -28,8 +29,13 @@ export default class UserStore {
     @observable platformList = [];
     @observable roleList = [];
 
+    @observable confirmDialogOpen = false;
+    @observable confirmDialogMsg = "";
+
     @action initStore = () => {
         this.isAddUserDialog = false;
+        this.confirmDialogOpen = false;
+        this.confirmDialogMsg = "";
     }
 
     @action initAddDialog = () => {
@@ -245,6 +251,10 @@ export default class UserStore {
             console.log('addUser');
             console.log(err);
             this.addingUser = false;
+            if(err.response.data.code === ErrorType.code.LoginIdInUse) {
+                this.confirmDialogMsg = "Id가 이미 사용중입니다";
+                this.confirmDialogOpen = true;
+            }
         }
     })
 
@@ -281,4 +291,13 @@ export default class UserStore {
             this.deletingUser = false;
         }
     });
+
+    @action confirmDialogClose = () => {
+        this.confirmDialogOpen = false;
+    }
+
+    @action confirmDialogHandle = () => {
+        this.confirmDialogOpen = false;
+        this.confirmDialogMsg = "";
+    }
 }
