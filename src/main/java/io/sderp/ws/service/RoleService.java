@@ -116,7 +116,7 @@ public class RoleService {
     private void userRoleInUseCheck(String roleId) {
         long count = userRoleRepository.selectUserRoleCount(roleId);
         if(count != 0) {
-            throw new BaseException(ErrorCode.RoleInUse, HttpStatus.BAD_REQUEST, "role in use");
+            throw new BaseException(ErrorCode.ROLE_IN_USE, HttpStatus.BAD_REQUEST, "role in use");
         }
     }
 
@@ -129,7 +129,7 @@ public class RoleService {
     private void roleNameDuplicateCheck(String roleName) {
         long count = roleRepository.selectRoleNameCount(roleName);
         if(count != 0) {
-            throw new BaseException(ErrorCode.RoleNameDuplicate, HttpStatus.BAD_REQUEST, "role name must be unique");
+            throw new BaseException(ErrorCode.ROLE_NAME_DUPLICATE, HttpStatus.BAD_REQUEST, "role name must be unique");
         }
     }
 

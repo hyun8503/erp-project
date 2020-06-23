@@ -161,6 +161,7 @@ export default class UserStore {
             yield axios.post(`/api/v1/authentications/signUp`, data);
             this.addingUser = false;
             this.initAddDialog();
+            this.getUsers();
         } catch (err) {
             console.log('addUser');
             console.log(err);

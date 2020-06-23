@@ -48,8 +48,8 @@ public class PlatformService {
 
         UserActionHistories userActionHistories = UserActionHistories.builder()
                 .userId(userId)
-                .typeCode(UserActionHistoryType.Platform)
-                .statusCode(UserActionHistoryStatus.Create)
+                .typeCode(UserActionHistoryType.PLATFORM)
+                .statusCode(UserActionHistoryStatus.CREATE)
                 .description(paramJson)
                 .ipAddress(remoteAddr)
                 .build();
@@ -61,7 +61,7 @@ public class PlatformService {
     private void platformNameDuplicateCheck(String platformName) {
         long count = platformRepository.selectPlatformNameCount(platformName);
         if(count != 0) {
-            throw new BaseException(ErrorCode.PlatformNameDuplicate, HttpStatus.BAD_REQUEST, "platform name must be unique");
+            throw new BaseException(ErrorCode.PLATFORM_NAME_DUPLICATE, HttpStatus.BAD_REQUEST, "platform name must be unique");
         }
     }
 
@@ -71,8 +71,8 @@ public class PlatformService {
 
         UserActionHistories userActionHistories = UserActionHistories.builder()
                 .userId(userId)
-                .typeCode(UserActionHistoryType.Platform)
-                .statusCode(UserActionHistoryStatus.Update)
+                .typeCode(UserActionHistoryType.PLATFORM)
+                .statusCode(UserActionHistoryStatus.UPDATE)
                 .description(paramJson)
                 .ipAddress(remoteAddr)
                 .build();
@@ -84,7 +84,7 @@ public class PlatformService {
     public void deletePlatform(String platformId) {
         long count = platformRepository.platformInUse(platformId);
         if(count != 0){
-            throw new BaseException(ErrorCode.PlatformInUse, HttpStatus.BAD_REQUEST, "platform is in use");
+            throw new BaseException(ErrorCode.PLATFORM_IN_USE, HttpStatus.BAD_REQUEST, "platform is in use");
         }else{
             platformRepository.deletePlatform(platformId);
         }

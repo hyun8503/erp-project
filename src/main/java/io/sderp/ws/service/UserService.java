@@ -60,7 +60,7 @@ public class UserService {
 
     @PostConstruct
     public void checkAdmin() {
-        final List<User> users = getUsers(UserType.Admin);
+        final List<User> users = getUsers(UserType.ADMIN);
 
         if((users == null) || (users.size() < 1)) {
             logger.info("Admin account not exists : create a default admin account");
@@ -69,8 +69,8 @@ public class UserService {
                     .userId(UUID.randomUUID().toString())
                     .loginId(DEFAULT_ADMIN_ID)
                     .loginPassword(DEFAULT_ADMIN_PASSWORD)
-                    .typeCode(UserType.Admin)
-                    .statusCode(UserStatusType.Normal)
+                    .typeCode(UserType.ADMIN)
+                    .statusCode(UserStatusType.NORMAL)
                     .build();
 
             createNewUser(newAdmin);
@@ -95,8 +95,8 @@ public class UserService {
                 .userId(userId)
                 .loginId(signUpParam.getUserId())
                 .loginPassword(signUpParam.getUserPwd())
-                .statusCode(UserStatusType.Normal)
-                .typeCode(UserType.Normal)
+                .statusCode(UserStatusType.NORMAL)
+                .typeCode(UserType.NORMAL)
                 .build();
 
         final UserRole userRole = UserRole.builder()

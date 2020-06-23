@@ -1,8 +1,8 @@
 export const type = {
-    ReportSubmit: 'ReportSubmit',
-    ReportSearch: 'ReportSearch',
-    ReportTemplate: 'ReportTemplate',
-    PlatformManagement: 'PlatformManagement',
-    RoleManagement: 'RoleManagement',
-    UserManagement: 'UserManagement',
+    ReportSubmit: 'REPORT_SUBMIT',
+    ReportSearch: 'REPORT_SEARCH',
+    ReportTemplate: 'REPORT_TEMPLATE',
+    PlatformManagement: 'PLATFORM_MANAGEMENT',
+    RoleManagement: 'ROLE_MANAGEMENT',
+    UserManagement: 'USER_MANAGEMENT',
 }

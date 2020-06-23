@@ -49,7 +49,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ErrorResponse getErrorResponse(Exception ex, HttpServletRequest httpServletRequest, HttpStatus status) {
-        ErrorCode errorCode = ErrorCode.Unknown;
+        ErrorCode errorCode = ErrorCode.UNKNOWN;
         if(ex instanceof BaseException) {
             errorCode = ((BaseException) ex).getErrorCode();
         }

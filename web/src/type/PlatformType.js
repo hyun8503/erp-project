@@ -1,5 +1,5 @@
 export const type =  {
-    None: 'None',
-    Direct: 'Direct',
-    NonDirect: "NonDirect"
+    None: 'NONE',
+    Direct: 'DIRECT',
+    NonDirect: "NON_DIRECT"
 }

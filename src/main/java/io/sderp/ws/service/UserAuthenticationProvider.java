@@ -1,8 +1,8 @@
 package io.sderp.ws.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.sderp.ws.model.SimpleUser;
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.support.UserStatusType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import io.sderp.ws.model.SimpleUser;
-import io.sderp.ws.model.User;
-import io.sderp.ws.model.support.UserStatusType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -51,7 +50,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             throw new UsernameNotFoundException("Username not found : " + userId);
         }
         
-        if(user.getStatusCode() == UserStatusType.Withdraw) {
+        if(user.getStatusCode() == UserStatusType.WITHDRAW) {
             throw new DisabledException("User is not enabled : " + userId);
         }
 

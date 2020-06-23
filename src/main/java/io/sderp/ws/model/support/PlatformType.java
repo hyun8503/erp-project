@@ -1,10 +1,10 @@
 package io.sderp.ws.model.support;
 
 public enum PlatformType {
-    UnKnown, None, Direct, NonDirect;
+    UNKNOWN, NONE, DIRECT, NON_DIRECT;
 
     public static PlatformType getInstance(String type) {
-        PlatformType platformType = PlatformType.UnKnown;
+        PlatformType platformType = PlatformType.UNKNOWN;
         PlatformType[] values = PlatformType.values();
         for (PlatformType value : values) {
             if(type.equalsIgnoreCase(value.name())) {

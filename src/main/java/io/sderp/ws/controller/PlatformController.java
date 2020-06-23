@@ -40,7 +40,7 @@ public class PlatformController {
     @GetMapping("/platform/{name}/type/{type}")
     public ResponseEntity<List<Platform>> getPlatform(HttpServletRequest request, @PathVariable String name, @PathVariable String type) {
         PlatformType platformType = PlatformType.getInstance(type);
-        if(platformType == PlatformType.UnKnown) {
+        if(platformType == PlatformType.UNKNOWN) {
             throw new RuntimeException("unknown platform type");
         }
 

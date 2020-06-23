@@ -1,5 +1,5 @@
 package io.sderp.ws.model.support;
 
 public enum PermissionType {
-    ReportSubmit, ReportSearch, ReportTemplate, PlatformManagement, RoleManagement, UserManagement
+    REPORT_SUBMIT, REPORT_SEARCH, REPORT_TEMPLATE, PLATFORM_MANAGEMENT, ROLE_MANAGEMENT, USER_MANAGEMENT
 }

@@ -1,5 +1,5 @@
 package io.sderp.ws.model.support;
 
 public enum UserActionHistoryType {
-    User, Role, Platform, Template, Permission
+    USER, ROLE, PLATFORM, TEMPLATE, PERMISSION
 }
