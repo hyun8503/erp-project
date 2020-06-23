@@ -106,7 +106,6 @@ class PlatformManagement extends React.Component {
                                     <Select
                                         defaultValue={"none"}
                                         value={this.props.platformStore.searchPlatformType}
-                                        //value={}
                                         onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
                                         <MenuItem value={PlatformType.type.None} disabled><em>플랫폼 유형</em></MenuItem>
                                         <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>
@@ -202,7 +201,7 @@ class PlatformManagement extends React.Component {
                                         }),
                                      onRowDelete: oldData =>
                                         new Promise((resolve, reject) => {
-                                             this.props.platformStore.deletePlatform(oldData.platformId);
+                                             this.props.platformStore.deletePlatform(oldData);
                                             resolve();
                                         }),
                                 }}

@@ -2,8 +2,13 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
+import {AccountCircle} from "@material-ui/icons";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 120;
 
@@ -28,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
     link: {
         textDecoration: 'none',
         color: 'inherit',
-    }
+    },
+    accountInfo: {
+    },
 }));
 
 export default function TopBar(props) {
@@ -56,6 +63,32 @@ export default function TopBar(props) {
                         ERP Solution
                     </Link>
                 </Typography>
+
+
+                {/*로그인 했을 때 보이고, 로그아웃 했을 때 안 보이도록*/}
+                {/*정보 수정 아이콘*/}
+                <IconButton
+                    className={classes.accountInfo}
+                    color="inherit"
+                    aria-label="account of current user"
+                    edge="end"
+                    //aria-controls={menuId}
+                    aria-haspopup="true"
+                    //onClick={handleProfileMenuOpen}
+                >
+                    <AccountCircle />
+                </IconButton>
+
+                {/*로그아웃 아이콘*/}
+                <List>
+                    <ListItem button onClick={() => doLogout()}>
+                        <ExitToAppIcon />
+                    </ListItem>
+                </List>
+
+
+
+
             </Toolbar>
         </AppBar>
     );

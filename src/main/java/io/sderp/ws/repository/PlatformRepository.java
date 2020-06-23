@@ -33,7 +33,6 @@ public class PlatformRepository {
     public int deletePlatform(String platformId) {
         return mapper.deletePlatform(platformId);
     }
-
     public long platformInUse(String platformId) {
         return mapper.platformInUse(platformId);
     }

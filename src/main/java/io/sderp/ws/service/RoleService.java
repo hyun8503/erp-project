@@ -7,11 +7,11 @@ import io.sderp.ws.exception.ErrorCode;
 import io.sderp.ws.model.Permission;
 import io.sderp.ws.model.Role;
 import io.sderp.ws.model.RoleWithPermission;
+import io.sderp.ws.model.UserActionHistories;
 import io.sderp.ws.model.support.PermissionType;
-import io.sderp.ws.repository.PermissionRepository;
-import io.sderp.ws.repository.RolePermissionRepository;
-import io.sderp.ws.repository.RoleRepository;
-import io.sderp.ws.repository.UserRoleRepository;
+import io.sderp.ws.model.support.UserActionHistoryStatus;
+import io.sderp.ws.model.support.UserActionHistoryType;
+import io.sderp.ws.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,13 +28,16 @@ public class RoleService {
     private RolePermissionRepository rolePermissionRepository;
     private PermissionRepository permissionRepository;
     private UserRoleRepository userRoleRepository;
+    private UserActionHistoryRepository userActionHistoryRepository;
 
     @Autowired
-    public RoleService(RoleRepository roleRepository, RolePermissionRepository rolePermissionRepository, PermissionRepository permissionRepository, UserRoleRepository userRoleRepository) {
+    public RoleService(RoleRepository roleRepository, RolePermissionRepository rolePermissionRepository, PermissionRepository permissionRepository, UserRoleRepository userRoleRepository,
+                       UserActionHistoryRepository userActionHistoryRepository) {
         this.roleRepository = roleRepository;
         this.rolePermissionRepository = rolePermissionRepository;
         this.permissionRepository = permissionRepository;
         this.userRoleRepository = userRoleRepository;
+        this.userActionHistoryRepository =userActionHistoryRepository;
     }
 
     public RoleListParam selectRolePermission(String roleId) {
@@ -74,9 +77,9 @@ public class RoleService {
 
         return roleListParam;
     }
-
+    //역할 등록
     @Transactional(rollbackFor = Exception.class)
-    public void insertRole(AddRoleParam param) {
+    public void insertRole(AddRoleParam param, String userId, String remoteAddr, String paramJson) {
         roleNameDuplicateCheck(param.getRoleName());
         LocalDateTime now = LocalDateTime.now();
         String roleId = UUID.randomUUID().toString();
@@ -90,10 +93,22 @@ public class RoleService {
 
         roleRepository.insertRole(role);
         insertRolePermission(roleId, param.getPermissionList());
+
+
+        UserActionHistories userActionHistories = UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.ROLE)
+                .statusCode(UserActionHistoryStatus.CREATE)
+                .description(paramJson)
+                .ipAddress(remoteAddr)
+                .build();
+
+        userActionHistoryRepository.insertActionHistory(userActionHistories);
     }
 
+   //역할 수정
     @Transactional(rollbackFor = Exception.class)
-    public void updateRole(RoleListParam roleListParam) {
+    public void updateRole(RoleListParam roleListParam, String userId, String remoteAddr, String paramJson) {
         Role role = roleListParam.getRole();
         List<Permission> permissionList = roleListParam.getPermissionList();
         role.setModifiedDate(LocalDateTime.now());
@@ -104,13 +119,33 @@ public class RoleService {
         for (Permission permission : permissionList) {
             rolePermissionRepository.insertRolePermission(role.getRoleId(), permission.getPermissionName());
         }
-    }
 
+        UserActionHistories userActionHistories = UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.ROLE)
+                .statusCode(UserActionHistoryStatus.UPDATE)
+                .description(paramJson)
+                .ipAddress(remoteAddr)
+                .build();
+
+        userActionHistoryRepository.insertActionHistory(userActionHistories);
+    }
+    //역할 삭제
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRole(String roleId) {
-        userRoleInUseCheck(roleId);
-        rolePermissionRepository.deleteRolePermission(roleId);
-        roleRepository.deleteRole(roleId);
+    public void deleteRole(Role param, String userId, String remoteAddr, String paramJson) {
+        userRoleInUseCheck(param.getRoleId());
+        rolePermissionRepository.deleteRolePermission(param.getRoleId());
+        roleRepository.deleteRole(param.getRoleId());
+
+        UserActionHistories userActionHistories = UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.ROLE)
+                .statusCode(UserActionHistoryStatus.DELETE)
+                .description(paramJson)
+                .ipAddress(remoteAddr)
+                .build();
+
+        userActionHistoryRepository.insertActionHistory(userActionHistories);
     }
 
     private void userRoleInUseCheck(String roleId) {

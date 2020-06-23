@@ -81,12 +81,23 @@ public class PlatformService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deletePlatform(String platformId) {
-        long count = platformRepository.platformInUse(platformId);
+    public void deletePlatform(Platform platform, String userId, String remoteAddr, String paramJson){
+        long count = platformRepository.platformInUse(platform.getPlatformId());
         if(count != 0){
             throw new BaseException(ErrorCode.PLATFORM_IN_USE, HttpStatus.BAD_REQUEST, "platform is in use");
         }else{
-            platformRepository.deletePlatform(platformId);
+            platformRepository.deletePlatform(platform.getPlatformId());
         }
+
+        UserActionHistories userActionHistories = UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.PLATFORM)
+                .statusCode(UserActionHistoryStatus.DELETE)
+                .description(paramJson)
+                .ipAddress(remoteAddr)
+                .build();
+
+        userActionHistoryRepository.insertActionHistory(userActionHistories);
+
     }
 }

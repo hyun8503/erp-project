@@ -239,10 +239,16 @@ export default class RoleStore {
         }
     });
 
-    deleteRole = flow(function* (roleId) {
+    deleteRole = flow(function* (rowData) {
         this.deleting = true;
         try {
-            yield axios.delete(`/api/v1/role/${roleId}`);
+            yield axios.delete(`/api/v1/role/${rowData.roleId}`,{ data:
+                {
+                roleId: rowData.roleId,
+                roleName: rowData.roleName,
+                },
+
+                });
             this.deleteDialogClose();
             this.getRoleList();
         } catch (err) {

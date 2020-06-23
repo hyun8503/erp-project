@@ -210,7 +210,7 @@ class RoleManagement extends React.Component {
                                     {
                                         icon: 'delete',
                                         tooltip: 'delete role',
-                                        onClick: (event, rowData) => this.props.roleStore.deleteDialogOpen(rowData.roleId)
+                                        onClick: (event, rowData) => this.props.roleStore.deleteDialogOpen(rowData)
                                     }
                                 ]}
                                 data={this.props.roleStore.roleList.length > 0 ? this.props.roleStore.roleList.map((item) => {

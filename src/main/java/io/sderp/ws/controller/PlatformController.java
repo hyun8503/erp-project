@@ -52,9 +52,8 @@ public class PlatformController {
         ObjectMapper objectMapper = new ObjectMapper();
         String remoteAddr = httpRequest.getRemoteAddr();
         String paramJson = objectMapper.writeValueAsString(param);
-        String userId = authenticationService.getUser().getLoginId();
+        String userId = authenticationService.getUser().getUserId();
 
-        logger.info("remoteAddr = {}, paramJson = {}, userId = {}", remoteAddr, paramJson, userId);
         platformService.insertPlatform(param, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(param, HttpStatus.OK);
     }
@@ -66,7 +65,7 @@ public class PlatformController {
         ObjectMapper objectMapper = new ObjectMapper();
         String remoteAddr = httpRequest.getRemoteAddr();
         String paramJson = objectMapper.writeValueAsString(param);
-        String userId = authenticationService.getUser().getLoginId();
+        String userId = authenticationService.getUser().getUserId();
 
         platformService.updatePlatform(param, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -74,13 +73,18 @@ public class PlatformController {
 
     //플랫폼 삭제
     @DeleteMapping("/platform/{platformId}")
-    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @PathVariable String platformId) throws Exception {
+    public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @RequestBody Platform param) throws Exception {
+//        Map map = new HashMap<String, String>();
+//        map.put("platformId", param.getPlatformId());
+//        map.put("platformName", param.getPlatformName());
+//        map.put("typeCode", param.getTypeCode());
+//        String paramJson = objectMapper.writeValueAsString(map);
         ObjectMapper objectMapper = new ObjectMapper();
-        Map map = new HashMap<String, String>();
-        map.put("platformId", platformId);
-        String paramJson = objectMapper.writeValueAsString(map);
+        String paramJson = objectMapper.writeValueAsString(param);
+        String remoteAddr = httpRequest.getRemoteAddr();
+        String userId = authenticationService.getUser().getUserId();
 
-        platformService.deletePlatform(platformId);
+        platformService.deletePlatform(param, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

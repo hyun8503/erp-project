@@ -48,18 +48,15 @@ export default class PlatformStore {
     @action changeSearchName = (value) => {
         value = value ? value.trim() : value;
         this.searchName = value;
-        console.log(value);
     }
     @action changeSearchPlatformType = (value) => {
         this.searchPlatformType = value;
-        console.log(value);
     }
     @action changeIsAddPlatformDialog = (value) => this.isAddPlatformDialog = value;
     @action changeSelectedPlatformType = (value) => this.addSelectedPlatformType = value;
     @action changeAddPlatformName = (value) => {
         value = value ? value.trim() : value;
         this.addPlatformName = value
-        console.log(value);
     };
 
     @action confirmDialogClose = () => {
@@ -98,11 +95,18 @@ export default class PlatformStore {
 
 
 
-    deletePlatform = flow(function* (platformId) {
+    deletePlatform = flow(function* (oldData) {
         this.deleting = true;
-        console.log(this.deleting);
+        console.log(oldData);
         try {
-             const response = yield axios.delete(`/api/v1/platform/${platformId}`);
+             yield axios.delete(`/api/v1/platform/${oldData.platformId}`, {
+                 data:
+            {
+                platformId: oldData.platformId,
+                platformName: oldData.platformName,
+                typeCode: oldData.typeCode,
+            }
+        });
              this.getPlatformList();
         } catch (err) {
             console.log('deletePlatform');
