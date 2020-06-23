@@ -5,9 +5,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {AccountCircle} from "@material-ui/icons";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 120;
@@ -37,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     accountInfo: {
     },
 }));
+
 
 export default function TopBar(props) {
     const classes = useStyles();
@@ -72,9 +70,7 @@ export default function TopBar(props) {
                     color="inherit"
                     aria-label="account of current user"
                     edge="end"
-                    //aria-controls={menuId}
                     aria-haspopup="true"
-                    //onClick={handleProfileMenuOpen}
                 >
                     <AccountCircle />
                 </IconButton>
