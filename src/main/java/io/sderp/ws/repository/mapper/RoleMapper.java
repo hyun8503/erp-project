@@ -11,6 +11,7 @@ public interface RoleMapper {
     List<Role> selectAllRole();
     List<Role> selectRoleByName(String name);
     Role selectRole(String roleId);
+    Role selectRoleByUserId(String userId);
     List<RoleWithPermission> selectRoleWithPermission();
     long selectRoleNameCount(String roleName);
     int insertRole(Role role);

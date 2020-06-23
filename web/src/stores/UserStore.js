@@ -9,21 +9,19 @@ export default class UserStore {
     @observable addUserPwd = "";
     @observable addUserRoleId = "none";
     @observable addUserPlatformIdList = [];
-    @observable addUserSelectRoleList = [];
-    @observable addUserPlatformList = [];
     @observable addUserSearchPlatformName = "";
     @observable addingUser = false;
 
     @observable isModifyUserDialog = false;
+    @observable modifyUserInfo = null;
     @observable modifyUserRoleId = "none";
     @observable modifyUserPlatformIdList = [];
-    @observable modifyUserSelectRoleList = [];
-    @observable modifyUserPlatformList = [];
     @observable modifyUserSearchPlatformName = "";
     @observable modifyingUser = false;
 
     @observable userList = [];
-
+    @observable platformList = [];
+    @observable roleList = [];
 
     @action initStore = () => {
         this.isAddUserDialog = false;
@@ -35,8 +33,6 @@ export default class UserStore {
         this.addUserPwd = "";
         this.addUserRoleId = "none";
         this.addUserPlatformIdList = [];
-        this.addUserSelectRoleList = [];
-        this.addUserPlatformList = [];
         this.addUserSearchPlatformName = "";
         this.addingUser = false;
     }
@@ -45,27 +41,27 @@ export default class UserStore {
         this.isModifyUserDialog = false;
         this.modifyUserRoleId = "none";
         this.modifyUserPlatformIdList = [];
-        this.modifyUserSelectRoleList = [];
-        this.modifyUserPlatformList = [];
         this.modifyUserSearchPlatformName = "";
         this.modifyingUser = false;
+        this.modifyUserInfo = null;
     }
 
-    @action changeIsModifyUserDialog = (value) => {
-        this.isModifyUserDialog = value;
-        if(value) {
-            this.getRoleList();
-            this.getPlatformList();
-        } else {
-            this.initModifyDialog();
-        }
+    @action modifyUserDialogOpen = (userId) => {
+        this.isModifyUserDialog = true;
+        this.getRoleList();
+        this.getPlatformList();
+        this.getModifyUser(userId);
+    }
+
+    @action modifyUserDialogClose = () => {
+        this.initModifyDialog();
     }
 
     @action filterPlatformList = () => {
         this.addUserPlatformIdList = [];
         if(this.addUserSearchPlatformName) {
-            const filterPlatformList = this.addUserPlatformList.filter((item) => item.platformName.indexOf(this.addUserSearchPlatformName) !== -1);
-            this.addUserPlatformList = filterPlatformList.length > 0 ? filterPlatformList : [];
+            const filterPlatformList = this.platformList.filter((item) => item.platformName.indexOf(this.addUserSearchPlatformName) !== -1);
+            this.platformList = filterPlatformList.length > 0 ? filterPlatformList : [];
         } else {
             this.getPlatformList();
         }
@@ -98,7 +94,7 @@ export default class UserStore {
 
     @action changeAddUserRoleId = (value) => this.addUserRoleId = value;
     @action changeAddUserPlatformIdList = (value, checked) => {
-        if(this.addUserPlatformList.length === 0) {
+        if(this.platformList.length === 0) {
             return null;
         }
 
@@ -106,7 +102,7 @@ export default class UserStore {
             if(value === "all") {
                 this.addUserPlatformIdList = [];
                 this.addUserPlatformIdList.push("all");
-                this.addUserPlatformList.forEach((item) => {
+                this.platformList.forEach((item) => {
                     this.addUserPlatformIdList.push(item.platformId);
                 });
             } else {
@@ -125,15 +121,15 @@ export default class UserStore {
     }
 
     getRoleList = flow(function* () {
-        this.addUserSelectRoleList = [];
+        this.roleList = [];
         const userRoleAdapter = new RoleAdapter();
-        this.addUserSelectRoleList = yield userRoleAdapter.getRoleList();
+        this.roleList = yield userRoleAdapter.getRoleList();
     });
 
     getPlatformList = flow(function* () {
-        this.addUserPlatformList = []
+        this.platformList = []
         const platformAdapter = new PlatformAdapter();
-        this.addUserPlatformList = yield platformAdapter.getPlatformList();
+        this.platformList = yield platformAdapter.getPlatformList();
     });
 
     getUsers = flow(function* () {
@@ -141,12 +137,23 @@ export default class UserStore {
         try {
             const response = yield axios.get(`/api/v1/users`);
             this.userList = response.data;
-            console.log(this.userList);
         } catch (err) {
             console.log('get Users error');
             console.log(err);
         }
-    })
+    });
+
+    getModifyUser = flow(function* (userId) {
+        this.modifyUserInfo = null;
+        try {
+            const response = yield axios.get(`/api/v1/user/${userId}`);
+            this.modifyUserInfo = response.data;
+            console.log(this.modifyUserInfo);
+        } catch (err) {
+            console.log('getModifyUser error');
+            console.log(err);
+        }
+    });
 
     addUser = flow(function* () {
         this.addingUser = true;

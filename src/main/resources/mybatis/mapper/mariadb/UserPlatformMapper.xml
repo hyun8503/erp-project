@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.sderp.ws.repository.mapper.UserPlatformMapper">
+	<select id="selectAll" resultType="UserPlatform">
+		select user_id, platform_id, created_date, modified_date
+		from erp_user_platforms
+	</select>
+
+	<select id="selectPlatformByUserId" parameterType="String" resultType="Platform">
+		SELECT erp_platforms.platform_id,
+		       erp_platforms.platform_name,
+		       erp_platforms.type_code,
+		       erp_platforms.created_date,
+		       erp_platforms.modified_date
+		FROM erp_user_platforms
+			     JOIN erp_platforms ON erp_user_platforms.platform_id = erp_platforms.platform_id
+		WHERE erp_user_platforms.user_id = #{userId}
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="map">
 		delete
 		from erp_user_platforms
@@ -30,8 +46,4 @@
 		where user_id = #{userId}
 		  and platform_id = #{platformId}
 	</update>
-	<select id="selectAll" resultType="UserPlatform">
-		select user_id, platform_id, created_date, modified_date
-		from erp_user_platforms
-	</select>
 </mapper>

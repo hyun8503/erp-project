@@ -51,8 +51,8 @@ class ModifyUserDialog extends React.Component {
 
         return (
             <Dialog 
-                open={this.props.userStore.isAddUserDialog}
-                onClose={() => this.props.userStore.changeIsAddUserDialog(false)}>   
+                open={this.props.userStore.isModifyUserDialog}
+                onClose={() => this.props.userStore.modifyUserDialogClose()}>
                 <DialogTitle>사용자 추가</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={1}>
@@ -85,8 +85,8 @@ class ModifyUserDialog extends React.Component {
                                         <MenuItem value="none" disabled>
                                             <em>역할</em>
                                         </MenuItem>
-                                        {this.props.userStore.addUserSelectRoleList.length > 0 ?
-                                            this.props.userStore.addUserSelectRoleList.map((item) => {
+                                        {this.props.userStore.roleList.length > 0 ?
+                                            this.props.userStore.roleList.map((item) => {
                                                 return (
                                                     <MenuItem key={item.role.roleId} value={item.role.roleId}>{item.role.roleName}</MenuItem>
                                                 )
@@ -125,8 +125,8 @@ class ModifyUserDialog extends React.Component {
                                             label="전체선택"
                                             labelPlacement="end"
                                         />
-                                        {this.props.userStore.addUserPlatformList.length > 0 ?
-                                            this.props.userStore.addUserPlatformList.map((item) => {
+                                        {this.props.userStore.platformList.length > 0 ?
+                                            this.props.userStore.platformList.map((item) => {
                                                 return (
                                                     <FormControlLabel
                                                         key={item.platformId}
@@ -149,12 +149,11 @@ class ModifyUserDialog extends React.Component {
                                 </Grid>
                             </FormControl>
                         </FormGroup>
-
                     </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.addUser()}>추가</Button>
                     <Button variant="outlined" color="primary"
-                            onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 닫기</Button>
+                            onClick={() => this.props.userStore.modifyUserDialogClose()}> 닫기</Button>
                 </DialogActions>
             </Dialog>
         )

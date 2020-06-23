@@ -24,6 +24,7 @@ public class RoleRepository {
     public int deleteRole(String roleId) { return mapper.deleteRole(roleId); }
 
     public Role selectRole(String roleId) { return mapper.selectRole(roleId); }
+    public Role selectRoleByUserId(String userId) { return mapper.selectRoleByUserId(userId); }
     public List<Role> selectRoleByName(String name) { return mapper.selectRoleByName(name); }
     public List<Role> selectAllRole() { return mapper.selectAllRole(); }
     public long selectRoleNameCount(String roleName) {

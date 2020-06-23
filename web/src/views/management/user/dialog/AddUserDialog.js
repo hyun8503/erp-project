@@ -85,8 +85,8 @@ class AddUserDialog extends React.Component {
                                         <MenuItem value="none" disabled>
                                             <em>역할</em>
                                         </MenuItem>
-                                        {this.props.userStore.addUserSelectRoleList.length > 0 ?
-                                            this.props.userStore.addUserSelectRoleList.map((item) => {
+                                        {this.props.userStore.roleList.length > 0 ?
+                                            this.props.userStore.roleList.map((item) => {
                                                 return (
                                                     <MenuItem key={item.role.roleId} value={item.role.roleId}>{item.role.roleName}</MenuItem>
                                                 )
@@ -125,8 +125,8 @@ class AddUserDialog extends React.Component {
                                             label="전체선택"
                                             labelPlacement="end"
                                         />
-                                        {this.props.userStore.addUserPlatformList.length > 0 ?
-                                            this.props.userStore.addUserPlatformList.map((item) => {
+                                        {this.props.userStore.platformList.length > 0 ?
+                                            this.props.userStore.platformList.map((item) => {
                                                 return (
                                                     <FormControlLabel
                                                         key={item.platformId}

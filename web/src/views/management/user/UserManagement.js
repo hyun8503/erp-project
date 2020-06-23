@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 import AddUserDialog from "./dialog/AddUserDialog";
+import ModifyUserDialog from "./dialog/ModifyUserDialog";
 
 
 const styles = theme => ({
@@ -165,6 +166,7 @@ class UserManagement extends React.Component {
                                 data={this.props.userStore.userList.length > 0 ?
                                     this.props.userStore.userList.map((item) => {
                                         return {
+                                            userId: item.userId,
                                             loginId: item.loginId,
                                             roleName: item.roleName,
                                         }
@@ -174,7 +176,7 @@ class UserManagement extends React.Component {
                                     {
                                         icon: 'edit',
                                         tooltip: 'update user',
-                                        onClick: (event, rowData) => {}
+                                        onClick: (event, rowData) => this.props.userStore.modifyUserDialogOpen(rowData.userId)
                                     },
                                     {
                                         icon: 'delete',
@@ -188,6 +190,7 @@ class UserManagement extends React.Component {
                     </Paper>
                 </Grid>
                 <AddUserDialog/>
+                <ModifyUserDialog/>
             </div>
         );
     }

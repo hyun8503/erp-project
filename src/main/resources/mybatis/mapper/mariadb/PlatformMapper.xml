@@ -28,29 +28,29 @@
         WHERE platform_name like CONCAT('%',#{platformName},'%') AND type_code = #{typeCode}
     </select>
 
-    <insert id="insertPlatform" parameterType="Platform">
-        INSERT INTO erp_platforms
-            (
-                platform_id,
-                platform_name,
-                type_code,
-                created_date,
-                modified_date
-            )
-        VALUES
-            (
-                #{platformId},
-                #{platformName},
-                #{typeCode},
-                #{createdDate},
-                #{modifiedDate}
-            )
-    </insert>
-
     <select id="selectPlatformNameCount" parameterType="String" resultType="long">
         SELECT COUNT(1) FROM erp_platforms WHERE platform_name = #{platformName}
     </select>
 
+    <insert id="insertPlatform" parameterType="Platform">
+        INSERT INTO erp_platforms
+        (
+            platform_id,
+            platform_name,
+            type_code,
+            created_date,
+            modified_date
+        )
+        VALUES
+        (
+            #{platformId},
+            #{platformName},
+            #{typeCode},
+            #{createdDate},
+            #{modifiedDate}
+        )
+    </insert>
+    
     <update id="updatePlatform" parameterType="Platform">
 		UPDATE erp_platforms
 		SET    modified_date = #{modifiedDate},

@@ -47,6 +47,15 @@
         WHERE role_id = #{roleId}
     </select>
 
+    <select id="selectRoleByUserId" parameterType="String" resultType="Role">
+        SELECT erp_roles.role_id,
+               erp_roles.role_name,
+               erp_roles.created_date,
+               erp_roles.modified_date
+        FROM erp_roles JOIN erp_user_roles ON erp_roles.role_id = erp_user_roles.role_id
+        WHERE erp_user_roles.user_id = #{userId}
+    </select>
+
     <insert id="insertRole" parameterType="Role">
         INSERT INTO
             erp_roles

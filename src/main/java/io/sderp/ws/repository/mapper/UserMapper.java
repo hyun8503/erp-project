@@ -12,5 +12,6 @@ public interface UserMapper {
     long selectUserCount(String id);
     List<User> selectUsersWhereType(UserType type);
     List<User> selectAllUser();
+    User selectUserByUserId(String userId);
     int insertUser(User account);
 }

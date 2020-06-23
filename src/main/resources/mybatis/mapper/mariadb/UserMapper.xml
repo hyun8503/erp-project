@@ -29,6 +29,18 @@
         WHERE login_id != 'admin'
     </select>
 
+    <select id="selectUserByUserId" parameterType="String" resultMap="UserResultMap">
+        SELECT user_id,
+               login_id,
+               login_password,
+               type_code,
+               status_code,
+               created_date,
+               modified_date
+        FROM erp_users
+        WHERE user_id = #{value}
+    </select>
+
     <select id="selectUser" parameterType="String" resultMap="UserResultMap">
         SELECT user_id,
                login_id,

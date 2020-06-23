@@ -1,14 +1,14 @@
 package io.sderp.ws.service;
 
 import io.sderp.ws.controller.param.SignUpParam;
+import io.sderp.ws.controller.param.UserParam;
 import io.sderp.ws.exception.BaseException;
 import io.sderp.ws.exception.ErrorCode;
 import io.sderp.ws.exception.NotAcceptableIdException;
-import io.sderp.ws.model.User;
-import io.sderp.ws.model.UserPlatform;
-import io.sderp.ws.model.UserRole;
+import io.sderp.ws.model.*;
 import io.sderp.ws.model.support.UserStatusType;
 import io.sderp.ws.model.support.UserType;
+import io.sderp.ws.repository.RoleRepository;
 import io.sderp.ws.repository.UserPlatformRepository;
 import io.sderp.ws.repository.UserRepository;
 import io.sderp.ws.repository.UserRoleRepository;
@@ -49,13 +49,15 @@ public class UserService {
     private UserRepository repository;
     private UserRoleRepository userRoleRepository;
     private UserPlatformRepository userPlatformRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserPlatformRepository userPlatformRepository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserPlatformRepository userPlatformRepository, RoleRepository roleRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.userPlatformRepository = userPlatformRepository;
+        this.roleRepository = roleRepository;
     }
 
     @PostConstruct
@@ -82,6 +84,19 @@ public class UserService {
     }
 
     public List<User> selectAllUser() { return repository.selectAllUser(); }
+
+    public UserParam getUserParam(String userId) {
+        User user = repository.selectUserByUserId(userId);
+        Role role = roleRepository.selectRoleByUserId(userId);
+        List<Platform> platformList = userPlatformRepository.selectPlatformByUserId(userId);
+
+        return UserParam.builder()
+                .user(user)
+                .role(role)
+                .platform(platformList)
+                .build();
+    }
+
     public List<User> getUsers(UserType type) {
         return repository.selectUsers(type);
     }
