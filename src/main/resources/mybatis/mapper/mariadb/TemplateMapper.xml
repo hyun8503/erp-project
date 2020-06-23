@@ -1,0 +1,37 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.sderp.ws.repository.mapper.TemplateMapper">
+    <select id="selectAllTemplate" resultType="Template">
+        SELECT template_id,
+               template_name,
+               file_name,
+               file_path,
+               file_size,
+               created_date,
+               modified_date
+        FROM erp_templates
+    </select>
+    <insert id="insertTemplate" parameterType="Template">
+        INSERT INTO erp_templates
+            (
+                template_id,
+                template_name,
+                file_name,
+                file_path,
+                file_size,
+                created_date,
+                modified_date
+            )
+        VALUES
+            (
+                #{templateId},
+                #{templateName},
+                #{fileName},
+                #{filePath},
+                #{fileSize},
+                #{createdDate},
+                #{modifiedDate}
+            )
+    </insert>
+</mapper>
+
+

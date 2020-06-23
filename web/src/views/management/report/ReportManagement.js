@@ -14,7 +14,6 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 
 const styles = theme => ({
     wrap: {
@@ -57,6 +56,7 @@ const styles = theme => ({
 @observer
 class ReportManagement extends React.Component {
     componentDidMount() {
+        this.props.reportSubmitStore.getTemplateList();
     }
 
     render() {
@@ -88,6 +88,7 @@ class ReportManagement extends React.Component {
                             {this.props.reportSubmitStore.isDropZoneAreaRender ?
                                 <DropzoneArea
                                     onChange={(files) => this.props.reportSubmitStore.changeUploadFileList(files)}
+                                    acceptedFiles={['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
                                     maxFileSize={30000000}
                                     showFileNamesInPreview={true}
                                     showPreviews={true}
@@ -104,37 +105,12 @@ class ReportManagement extends React.Component {
                                 {/*    <Button variant={"contained"} color={"secondary"}>취소</Button>*/}
                                 {/*</Grid>*/}
                                 <Grid item>
-                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.addFileList()}>등록</Button>
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.uploadFiles()}>등록</Button>
                                 </Grid>
                             </Grid>
                             : ""}
 
                         <Grid container className={classes.cardGrid} spacing={3}>
-                            <Grid item xs={3}>
-                                <Card>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={"/images/excel.png"}
-                                            title={"hoho"}
-                                        />
-                                        <CardContent>
-                                            <Typography variant={"subtitle1"}>
-                                                test1
-                                            </Typography>
-                                            <Typography variant={"body2"}>
-                                                업데이트: {moment().format("YYYY-MM-DD")}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <Button size="large" color="secondary">
-                                            삭제
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-
                             {this.props.reportSubmitStore.fileList.length > 0 ?
                                 this.props.reportSubmitStore.fileList.map((item, index) => {
                                     return (
@@ -144,22 +120,22 @@ class ReportManagement extends React.Component {
                                                     <CardMedia
                                                         className={classes.cardMedia}
                                                         image={"/images/excel.png"}
-                                                        title={"hoho"}
+                                                        title={item.templateName}
                                                     />
                                                     <CardContent>
                                                         <Typography variant={"subtitle1"}>
-                                                            {item.name}
+                                                            {item.templateName}
                                                         </Typography>
                                                         <Typography variant={"body2"}>
-                                                            업데이트: {moment(item.lastModified).format("YYYY-MM-DD")}
+                                                            업데이트: {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                         </Typography>
                                                     </CardContent>
                                                 </CardActionArea>
-                                                <CardActions>
-                                                    <Button size="large" color="secondary">
-                                                        삭제
-                                                    </Button>
-                                                </CardActions>
+                                                {/*<CardActions>*/}
+                                                {/*    <Button size="large" color="secondary">*/}
+                                                {/*        삭제*/}
+                                                {/*    </Button>*/}
+                                                {/*</CardActions>*/}
                                             </Card>
                                         </Grid>
                                     )

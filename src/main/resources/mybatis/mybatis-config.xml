@@ -18,6 +18,7 @@
         <typeAlias type="io.sderp.ws.model.UserRole" alias="UserRole"/>
         <typeAlias type="io.sderp.ws.model.UserPlatform" alias="UserPlatform" />
         <typeAlias type="io.sderp.ws.model.UserActionHistories" alias="UserActionHistories" />
+        <typeAlias type="io.sderp.ws.model.Template" alias="Template" />
     </typeAliases>
 
     <typeHandlers>

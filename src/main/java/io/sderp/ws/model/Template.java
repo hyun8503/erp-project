@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Templates {
+public class Template {
     private String templateId;
 
     private String templateName;

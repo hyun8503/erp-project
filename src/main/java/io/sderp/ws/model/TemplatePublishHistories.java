@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,12 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TemplatePublishHistories {
-    private Long publishHistId;
-
+    private BigInteger publishHistId;
     private String templateId;
-
     private String platformId;
-
     private String reportMonth;
 
     private String successFlag;
