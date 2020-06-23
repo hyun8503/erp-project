@@ -17,12 +17,6 @@
 		WHERE erp_user_platforms.user_id = #{userId}
 	</select>
 
-	<delete id="deleteByPrimaryKey" parameterType="map">
-		delete
-		from erp_user_platforms
-		where user_id = #{userId}
-		  and platform_id = #{platformId}
-	</delete>
 	<insert id="insertUserPlatform" parameterType="UserPlatform">
 		insert into erp_user_platforms
 		    (
@@ -39,6 +33,7 @@
 		        #{modifiedDate}
             )
 	</insert>
+
 	<update id="updateByPrimaryKey" parameterType="UserPlatform">
 		update erp_user_platforms
 		set created_date  = #{createdDate},
@@ -46,4 +41,16 @@
 		where user_id = #{userId}
 		  and platform_id = #{platformId}
 	</update>
+
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete
+		from erp_user_platforms
+		where user_id = #{userId}
+		  and platform_id = #{platformId}
+	</delete>
+
+	<delete id="deleteUserPlatform" parameterType="String">
+		DELETE FROM erp_user_platforms
+		WHERE user_id = #{userId}
+	</delete>
 </mapper>

@@ -1,15 +1,13 @@
 package io.sderp.ws.controller;
 
+import io.sderp.ws.controller.param.ModifyUserParam;
 import io.sderp.ws.controller.param.UserParam;
 import io.sderp.ws.model.User;
 import io.sderp.ws.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,5 +30,11 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<UserParam> getUser(HttpServletRequest httpRequest, @PathVariable String userId) {
         return new ResponseEntity<>(userService.getUserParam(userId), HttpStatus.OK);
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<Object> updateUser(HttpServletRequest httpRequest, @RequestBody ModifyUserParam modifyUserParam) {
+        userService.modifyUser(modifyUserParam);
+        return new ResponseEntity<>(modifyUserParam, HttpStatus.OK);
     }
 }

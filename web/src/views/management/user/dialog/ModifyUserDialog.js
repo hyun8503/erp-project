@@ -152,9 +152,13 @@ class ModifyUserDialog extends React.Component {
                         </FormGroup>
                     </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => {}}>수정</Button>
+                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.modifyUser()}>수정</Button>
                     <Button variant="outlined" color="primary"
-                            onClick={() => this.props.userStore.modifyUserDialogClose()}> 닫기</Button>
+                            onClick={() => this.props.userStore.modifyUserDialogClose()}
+                            disabled={this.props.userStore.modifyingUser}
+                    >
+                        닫기
+                    </Button>
                 </DialogActions>
             </Dialog>
         )

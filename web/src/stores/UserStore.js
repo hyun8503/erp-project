@@ -234,14 +234,19 @@ export default class UserStore {
         this.modifyingUser = true;
         try {
             const data = {
-                userId: this.modifyUserInfo.userId,
+                userId: this.modifyUserInfo.user.userId,
                 userPwd: this.modifyUserPwd,
                 userRoleId: this.modifyUserRoleId,
                 userPlatformIdList: this.modifyUserPlatformIdList.filter((item) => item !== "all"),
             }
+
+            yield axios.put(`/api/v1/user`, data);
+            this.initModifyDialog();
+            this.getUsers();
         } catch (err) {
             console.log('modifyUser error');
             console.log(err);
+            this.modifyingUser = false;
         }
     })
 }

@@ -22,4 +22,6 @@ public class UserPlatformRepository {
     public int insertUserPlatform(UserPlatform record) {
         return mapper.insertUserPlatform(record);
     }
+
+    public int deleteUserPlatform(String userId) { return mapper.deleteUserPlatform(userId); }
 }

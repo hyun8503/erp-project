@@ -90,4 +90,13 @@
             NOW()
         )
     </insert>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE erp_users
+        SET type_code = #{typeCode},
+            status_code = #{statusCode},
+            <if test="loginPassword != null">login_password = #{loginPassword},</if>
+            modified_date = #{modifiedDate}
+        WHERE user_id = #{userId}
+    </update>
 </mapper>

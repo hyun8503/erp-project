@@ -16,6 +16,13 @@
 		where user_id = #{userId}
 		  and role_id = #{roleId}
 	</update>
+
+	<update id="updateUserRole" parameterType="Map">
+		UPDATE erp_user_roles
+		SET role_id = #{roleId}
+		WHERE user_id = #{userId}
+	</update>
+
 	<select id="selectAll" resultType="UserRole">
 		select user_id, role_id, created_date
 		from erp_user_roles

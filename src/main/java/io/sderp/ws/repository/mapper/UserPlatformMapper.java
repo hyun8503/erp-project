@@ -15,4 +15,5 @@ public interface UserPlatformMapper {
     int deleteByPrimaryKey(@Param("userId") String userId, @Param("platformId") String platformId);
     int insertUserPlatform(UserPlatform record);
     int updateByPrimaryKey(UserPlatform record);
+    int deleteUserPlatform(String userId);
 }

@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository;
 public class UserRoleRepository {
     private UserRoleMapper mapper;
 
-    public UserRoleRepository(UserRoleMapper mapper) {
-        this.mapper = mapper;
-    }
-
     public long selectUserRoleCount(String roleId) {
         return mapper.selectUserRoleCount(roleId);
     }
@@ -19,4 +15,10 @@ public class UserRoleRepository {
     public int insertUserRole(UserRole userRole) {
         return mapper.insertUserRole(userRole);
     }
+
+    public UserRoleRepository(UserRoleMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    public int updateUserRole(String userId, String roleId) { return mapper.updateUserRole(userId, roleId); }
 }

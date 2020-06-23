@@ -26,9 +26,8 @@ public class UserRepository {
         return mapper.selectUsersWhereType(type);
     }
     public List<User> selectAllUser() { return mapper.selectAllUser(); }
-    public User selectUserByUserId(String userId) { return mapper.selectUserByUserId(userId); };
+    public User selectUserByUserId(String userId) { return mapper.selectUserByUserId(userId); }
 
-    public int insertUser(User user) {
-        return mapper.insertUser(user);
-    }
+    public int insertUser(User user) { return mapper.insertUser(user); }
+    public int updateUser(User user) { return mapper.updateUser(user); }
 }

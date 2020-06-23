@@ -1,5 +1,6 @@
 package io.sderp.ws.service;
 
+import io.sderp.ws.controller.param.ModifyUserParam;
 import io.sderp.ws.controller.param.SignUpParam;
 import io.sderp.ws.controller.param.UserParam;
 import io.sderp.ws.exception.BaseException;
@@ -151,6 +152,39 @@ public class UserService {
         repository.insertUser(user);
 
         return user;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void modifyUser(ModifyUserParam modifyUserParam) {
+        String loginPassword = null;
+        List<String> platformIdList = modifyUserParam.getUserPlatformIdList();
+        if(platformIdList.size() == 0) {
+            throw new RuntimeException("modify user fail: platform id list size not zero");
+        }
+
+        if(!modifyUserParam.getUserPwd().isEmpty()) {
+            loginPassword = passwordEncoder.encode(modifyUserParam.getUserPwd());
+        }
+
+        User user = User.builder()
+                .userId(modifyUserParam.getUserId())
+                .loginPassword(loginPassword)
+                .typeCode(UserType.NORMAL)
+                .statusCode(UserStatusType.NORMAL)
+                .modifiedDate(LocalDateTime.now())
+                .build();
+
+        repository.updateUser(user);
+        userRoleRepository.updateUserRole(modifyUserParam.getUserId(), modifyUserParam.getUserRoleId());
+        userPlatformRepository.deleteUserPlatform(modifyUserParam.getUserId());
+        for (String platformId: platformIdList) {
+            userPlatformRepository.insertUserPlatform(UserPlatform.builder()
+                    .userId(modifyUserParam.getUserId())
+                    .platformId(platformId)
+                    .modifiedDate(LocalDateTime.now())
+                    .createdDate(LocalDateTime.now())
+                    .build());
+        }
     }
 
     private void loginIdDuplicateCheck(String loginId) {
