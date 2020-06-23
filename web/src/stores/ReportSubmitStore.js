@@ -53,7 +53,6 @@ export default class ReportSubmitStore {
         try {
             const response = yield axios.get(`/api/v1/report/template`);
             this.fileList = response.data;
-            console.log(this.fileList);
         } catch (err) {
             console.log('getTemplateList error');
             console.log(err);
