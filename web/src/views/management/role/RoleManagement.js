@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 import AddRoleDialog from "./dialog/AddRoleDialog";
-import UpdateRoleDialog from "./dialog/UpdateRoleDialog";
+import ModifyRoleDialog from "./dialog/ModifyRoleDialog";
 import ConfirmDialog from "../../../components/ConfirmDialog";
 import DeleteDialog from "./dialog/DeleteDialog";
 import Chip from '@material-ui/core/Chip';
@@ -225,7 +225,7 @@ class RoleManagement extends React.Component {
                     </Paper>
                   </Grid>
                 <AddRoleDialog/>
-                <UpdateRoleDialog/>
+                <ModifyRoleDialog/>
                 <ConfirmDialog
                     open={this.props.roleStore.confirmDialogOpen}
                     handleClose={this.props.roleStore.confirmDialogClose}

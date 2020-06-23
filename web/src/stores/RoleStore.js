@@ -181,6 +181,7 @@ export default class RoleStore {
         } catch (err) {
             console.log('getUpdateRole error');
             console.log(err);
+            this.changeIsUpdateDialog(false);
         }
     });
 

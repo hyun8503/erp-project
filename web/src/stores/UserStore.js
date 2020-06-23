@@ -18,6 +18,7 @@ export default class UserStore {
     @observable modifyUserPlatformIdList = [];
     @observable modifyUserSearchPlatformName = "";
     @observable modifyingUser = false;
+    @observable modifyUserPwd = "";
 
     @observable userList = [];
     @observable platformList = [];
@@ -44,6 +45,55 @@ export default class UserStore {
         this.modifyUserSearchPlatformName = "";
         this.modifyingUser = false;
         this.modifyUserInfo = null;
+        this.modifyUserPwd = "";
+    }
+
+    @action modifyFilterPlatformList = () => {
+        if(this.modifyUserSearchPlatformName) {
+            const filterPlatformList = this.platformList.filter((item) => item.platformName.indexOf(this.modifyUserSearchPlatformName) !== -1);
+            this.platformList = filterPlatformList.length > 0 ? filterPlatformList : [];
+        } else {
+            this.getPlatformList();
+        }
+    }
+
+    @action changeModifyUserSearchPlatformName = (value) => {
+        value = value ? value.trim() : value;
+        this.modifyUserSearchPlatformName = value;
+    }
+
+    @action changeModifyUserPlatformIdList = (value, checked) => {
+        if(this.platformList.length === 0) {
+            return null;
+        }
+
+        if(checked) {
+            if(value === "all") {
+                this.modifyUserPlatformIdList = [];
+                this.modifyUserPlatformIdList.push("all");
+                this.platformList.forEach((item) => {
+                    this.modifyUserPlatformIdList.push(item.platformId);
+                });
+            } else {
+                this.modifyUserPlatformIdList.push(value);
+            }
+        } else {
+            if(value === "all") {
+                this.modifyUserPlatformIdList = [];
+            } else {
+                const delIdx = this.modifyUserPlatformIdList.findIndex((item) => item === value);
+                if(delIdx !== -1) {
+                    this.modifyUserPlatformIdList.splice(delIdx, 1);
+                }
+            }
+        }
+    }
+
+    @action changeModifyUserRoleId = (value) => this.modifyUserRoleId = value;
+
+    @action changeModifyUserPwd = (value) => {
+        value = value ? value.trim() : value;
+        this.modifyUserPwd = value;
     }
 
     @action modifyUserDialogOpen = (userId) => {
@@ -148,10 +198,14 @@ export default class UserStore {
         try {
             const response = yield axios.get(`/api/v1/user/${userId}`);
             this.modifyUserInfo = response.data;
-            console.log(this.modifyUserInfo);
+            this.modifyUserRoleId = this.modifyUserInfo ? this.modifyUserInfo.role.roleId : "none";
+            this.modifyUserPlatformIdList = this.modifyUserInfo ?
+                this.modifyUserInfo.platform.map((item) => item.platformId)
+                : [];
         } catch (err) {
             console.log('getModifyUser error');
             console.log(err);
+            this.initModifyDialog();
         }
     });
 
@@ -173,6 +227,21 @@ export default class UserStore {
             console.log('addUser');
             console.log(err);
             this.addingUser = false;
+        }
+    })
+
+    modifyUser = flow(function* () {
+        this.modifyingUser = true;
+        try {
+            const data = {
+                userId: this.modifyUserInfo.userId,
+                userPwd: this.modifyUserPwd,
+                userRoleId: this.modifyUserRoleId,
+                userPlatformIdList: this.modifyUserPlatformIdList.filter((item) => item !== "all"),
+            }
+        } catch (err) {
+            console.log('modifyUser error');
+            console.log(err);
         }
     })
 }

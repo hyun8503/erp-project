@@ -33,7 +33,10 @@ class AddRoleDialog extends React.Component {
 
         return (
         <Dialog open={this.props.roleStore.isAddRoleDialog} 
-                onClose={() => this.props.roleStore.changeIsAddRoleDialog(false)}>        
+                onClose={() => this.props.roleStore.changeIsAddRoleDialog(false)}
+                disableBackdropClick={false}
+                disableEscapeKeyDown={false}
+        >
             <DialogTitle>권한관리</DialogTitle>
             <DialogContent>                                                         
                 <FormControl className={classes.formControl} noValidate autoComplete="off">

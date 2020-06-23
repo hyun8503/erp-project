@@ -47,12 +47,16 @@ class AddUserDialog extends React.Component {
         const addBtnDisabled = !(this.props.userStore.addUserPlatformIdList.length > 0 &&
                                this.props.userStore.addUserId &&
                                this.props.userStore.addUserPwd &&
-                               this.props.userStore.addUserRoleId)
+                               this.props.userStore.addUserRoleId &&
+                               !this.props.userStore.addingUser)
 
         return (
             <Dialog 
                 open={this.props.userStore.isAddUserDialog}
-                onClose={() => this.props.userStore.changeIsAddUserDialog(false)}>   
+                onClose={() => this.props.userStore.changeIsAddUserDialog(false)}
+                disableBackdropClick={false}
+                disableEscapeKeyDown={false}
+            >
                 <DialogTitle>사용자 추가</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={1}>

@@ -31,7 +31,10 @@ class AddPlatformDialog extends React.Component {
         return (
             <Dialog 
                 open={this.props.platformStore.isAddPlatformDialog} 
-                onClose={() => this.props.platformStore.changeIsAddPlatformDialog(false)}>
+                onClose={() => this.props.platformStore.changeIsAddPlatformDialog(false)}
+                disableBackdropClick={false}
+                disableEscapeKeyDown={false}
+            >
                 <DialogTitle>플랫폼 추가</DialogTitle>
                 <DialogContent>
                     <FormControl variant="outlined" className={classes.formControl}>

@@ -22,7 +22,7 @@ const styles = (theme) => ({
 
 @inject("roleStore")
 @observer
-class UpdateRoleDialog extends React.Component {
+class ModifyRoleDialog extends React.Component {
     componentDidMount() {
         
     }
@@ -33,7 +33,10 @@ class UpdateRoleDialog extends React.Component {
 
         return (
             <Dialog open={this.props.roleStore.isUpdateDialog}
-                    onClose={() => this.props.roleStore.changeIsUpdateDialog(false)}>
+                    onClose={() => this.props.roleStore.changeIsUpdateDialog(false)}
+                    disableBackdropClick={false}
+                    disableEscapeKeyDown={false}
+            >
                 <DialogTitle>권한관리</DialogTitle>
                 <DialogContent>
                     <FormControl className={classes.formControl} noValidate autoComplete="off">
@@ -126,4 +129,4 @@ class UpdateRoleDialog extends React.Component {
     }
 }
 
-export default withStyles(styles)(UpdateRoleDialog);
+export default withStyles(styles)(ModifyRoleDialog);

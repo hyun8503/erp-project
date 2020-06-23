@@ -90,6 +90,10 @@ public class UserService {
         Role role = roleRepository.selectRoleByUserId(userId);
         List<Platform> platformList = userPlatformRepository.selectPlatformByUserId(userId);
 
+        if(user.getUserId() == null && role.getRoleId() == null && platformList.size() == 0) {
+            throw new RuntimeException("get user param fail");
+        }
+
         return UserParam.builder()
                 .user(user)
                 .role(role)
