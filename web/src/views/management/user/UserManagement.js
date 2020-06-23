@@ -71,11 +71,11 @@ class UserManagement extends React.Component {
       
         const tableDummyData = [
             {platformName: '사용자1', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자2', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자3', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자4', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자5', platformType: '플랫폼1', status: '1'},
-            {platformName: '사용자6', platformType: '플랫폼2', status: '2'},
+            {platformName: '사용자2', platformType: '플랫폼1', status: '2'},
+            {platformName: '사용자3', platformType: '플랫폼1', status: '3'},
+            {platformName: '사용자4', platformType: '플랫폼1', status: '4'},
+            {platformName: '사용자5', platformType: '플랫폼1', status: '5'},
+            {platformName: '사용자6', platformType: '플랫폼2', status: '6'},
             {platformName: '사용자7', platformType: '플랫폼2', status: '2'},
             {platformName: '사용자8', platformType: '플랫폼2', status: '2'},
             {platformName: '사용자9', platformType: '플랫폼2', status: '2'},
@@ -125,12 +125,12 @@ class UserManagement extends React.Component {
                                     <MenuItem value="none" disabled>
                                     <em>역할 유형</em>
                                     </MenuItem>
-                                    <MenuItem value={"보고서제출"}>보고서제출</MenuItem>
-                                    <MenuItem value={"보고서검색"}>보고서검색</MenuItem>
-                                    <MenuItem value={"보고서형식"}>보고서형식</MenuItem>
-                                    <MenuItem value={"플랫폼관리"}>플랫폼관리</MenuItem>
-                                    <MenuItem value={"사용자관리"}>사용자관리</MenuItem>
-                                    <MenuItem value={"역할 관리"}>역할 관리</MenuItem>
+                                    <MenuItem value={"역할1"}>역할1</MenuItem>
+                                    <MenuItem value={"역할2"}>역할2</MenuItem>
+                                    <MenuItem value={"역할3"}>역할3</MenuItem>
+                                    <MenuItem value={"역할4"}>역할4</MenuItem>
+                                    <MenuItem value={"역할5"}>역할5</MenuItem>
+                                    <MenuItem value={"역할6"}>역할6</MenuItem>
                                 </Select>
                            </FormControl> 
 
@@ -189,7 +189,7 @@ class UserManagement extends React.Component {
                                     {
                                         title: '역할',
                                         field: 'status',
-                                        lookup: { '1': '보고서제출', '2': '보고서검색', '3': '보고서형식', '4': '플랫폼관리','5': '사용자관리', '6': '역할 관리' },
+                                        lookup: { '1': '역할1', '2': '역할2', '3': '역할3', '4': '역할4', '5': '역할5', '6': '역할6' },
                                       },
                                
                                 ]}

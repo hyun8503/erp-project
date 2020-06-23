@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="project.base.mybatis")
+@ConfigurationProperties(prefix="sderp.mybatis")
 @Data
 public class DatabaseProperties {
     private String driverClassName;

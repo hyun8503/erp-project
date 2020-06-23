@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="project.base.tomcat")
+@ConfigurationProperties(prefix="sderp.tomcat")
 @Data
 public class TomcatProperties {
     private String maxThreads;

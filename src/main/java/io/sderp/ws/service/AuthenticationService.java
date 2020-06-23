@@ -1,7 +1,7 @@
 package io.sderp.ws.service;
 
-import io.sderp.ws.model.BaseSimpleUser;
-import io.sderp.ws.model.BaseUserToken;
+import io.sderp.ws.model.SimpleUser;
+import io.sderp.ws.model.UserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public BaseUserToken getToken(String id, String rawPassword, HttpSession session) {
+    public UserToken getToken(String id, String rawPassword, HttpSession session) {
         final Authentication request = new UsernamePasswordAuthenticationToken(id, rawPassword);
         final Authentication result = authenticationManager.authenticate(request);
 
@@ -30,16 +30,16 @@ public class AuthenticationService {
             return null;
         }
 
-        return BaseUserToken.builder()
+        return UserToken.builder()
                 .token(session.getId())
-                .user((BaseSimpleUser) result.getDetails())
+                .user((SimpleUser) result.getDetails())
                 .build();
     }
 
-    public BaseSimpleUser getUser() {
+    public SimpleUser getUser() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return (BaseSimpleUser) authentication.getDetails();
+        return (SimpleUser) authentication.getDetails();
     }
 
 

@@ -53,7 +53,7 @@ export default function TopBar(props) {
                 </IconButton>
                 <Typography variant="h6" noWrap className={classes.title}>
                     <Link to='/' className={classes.link}>
-                        데이터 관리 시스템
+                        ERP Solution
                     </Link>
                 </Typography>
             </Toolbar>

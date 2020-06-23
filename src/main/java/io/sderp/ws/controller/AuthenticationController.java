@@ -1,10 +1,10 @@
 package io.sderp.ws.controller;
 
 import io.sderp.ws.exception.CanNotFoundUserException;
+import io.sderp.ws.model.SimpleUser;
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.UserToken;
 import io.sderp.ws.service.AuthenticationService;
-import io.sderp.ws.model.BaseSimpleUser;
-import io.sderp.ws.model.BaseUser;
-import io.sderp.ws.model.BaseUserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<BaseUserToken> getLoginToken(HttpServletRequest httpRequest, HttpSession session, @RequestBody BaseUser account) {
-        final BaseUserToken token = authenticationService.getToken(account.getId(), account.getPassword(), session);
+    public ResponseEntity<UserToken> getLoginToken(HttpServletRequest httpRequest, HttpSession session, @RequestBody User account) {
+        final UserToken token = authenticationService.getToken(account.getLoginId(), account.getLoginPassword(), session);
 
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
@@ -46,8 +46,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/signcheck")
-    public ResponseEntity<BaseSimpleUser> check(HttpServletRequest httpRequest) {
-        final BaseSimpleUser user = authenticationService.getUser();
+    public ResponseEntity<SimpleUser> check(HttpServletRequest httpRequest) {
+        final SimpleUser user = authenticationService.getUser();
 
         if(user == null) {
             throw new CanNotFoundUserException();

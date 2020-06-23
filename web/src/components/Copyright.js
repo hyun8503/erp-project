@@ -20,7 +20,7 @@ export default function Copyright() {
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '}
                 <Link color="inherit" href="http://www.aetherit.io">
-                    SindTech
+                    Sind Tech
                 </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}

@@ -1,8 +1,8 @@
 package io.sderp.ws.repository;
 
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.repository.mapper.UserMapper;
-import io.sderp.ws.model.BaseUser;
-import io.sderp.ws.model.support.BaseUserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,15 +17,15 @@ public class UserRepository {
         this.mapper = mapper;
     }
 
-    public BaseUser selectUser(String id) {
+    public User selectUser(String id) {
         return mapper.selectUser(id);
     }
 
-    public List<BaseUser> selectUsers(BaseUserType type) {
+    public List<User> selectUsers(UserType type) {
         return mapper.selectUsersWhereType(type);
     }
 
-    public int insertUser(BaseUser user) {
+    public int insertUser(User user) {
         return mapper.insertUser(user);
     }
 }

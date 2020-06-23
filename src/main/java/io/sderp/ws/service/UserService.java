@@ -1,9 +1,10 @@
 package io.sderp.ws.service;
 
 import io.sderp.ws.exception.NotAcceptableIdException;
-import io.sderp.ws.model.support.BaseUserType;
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.support.UserStatusType;
+import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.repository.UserRepository;
-import io.sderp.ws.model.BaseUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -45,40 +47,40 @@ public class UserService {
 
     @PostConstruct
     public void checkAdmin() {
-        final List<BaseUser> users = getUsers(BaseUserType.Admin);
+        final List<User> users = getUsers(UserType.Admin);
 
         if((users == null) || (users.size() < 1)) {
             logger.info("Admin account not exists : create a default admin account");
 
-            final BaseUser newAdmin = BaseUser.builder()
-                    .id(DEFAULT_ADMIN_ID)
-                    .password(DEFAULT_ADMIN_PASSWORD)
-                    .name(DEFAULT_ADMIN_NAME)
-                    .type(BaseUserType.Admin)
-                    .isEnabled(true)
+            final User newAdmin = User.builder()
+                    .userId(UUID.randomUUID().toString())
+                    .loginId(DEFAULT_ADMIN_ID)
+                    .loginPassword(DEFAULT_ADMIN_PASSWORD)
+                    .typeCode(UserType.Admin)
+                    .statusCode(UserStatusType.Normal)
                     .build();
 
             createNewUser(newAdmin);
         }
     }
 
-    public BaseUser getUser(String id) {
+    public User getUser(String id) {
         return repository.selectUser(id);
     }
 
-    public List<BaseUser> getUsers(BaseUserType type) {
+    public List<User> getUsers(UserType type) {
         return repository.selectUsers(type);
     }
 
-    public BaseUser createNewUser(BaseUser user) {
-        if(isNotAcceptableId(user.getId())) {
-            throw new NotAcceptableIdException(user.getId());
+    public User createNewUser(User user) {
+        if(isNotAcceptableId(user.getUserId())) {
+            throw new NotAcceptableIdException(user.getUserId());
         }
-        final String encodedPassword = passwordEncoder.encode(user.getPassword());
+        final String encodedPassword = passwordEncoder.encode(user.getLoginPassword());
 
-        user.setPassword(encodedPassword);
-        user.setCreatedDatetime(LocalDateTime.now());
-        user.setUpdatedDatetime(LocalDateTime.now());
+        user.setLoginPassword(encodedPassword);
+        user.setCreatedDate(LocalDateTime.now());
+        user.setModifiedDate(LocalDateTime.now());
 
         repository.insertUser(user);
 

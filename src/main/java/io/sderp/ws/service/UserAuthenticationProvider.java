@@ -1,7 +1,10 @@
 package io.sderp.ws.service;
 
-import io.sderp.ws.model.BaseSimpleUser;
-import io.sderp.ws.model.BaseUser;
+import io.sderp.ws.model.SimpleUser;
+import io.sderp.ws.model.User;
+import io.sderp.ws.model.support.UserStatusType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +24,7 @@ import java.util.List;
 
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
+    private static final Logger logger = LoggerFactory.getLogger(UserAuthenticationProvider.class);
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
@@ -38,18 +42,19 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         final String userId = (String) request.getPrincipal();
         final String password = (String) request.getCredentials();
 
-        final BaseUser user = userService.getUser(userId);
+        final User user = userService.getUser(userId);
+
         if(user == null) {
             throw new UsernameNotFoundException("Username not found : " + userId);
         }
 
-        if(!user.isEnabled()) {
+        if(user.getStatusCode() == UserStatusType.Withdraw) {
             throw new DisabledException("User is not enabled : " + userId);
         }
 
-        if ((password != null) && (password.length() > 0) && (passwordEncoder.matches(password, user.getPassword()))) {
+        if ((password != null) && (password.length() > 0) && (passwordEncoder.matches(password, user.getLoginPassword()))) {
             final List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getType().name()));
+            authorities.add(new SimpleGrantedAuthority(user.getTypeCode().name()));
 
             result = new UsernamePasswordAuthenticationToken(userId, password, authorities);
             result.setDetails(getSimpleUser(user));
@@ -65,14 +70,13 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
     }
 
-    private BaseSimpleUser getSimpleUser(BaseUser user) {
-        return BaseSimpleUser.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .type(user.getType())
-                .isEnabled(user.isEnabled())
-                .createdDatetime(user.getCreatedDatetime())
-                .updatedDatetime(user.getUpdatedDatetime())
+    private SimpleUser getSimpleUser(User user) {
+        return SimpleUser.builder()
+                .userId(user.getUserId())
+                .loginId(user.getLoginId())
+                .typeCode(user.getTypeCode())
+                .createDate(user.getCreatedDate())
+                .modifiedDate(user.getModifiedDate())
                 .build();
     }
 }

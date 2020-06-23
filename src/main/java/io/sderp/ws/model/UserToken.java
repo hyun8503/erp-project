@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseUserToken {
+public class UserToken {
     private String token;
-    private BaseSimpleUser user;
+    private SimpleUser user;
 }
