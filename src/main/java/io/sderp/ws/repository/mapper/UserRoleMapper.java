@@ -17,5 +17,7 @@ public interface UserRoleMapper {
     int updateByPrimaryKey(UserRole record);
     int updateUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 
+    int deleteUserRole(String userId);
+
     long selectUserRoleCount(String roleId);
 }

@@ -20,6 +20,10 @@ export default class UserStore {
     @observable modifyingUser = false;
     @observable modifyUserPwd = "";
 
+    @observable isDeleteDialog = false;
+    @observable deletingUser = false;
+    @observable deleteUserId = null;
+
     @observable userList = [];
     @observable platformList = [];
     @observable roleList = [];
@@ -46,6 +50,20 @@ export default class UserStore {
         this.modifyingUser = false;
         this.modifyUserInfo = null;
         this.modifyUserPwd = "";
+    }
+
+    @action isDeleteDialogOpen = (userId) => {
+        if(!userId) {
+            return null;
+        }
+
+        this.deleteUserId = userId;
+        this.isDeleteDialog = true;
+    }
+
+    @action isDeleteDialogClose = () => {
+        this.deleteUserId = null;
+        this.isDeleteDialog = false;
     }
 
     @action modifyFilterPlatformList = () => {
@@ -249,4 +267,18 @@ export default class UserStore {
             this.modifyingUser = false;
         }
     })
+
+    deleteUser = flow(function* () {
+        this.deletingUser = true;
+        try {
+            yield axios.delete(`/api/v1/user/${this.deleteUserId}`);
+            this.deletingUser = false;
+            this.isDeleteDialogClose();
+            this.getUsers();
+        } catch (err) {
+            console.log('delete user error');
+            console.log(err);
+            this.deletingUser = false;
+        }
+    });
 }

@@ -37,4 +37,10 @@ public class UserController {
         userService.modifyUser(modifyUserParam);
         return new ResponseEntity<>(modifyUserParam, HttpStatus.OK);
     }
+
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<Object> deleteUser(HttpServletRequest httpRequest, @PathVariable String userId) {
+        userService.withdrawUser(userId);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
+    }
 }

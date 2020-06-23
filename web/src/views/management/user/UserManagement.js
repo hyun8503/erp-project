@@ -11,6 +11,7 @@ import SideMenu from "../../../components/SideMenu";
 import {inject, observer} from "mobx-react";
 import AddUserDialog from "./dialog/AddUserDialog";
 import ModifyUserDialog from "./dialog/ModifyUserDialog";
+import DeleteDialog from "./dialog/DeleteDialog";
 
 
 const styles = theme => ({
@@ -181,7 +182,7 @@ class UserManagement extends React.Component {
                                     {
                                         icon: 'delete',
                                         tooltip: 'delete user',
-                                        onClick: (event, rowData) => {}
+                                        onClick: (event, rowData) => this.props.userStore.isDeleteDialogOpen(rowData.userId)
                                     }
                                 ]}
                             />
@@ -191,6 +192,7 @@ class UserManagement extends React.Component {
                 </Grid>
                 <AddUserDialog/>
                 <ModifyUserDialog/>
+                <DeleteDialog/>
             </div>
         );
     }

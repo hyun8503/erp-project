@@ -3,7 +3,6 @@ package io.sderp.ws.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.controller.param.AddRoleParam;
 import io.sderp.ws.controller.param.RoleListParam;
-import io.sderp.ws.model.Role;
 import io.sderp.ws.model.RoleWithPermission;
 import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.RoleService;
@@ -13,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -71,13 +72,15 @@ public class RoleController {
     }
 
     @DeleteMapping("/role/{roleId}")
-    public ResponseEntity<Object> deleteRole(HttpServletRequest httpRequest, @RequestBody Role param) throws Exception{
+    public ResponseEntity<Object> deleteRole(HttpServletRequest httpRequest, @PathVariable String roleId) throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
-        String paramJson = objectMapper.writeValueAsString(param);
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("roleId", roleId);
+        String paramJson = objectMapper.writeValueAsString(paramMap);
         String remoteAddr = httpRequest.getRemoteAddr();
         String userId = authenticationService.getUser().getUserId();
 
-        roleService.deleteRole(param, userId, remoteAddr, paramJson);
+        roleService.deleteRole(roleId, userId, remoteAddr, paramJson);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

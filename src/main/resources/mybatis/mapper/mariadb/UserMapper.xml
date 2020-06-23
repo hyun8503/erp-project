@@ -15,7 +15,7 @@
         <result property="modifiedDate"             column="modified_date" />
     </resultMap>
 
-    <select id="selectAllUser" resultType="User">
+    <select id="selectAllUser" parameterType="Map" resultType="User">
         SELECT erp_users.user_id,
                erp_users.login_id,
                erp_users.type_code,
@@ -26,7 +26,7 @@
         FROM erp_users
             JOIN erp_user_roles ON erp_users.user_id = erp_user_roles.user_id
             JOIN erp_roles ON erp_user_roles.role_id = erp_roles.role_id
-        WHERE login_id != 'admin'
+        WHERE erp_users.status_code = #{userStatusType}
     </select>
 
     <select id="selectUserByUserId" parameterType="String" resultMap="UserResultMap">
@@ -41,7 +41,7 @@
         WHERE user_id = #{value}
     </select>
 
-    <select id="selectUser" parameterType="String" resultMap="UserResultMap">
+    <select id="selectUser" parameterType="Map" resultMap="UserResultMap">
         SELECT user_id,
                login_id,
                login_password,
@@ -50,13 +50,13 @@
                created_date,
                modified_date
         FROM erp_users
-        WHERE login_id = #{value}
+        WHERE login_id = #{id} AND status_code = #{statusType}
     </select>
 
-    <select id="selectUserCount" parameterType="String" resultType="long">
+    <select id="selectUserCount" parameterType="Map" resultType="long">
         SELECT COUNT(1)
         FROM erp_users
-        WHERE login_id = #{value}
+        WHERE login_id = #{id} AND status_code = #{statusType}
     </select>
 
     <select id="selectUsersWhereType" parameterType="UserType" resultMap="UserResultMap">

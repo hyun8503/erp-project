@@ -21,4 +21,6 @@ public class UserRoleRepository {
     }
 
     public int updateUserRole(String userId, String roleId) { return mapper.updateUserRole(userId, roleId); }
+
+    public int deleteUserRole(String userId) { return mapper.deleteUserRole(userId); }
 }

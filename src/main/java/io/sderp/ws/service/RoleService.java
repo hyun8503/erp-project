@@ -132,10 +132,10 @@ public class RoleService {
     }
     //역할 삭제
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRole(Role param, String userId, String remoteAddr, String paramJson) {
-        userRoleInUseCheck(param.getRoleId());
-        rolePermissionRepository.deleteRolePermission(param.getRoleId());
-        roleRepository.deleteRole(param.getRoleId());
+    public void deleteRole(String roleId, String userId, String remoteAddr, String paramJson) {
+        userRoleInUseCheck(roleId);
+        rolePermissionRepository.deleteRolePermission(roleId);
+        roleRepository.deleteRole(roleId);
 
         UserActionHistories userActionHistories = UserActionHistories.builder()
                 .userId(userId)

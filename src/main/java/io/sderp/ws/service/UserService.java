@@ -187,6 +187,20 @@ public class UserService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void withdrawUser(String userId) {
+        repository.updateUser(User.builder()
+                .userId(userId)
+                .loginPassword(null)
+                .statusCode(UserStatusType.WITHDRAW)
+                .typeCode(UserType.NORMAL)
+                .modifiedDate(LocalDateTime.now())
+                .build());
+
+        userRoleRepository.deleteUserRole(userId);
+        userPlatformRepository.deleteUserPlatform(userId);
+    }
+
     private void loginIdDuplicateCheck(String loginId) {
         long count = repository.selectUserCount(loginId);
         if(count != 0) {
