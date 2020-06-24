@@ -1,8 +1,7 @@
 package io.sderp.ws.util;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -29,8 +28,7 @@ public class GoogleApiUtil {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String CREDENTIALS_FILE_PATH = "/client_secret.json";
-    public static final int LOCAL_RECEIVER_PORT = 8888;
-    public static final String LOCAL_RECEIVER_CALLBACK_URL = "http://localhost:"+LOCAL_RECEIVER_PORT+"/Callback";
+    public static final String REDIRECTION_URI = "http://localhost:3000/oauth2";
     private static final String CREDENTIALS_SUCCESS_RENDING_PAGE_URL = "http://localhost:3000/";
     private static final String CREDENTIALS_FAIL_RENDING_PAGE_URL = "http://localhost:3000/";
 
@@ -69,7 +67,7 @@ public class GoogleApiUtil {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String userId, String rendingURL) throws IOException {
+    public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String userId, String code) throws IOException {
         List<String> scopes = new ArrayList<>();
         scopes.add(DriveScopes.DRIVE);
         scopes.add(DriveScopes.DRIVE_FILE);
@@ -89,12 +87,17 @@ public class GoogleApiUtil {
                 .setAccessType("offline")
                 .build();
 
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder()
-                .setPort(LOCAL_RECEIVER_PORT)
-                .setLandingPages(rendingURL == null ? CREDENTIALS_SUCCESS_RENDING_PAGE_URL : rendingURL, rendingURL == null ? CREDENTIALS_FAIL_RENDING_PAGE_URL : rendingURL)
-                .build();
+        Credential credential = flow.loadCredential(userId);
+        if (credential == null || credential.getRefreshToken() == null && credential.getExpiresInSeconds() != null && credential.getExpiresInSeconds() <= 60L) {
+            if(code == null) {
+                throw new RuntimeException("before google auth!");
+            }
 
-        return new AuthorizationCodeInstalledApp(flow, receiver).authorize(userId);
+            TokenResponse response = flow.newTokenRequest(code).setRedirectUri(REDIRECTION_URI).execute();
+            return flow.createAndStoreCredential(response, userId);
+        } else {
+            return credential;
+        }
     }
 
     public static Drive getDrive(String userId) throws IOException, GeneralSecurityException {

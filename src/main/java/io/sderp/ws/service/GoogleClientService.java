@@ -27,9 +27,9 @@ public class GoogleClientService {
         return GoogleApiUtil.credentialCheck(userId);
     }
 
-    public Credential getCredentialProcStart(String userId, String rendingURL) throws GeneralSecurityException, IOException {
+    public Credential getCredentialProcStart(String userId, String code) throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        return GoogleApiUtil.getCredentials(HTTP_TRANSPORT, userId, rendingURL);
+        return GoogleApiUtil.getCredentials(HTTP_TRANSPORT, userId, code);
     }
 
     public void readDriveFileList(Drive service) throws IOException {

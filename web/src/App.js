@@ -16,6 +16,7 @@ import RoleManagement from "./views/management/role/RoleManagement";
 import UserManagement from "./views/management/user/UserManagement";
 import ReportSubmit from "./views/report/ReportSubmit";
 import ReportList from "./views/report/ReportList";
+import OAuth2 from "./views/OAuth2";
 import * as store from "./stores/AuthStore";
 import Copyright from "./components/Copyright";
 
@@ -109,6 +110,7 @@ class App extends React.Component {
                                         <Route exact path="/management/user" component={UserManagement} />
                                         <Route exact path="/report/submit" component={ReportSubmit} />
                                         <Route exact path="/report/list" component={ReportList} />
+                                        <Route exact path="/oauth2" component={OAuth2} />
                                     </Switch>
                                 </React.Fragment>
                             ) : (

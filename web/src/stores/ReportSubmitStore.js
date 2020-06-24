@@ -64,10 +64,11 @@ export default class ReportSubmitStore {
             const response = yield axios.get(`/api/v1/gapi/check-credential`);
             if(response.data.authUrl) {
                 const authUrl = response.data.authUrl.replace('&redirect_uri', '&redirect_uri=' + response.data.redirectUri)
-                axios.post(`/api/v1/gapi/credential-proc-start?rendingURL=${window.location.href}`);
-                setTimeout(() => {
-                    window.location.href = authUrl;
-                }, 2000)
+                // axios.post(`/api/v1/gapi/credential-proc-start?rendingURL=${window.location.href}`);
+                window.location.href = authUrl;
+                // setTimeout(() => {
+                //     window.location.href = authUrl;
+                // }, 2000)
             } else {
                 yield axios.get(`/api/v1/gapi/test`);
             }

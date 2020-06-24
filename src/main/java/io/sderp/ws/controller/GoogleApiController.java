@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -42,13 +45,13 @@ public class GoogleApiController {
         String authUrl = googleClientService.checkGoogleCredential(authenticationService.getUser().getUserId());
         Map<String, String> map = new HashMap<>();
         map.put("authUrl", authUrl);
-        map.put("redirectUri", GoogleApiUtil.LOCAL_RECEIVER_CALLBACK_URL);
+        map.put("redirectUri", GoogleApiUtil.REDIRECTION_URI);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("/gapi/credential-proc-start")
-    public ResponseEntity<Object> credentialProcStart(HttpServletRequest httpRequest, @RequestParam String rendingURL) throws IOException, GeneralSecurityException {
-        Credential credential = googleClientService.getCredentialProcStart(authenticationService.getUser().getUserId(), rendingURL);
+    @GetMapping("/gapi/oauth2")
+    public ResponseEntity<Object> credentialProcStart(HttpServletRequest httpRequest, @RequestParam String code, @RequestParam String scope) throws IOException, GeneralSecurityException {
+        Credential credential = googleClientService.getCredentialProcStart(authenticationService.getUser().getUserId(), code);
         logger.info("credential Success = {}", credential.getAccessToken());
         return new ResponseEntity<>(HttpStatus.OK);
     }
