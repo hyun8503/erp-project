@@ -14,6 +14,8 @@ public class TemplateRepository {
         this.mapper = mapper;
     }
 
+    public Template selectTemplate(String templateId) { return mapper.selectTemplate(templateId); }
+
     public List<Template> selectAllTemplate() { return mapper.selectAllTemplate(); }
 
     public int insertTemplate(Template template) {

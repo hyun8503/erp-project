@@ -1,9 +1,11 @@
 package io.sderp.ws.controller;
 
 import io.sderp.ws.model.Template;
+import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,12 @@ public class ReportController {
     private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 
     private ReportService reportService;
+    private AuthenticationService authenticationService;
 
-    public ReportController(ReportService reportService) {
+    @Autowired
+    public ReportController(ReportService reportService, AuthenticationService authenticationService) {
         this.reportService = reportService;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("/report/template")
@@ -35,6 +40,11 @@ public class ReportController {
         }
 
         reportService.insertTemplate(files);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/report/template/{templateId}")
+    public ResponseEntity<Object> viewTemplate(HttpServletRequest httpRequest, @PathVariable String templateId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

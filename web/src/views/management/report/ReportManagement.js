@@ -116,7 +116,7 @@ class ReportManagement extends React.Component {
                                     return (
                                         <Grid item xs={3} key={"upload-file"+index}>
                                             <Card>
-                                                <CardActionArea>
+                                                <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc()}>
                                                     <CardMedia
                                                         className={classes.cardMedia}
                                                         image={"/images/excel.png"}

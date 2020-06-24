@@ -10,6 +10,19 @@
                modified_date
         FROM erp_templates
     </select>
+
+    <select id="selectTemplate" resultType="Template">
+        SELECT template_id,
+               template_name,
+               file_name,
+               file_path,
+               file_size,
+               created_date,
+               modified_date
+        FROM erp_templates
+        WHERE template_id = #{templateId}
+    </select>
+
     <insert id="insertTemplate" parameterType="Template">
         INSERT INTO erp_templates
             (

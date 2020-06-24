@@ -8,5 +8,6 @@ import java.util.List;
 @Repository
 public interface TemplateMapper {
     List<Template> selectAllTemplate();
+    Template selectTemplate(String templateId);
     int insertTemplate(Template template);
 }

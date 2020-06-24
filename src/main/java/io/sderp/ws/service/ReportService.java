@@ -30,6 +30,22 @@ public class ReportService {
         return templateRepository.selectAllTemplate();
     }
 
+//    public String checkGoogleCredential(String templateId, String userId) throws IOException, GeneralSecurityException {
+//        Template template = templateRepository.selectTemplate(templateId);
+//        if(template.getTemplateId() == null) {
+//            throw new RuntimeException("not exists template");
+//        }
+//
+//        String authUrl = GoogleApiUtil.credentialCheck(userId);
+//        if(authUrl != null) {
+//            return authUrl;
+//        }
+//
+//        Resource fileResource = S3Util.download(template.getFilePath());
+//
+//        return null;
+//    }
+
     @Transactional(rollbackFor = Exception.class)
     public void insertTemplate(List<MultipartFile> files) throws Exception {
         for (MultipartFile file: files) {
