@@ -57,7 +57,11 @@ const styles = theme => ({
 class ReportList extends React.Component {
     componentDidMount() {
         this.props.reportStore.getReportList();
-        this.props.platformStore.getPlatformList();
+        this.props.reportStore.getMyPlatformList();
+    }
+
+    componentWillUnmount() {
+        this.props.reportStore.initStore();
     }
 
     render() {
@@ -97,8 +101,8 @@ class ReportList extends React.Component {
                                     <em>平台类型</em>
                                 </MenuItem>
                                 <MenuItem value={"all"}>全部类型</MenuItem>
-                                {this.props.platformStore.platformList.length > 0 ?
-                                    this.props.platformStore.platformList.map((item) => {
+                                {this.props.reportStore.platformList.length > 0 ?
+                                    this.props.reportStore.platformList.map((item) => {
                                         return (
                                             <MenuItem key={item.platformId} value={item.platformId}>{item.platformName}</MenuItem>
                                         )

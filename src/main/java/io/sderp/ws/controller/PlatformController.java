@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.model.Platform;
 import io.sderp.ws.model.support.PlatformType;
+import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.PlatformService;
 import org.slf4j.Logger;
@@ -14,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 @RestController
@@ -34,6 +35,17 @@ public class PlatformController {
     @GetMapping("/platforms")
     public ResponseEntity<List<Platform>> getPlatformList(HttpServletRequest request) {
         return new ResponseEntity<>(platformService.selectPlatformList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/platforms-my")
+    public ResponseEntity<List<Platform>> getMyPlatformList(HttpServletRequest request) {
+        List<Platform> platformList = new ArrayList<>();
+        if(authenticationService.getUser().getTypeCode() == UserType.ADMIN) {
+            platformList = platformService.selectPlatformList();
+        } else if(authenticationService.getUser().getTypeCode() == UserType.NORMAL) {
+            platformList = platformService.selectPlatformList(authenticationService.getUser().getUserId());
+        }
+        return new ResponseEntity<>(platformList, HttpStatus.OK);
     }
 
     @GetMapping("/platform/{name}/type/{type}")

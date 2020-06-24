@@ -35,7 +35,7 @@
             WHERE erp_user_platforms.user_id = #{userId}
         ) AND report_month = #{reportMonth}
         <if test="platformId != null"> AND platform_id = #{platformId} </if>
-        <if test="reportName != null"> AND platform_id like CONCAT('%',#{reportName},'%') </if>
+        <if test="reportName != null"> AND report_name like CONCAT('%',#{reportName},'%') </if>
     </select>
 
     <select id="selectReportByReportId" parameterType="String" resultType="Report">

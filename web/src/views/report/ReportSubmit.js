@@ -12,8 +12,8 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import Button from '@material-ui/core/Button';
-import CardActions from "@material-ui/core/CardActions";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
     wrap: {
@@ -52,17 +52,81 @@ const styles = theme => ({
     }
 });
 
-@inject("authStore", "reportSubmitStore")
+@inject("authStore", "reportStore")
 @observer
 class ReportSubmit extends React.Component {
     componentDidMount() {
+        this.props.reportStore.getReportList();
+    }
+
+    componentWillUnmount() {
+        this.props.reportStore.initStore();
     }
 
     render() {
         const { classes } = this.props;
 
+        const renderFileWebView = () => {
+            return (
+                <React.Fragment>
+                    <Grid item xs={12} style={{display: "flex"}}>
+                        <iframe src={this.props.reportStore.fileWebViewLink ? this.props.reportStore.fileWebViewLink : ""}
+                                style={{
+                                    display: 'flex',
+                                    width: '100%',
+                                    minHeight: '700px'
+                                }}
+                        >
+                        </iframe>
+                    </Grid>
+                </React.Fragment>
+            );
+        }
+
+        const renderList = () => {
+            return (
+                <React.Fragment>
+                    <Grid container className={classes.cardGrid} spacing={3}>
+                        {this.props.reportStore.reportList.length > 0 ?
+                            this.props.reportStore.reportList.map((item, index) => {
+                                return (
+                                    <Grid item xs={3} key={item.reportId}>
+                                        <Card>
+                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId)}>
+                                                <CardMedia
+                                                    className={classes.cardMedia}
+                                                    image={"/images/excel.png"}
+                                                    title={"hoho"}
+                                                />
+                                                <CardContent>
+                                                    <Typography variant={"subtitle1"}>
+                                                        {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
+                                                    </Typography>
+                                                    <Typography variant={"body2"}>
+                                                        업데이트: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grid>
+                                )
+                            })
+                            :
+                            ""
+                        }
+                    </Grid>
+                </React.Fragment>
+            )
+        }
+
         return (
             <div className={classes.wrap}>
+                <Backdrop open={this.props.reportStore.fileWebViewLoading}
+                          style={{zIndex: 10000}}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+
                 <SideMenu
                     mobileOpen = {false}
                     setMobileOpen = {() => {}}
@@ -82,58 +146,7 @@ class ReportSubmit extends React.Component {
                                 현재 날짜: {moment().format("YYYY-MM-DD")}
                             </Typography>
                         </Grid>
-
-                        <Grid container className={classes.cardGrid} spacing={3}>
-                            <Grid item xs={3}>
-                                <Card>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={"/images/excel.png"}
-                                            title={"hoho"}
-                                        />
-                                        <CardContent>
-                                            <Typography variant={"subtitle1"}>
-                                                test1
-                                            </Typography>
-                                            <Typography variant={"body2"}>
-                                                업데이트: {moment().format("YYYY-MM-DD")}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <Button size="large" color="primary">
-                                            제출
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <Card>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={"/images/excel.png"}
-                                            title={"hoho"}
-                                        />
-                                        <CardContent>
-                                            <Typography variant={"subtitle1"}>
-                                                test2
-                                            </Typography>
-                                            <Typography variant={"body2"}>
-                                                업데이트: {moment().format("YYYY-MM-DD")}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                    <CardActions>
-                                        <Button size="large" color="primary">
-                                            제출
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        </Grid>
+                        {this.props.reportStore.fileWebViewLink ? renderFileWebView() : renderList()}
                     </Paper>
                 </Grid>
             </div>

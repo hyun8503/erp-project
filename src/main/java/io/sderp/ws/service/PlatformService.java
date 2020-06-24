@@ -8,6 +8,7 @@ import io.sderp.ws.model.support.UserActionHistoryStatus;
 import io.sderp.ws.model.support.UserActionHistoryType;
 import io.sderp.ws.repository.PlatformRepository;
 import io.sderp.ws.repository.UserActionHistoryRepository;
+import io.sderp.ws.repository.UserPlatformRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,21 @@ public class PlatformService {
 
     private PlatformRepository platformRepository;
     private UserActionHistoryRepository userActionHistoryRepository;
+    private UserPlatformRepository userPlatformRepository;
 
     @Autowired
-    public PlatformService (PlatformRepository platformRepository, UserActionHistoryRepository userActionHistoryRepository) {
+    public PlatformService (PlatformRepository platformRepository, UserActionHistoryRepository userActionHistoryRepository, UserPlatformRepository userPlatformRepository) {
         this.userActionHistoryRepository = userActionHistoryRepository;
         this.platformRepository = platformRepository;
+        this.userPlatformRepository = userPlatformRepository;
     }
 
     public List<Platform> selectPlatformListByName(String platformName, String typeCode) { return platformRepository.selectPlatformListByName(platformName, typeCode); }
     public List<Platform> selectPlatformList() {
         return platformRepository.selectPlatformList();
+    }
+    public List<Platform> selectPlatformList(String userId) {
+        return userPlatformRepository.selectPlatformByUserId(userId);
     }
 
     @Transactional(rollbackFor = Exception.class)

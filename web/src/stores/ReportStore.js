@@ -11,6 +11,8 @@ export default class ReportStore {
     @observable selectedPlatformId = "none";
     @observable searchFileName = "";
 
+    @observable platformList = [];
+
     @action initStore = () => {
         this.reportList = [];
         this.fileWebViewId = null;
@@ -18,6 +20,7 @@ export default class ReportStore {
         this.fileWebViewLoading = false;
         this.selectedPlatformId = "none";
         this.searchFileName = "";
+        this.platformList = [];
     }
 
     @action viewExcelClose = () => {
@@ -45,6 +48,19 @@ export default class ReportStore {
             this.reportList = response.data;
         } catch (err) {
             console.log('getReportList error');
+        }
+    });
+
+    getMyPlatformList = flow(function* () {
+        this.platformList = [];
+        try {
+            const response = yield axios.get(`/api/v1/platforms-my`);
+            this.platformList = response.data;
+        } catch (err) {
+            console.log('getPlatformList');
+            console.log(err);
+            this.platformListError = true;
+            this.platformList = [];
         }
     });
 
