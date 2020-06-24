@@ -128,7 +128,6 @@ export default class UserStore {
     @action changeModifyUserPwd = (value) => {
         value = value ? value.trim() : value;
         this.modifyUserPwd = value;
-        console.log(value);
     }
 
     @action modifyUserDialogOpen = (userId) => {
@@ -161,9 +160,8 @@ export default class UserStore {
     @action changeUserSearchPlatformName = (value) => {
         value = value ? value.trim() : value;
         this.userSearchPlatformName = value;
-        console.log(value);
     }
-    //
+
 
     @action changeIsAddUserDialog = (value) => {
         this.isAddUserDialog = value;
@@ -278,17 +276,12 @@ export default class UserStore {
         }
     })
 
-    //여기
     searchUser = flow(function* (){
-        console.log(this.userList);
-        console.log(this.roleList);
-        console.log(this.platformList);
         if (!this.userPlatformId && !this.userRoleId && !this.userSearchPlatformName) {
             return null;
         }
         this.userList = [];
-        //this.roleList = [];
-        //this.platformList = [];
+
         try {
             const response = yield axios.get(`/api/v1/user/${this.userPlatformId}/role/${this.userRoleId}/name/${this.userSearchPlatformName}`);
             this.userList = response.data;
@@ -305,7 +298,6 @@ export default class UserStore {
 
     modifyPassword = flow(function* (data) {
         this.modifyingUser = true;
-        console.log(this.modifyUserPwd);
         try {
             const data = {password:this.modifyUserPwd}
             yield axios.put(`/api/v1/user/my-info`,data);

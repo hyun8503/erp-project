@@ -195,7 +195,7 @@ class RoleManagement extends React.Component {
                                     },
                                     pagination: {
                                         labelRowsSelect: ' 个项目',
-                                        labelDisplayedRows: '总 {count}个 中 {from} - {to}',
+                                        labelDisplayedRows: '总 {count}个项目中 {from} - {to}',
                                     },
                                 }}
                                 columns={[

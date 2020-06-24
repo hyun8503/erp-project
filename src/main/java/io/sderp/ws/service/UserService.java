@@ -7,12 +7,11 @@ import io.sderp.ws.exception.BaseException;
 import io.sderp.ws.exception.ErrorCode;
 import io.sderp.ws.exception.NotAcceptableIdException;
 import io.sderp.ws.model.*;
+import io.sderp.ws.model.support.UserActionHistoryStatus;
+import io.sderp.ws.model.support.UserActionHistoryType;
 import io.sderp.ws.model.support.UserStatusType;
 import io.sderp.ws.model.support.UserType;
-import io.sderp.ws.repository.RoleRepository;
-import io.sderp.ws.repository.UserPlatformRepository;
-import io.sderp.ws.repository.UserRepository;
-import io.sderp.ws.repository.UserRoleRepository;
+import io.sderp.ws.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,14 +55,16 @@ public class UserService {
     private UserRoleRepository userRoleRepository;
     private UserPlatformRepository userPlatformRepository;
     private RoleRepository roleRepository;
+    private UserActionHistoryRepository userActionHistoryRepository;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserPlatformRepository userPlatformRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, UserPlatformRepository userPlatformRepository, RoleRepository roleRepository, UserActionHistoryRepository userActionHistoryRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.userPlatformRepository = userPlatformRepository;
         this.roleRepository = roleRepository;
+        this.userActionHistoryRepository = userActionHistoryRepository;
     }
 
     @PostConstruct
@@ -226,17 +227,30 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int getMyInfo(String password, String userId) {
+    public int getMyInfo(String password, String userId, String remoteAddr, String paramJson) {
         String loginPassword = null;
         if (!password.isEmpty()) {
             loginPassword = passwordEncoder.encode(password);
+
         }
         User user = User.builder()
                 .userId(userId)
                 .loginPassword(loginPassword)
                 .build();
-        logger.info("user = {}", user);
+
+
+        UserActionHistories userActionHistories = UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.USER)
+                .statusCode(UserActionHistoryStatus.UPDATE)
+                .description(paramJson)
+                .ipAddress(remoteAddr)
+                .build();
+
+        userActionHistoryRepository.insertActionHistory(userActionHistories);
+
         return repository.updatePassword(user);
+
     }
 
 

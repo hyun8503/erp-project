@@ -1,5 +1,7 @@
 package io.sderp.ws.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.controller.param.ModifyUserParam;
 import io.sderp.ws.controller.param.UserParam;
 import io.sderp.ws.model.Platform;
@@ -11,6 +13,8 @@ import io.sderp.ws.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +46,14 @@ public class UserController {
     }
 
     @PutMapping("/user/my-info")
-    public ResponseEntity<Object> getMyInfo(HttpServletRequest httpRequest,  @RequestBody String password) {
+    public ResponseEntity<Object> getMyInfo(HttpServletRequest httpRequest,  @RequestBody String password) throws JSONException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String remoteAddr = httpRequest.getRemoteAddr();
+        String paramJson = objectMapper.writeValueAsString(password);
         String userId = authenticationService.getUser().getUserId();
-        logger.info("password = {}, userId={}", password,userId);
-        return new ResponseEntity<>(userService.getMyInfo(password,userId), HttpStatus.OK);
+        JSONObject jObject = new JSONObject(password);
+        String parsingPassword = jObject.getString("password");
+        return new ResponseEntity<>(userService.getMyInfo(parsingPassword,userId,remoteAddr,paramJson), HttpStatus.OK);
     }
 
     @PutMapping("/user")

@@ -179,8 +179,8 @@ class UserManagement extends React.Component {
                                         emptyDataSourceMessage: '对不起，没有数据',
                                     },
                                     pagination: {
-                                        labelRowsSelect: ' 个 项目',
-                                        labelDisplayedRows: '总 {count}个 中 {from} - {to}',
+                                        labelRowsSelect: ' 个项目',
+                                        labelDisplayedRows: '总 {count}个项目中 {from} - {to}',
                                     },
                                 }}
                                 columns={[

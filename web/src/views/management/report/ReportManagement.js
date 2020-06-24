@@ -100,7 +100,7 @@ class ReportManagement extends React.Component {
                                 showPreviews={true}
                                 showPreviewsInDropzone={false}
                                 previewGridProps={{item: {xs: 2}}}
-                                dropzoneText={"파일을 드래그 하거나 여기를 클릭하세요"}
+                                dropzoneText={"请把文件拖拽到这里"}
                             />
                             : ""}
                     </Grid>
@@ -111,7 +111,7 @@ class ReportManagement extends React.Component {
                             {/*    <Button variant={"contained"} color={"secondary"}>취소</Button>*/}
                             {/*</Grid>*/}
                             <Grid item>
-                                <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.uploadFiles()}>등록</Button>
+                                <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.uploadFiles()}>上传</Button>
                             </Grid>
                         </Grid>
                         : ""}
@@ -133,7 +133,7 @@ class ReportManagement extends React.Component {
                                                         {item.templateName}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
-                                                        업데이트: {moment(item.modifiedDate).format("YYYY-MM-DD")}
+                                                       上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                     </Typography>
                                                 </CardContent>
                                             </CardActionArea>
@@ -171,20 +171,20 @@ class ReportManagement extends React.Component {
                         <Grid container>
                             <Grid item xs={12}>
                                 <Typography variant="h4" component="h2">
-                                    보고서 템플릿 관리
+                                    报表模版管理
                                 </Typography>
                             </Grid>
 
                             <Grid container item xs={12} style={{marginTop: '16px'}}>
                                 <Grid item xs={10}>
                                     <Typography variant="h6" gutterBottom>
-                                        현재 날짜: {moment().format("YYYY-MM-DD")}
+                                        目前日期: {moment().format("YYYY-MM-DD")}
                                     </Typography>
                                 </Grid>
 
                                 <Grid item xs={2} align={"right"}>
                                     {this.props.reportSubmitStore.fileWebViewLink ?
-                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.viewExcelSave()}>저장</Button>
+                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.viewExcelSave()}>储蓄</Button>
                                         : ""
                                     }
                                 </Grid>
