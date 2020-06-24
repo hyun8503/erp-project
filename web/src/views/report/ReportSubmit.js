@@ -104,7 +104,7 @@ class ReportSubmit extends React.Component {
                                                         {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
-                                                        업데이트: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}
+                                                        上传日期: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}
                                                     </Typography>
                                                 </CardContent>
                                             </CardActionArea>
@@ -139,19 +139,19 @@ class ReportSubmit extends React.Component {
                     <Paper className={classes.mainContent}>
                         <Grid item xs={12}>
                             <Typography variant="h4" component="h2">
-                                레포트 제출
+                                提交报表
                             </Typography>
                         </Grid>
                         <Grid container item xs={12} style={{marginTop: '16px'}}>
                             <Grid item xs={10}>
                                 <Typography variant="h6" gutterBottom>
-                                    현재 날짜: {moment().format("YYYY-MM-DD")}
+                                    目前日期: {moment().format("YYYY-MM-DD")}
                                 </Typography>
                             </Grid>
 
                             <Grid item xs={2} align={"right"}>
                                 {this.props.reportStore.fileWebViewLink ?
-                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelSave()}>저장</Button>
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelSave()}>储蓄</Button>
                                     : ""
                                 }
                             </Grid>

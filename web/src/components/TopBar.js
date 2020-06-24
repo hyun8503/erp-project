@@ -54,6 +54,7 @@ export default function TopBar(props) {
     const classes = useStyles();
     const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, userPasswordModifyHandle, userPasswordChange } = props;
     const [open, setOpen] = React.useState(false);
+    const [fullWidth, setFullWidth] = React.useState(true);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -66,6 +67,12 @@ export default function TopBar(props) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const submitAndChange = () => {
+        userPasswordModifyHandle();
+        handleClose();
+    };
+
 
 
     if(!isLoggedIn) {
@@ -119,6 +126,7 @@ export default function TopBar(props) {
                         <AccountCircle/>
                     </IconButton>
                     <Dialog
+                        fullWidth={fullWidth}
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="draggable-dialog-title"
@@ -147,7 +155,7 @@ export default function TopBar(props) {
                             <Button className={classes.button}
                                     variant="contained"
                                     color="primary"
-                                    onClick={userPasswordModifyHandle}
+                                    onClick={submitAndChange}
                             >确定
                             </Button>
                             <Button className={classes.button}
