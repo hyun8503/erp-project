@@ -16,6 +16,9 @@ public class ReportRepository {
         this.reportMapper = reportMapper;
     }
 
+    public int insertReportHistory(String userId, String reportId) { return reportMapper.insertReportHistory(userId, reportId); }
+    public int updateReport(Report report) { return reportMapper.updateReport(report); }
+
     public List<Report> selectAllReport(String platformId, String reportName) { return reportMapper.selectAllReport(platformId, reportName); }
     public List<Report> selectReport(String userId, String reportMonth, String platformId, String reportName) { return reportMapper.selectReport(userId, reportMonth, platformId, reportName); }
     public Report selectReportByReportId(String reportId) { return reportMapper.selectReportByReportId(reportId); }

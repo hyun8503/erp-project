@@ -7,6 +7,9 @@ export default class ReportStore {
     @observable fileWebViewLink = null;
     @observable fileWebViewId = null;
     @observable fileWebViewLoading = false;
+    @observable fileWebViewReportId = null;
+
+    @observable fileSaving = false;
 
     @observable selectedPlatformId = "none";
     @observable searchFileName = "";
@@ -21,6 +24,8 @@ export default class ReportStore {
         this.selectedPlatformId = "none";
         this.searchFileName = "";
         this.platformList = [];
+        this.fileWebViewReportId = null;
+        this.fileSaving = false;
     }
 
     @action viewExcelClose = () => {
@@ -78,6 +83,8 @@ export default class ReportStore {
                 const response = yield axios.get(`/api/v1/report/${reportId}/webviewlink`);
                 this.fileWebViewLink = response.data.webViewLink;
                 this.fileWebViewId = response.data.fileId;
+                this.fileWebViewReportId = reportId;
+
                 console.log(this.fileWebViewLink);
                 console.log(this.fileWebViewId);
             }
@@ -86,6 +93,24 @@ export default class ReportStore {
             console.log('viewExcelProc error');
             console.log(err);
             this.fileWebViewLoading = false;
+        }
+    });
+
+    viewExcelSave = flow(function* () {
+        this.fileSaving = true;
+        try {
+            yield axios.put(`/api/v1/report`, {
+                reportId: this.fileWebViewReportId,
+                fileId: this.fileWebViewId
+            });
+
+            this.fileSaving = false;
+            this.fileWebViewLink = null;
+            this.fileWebViewId = null;
+            this.fileWebViewReportId = null;
+        } catch (err) {
+            console.log('viewExcelSaveProc error');
+            this.fileSaving = false;
         }
     });
 }

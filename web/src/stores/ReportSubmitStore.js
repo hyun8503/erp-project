@@ -103,8 +103,6 @@ export default class ReportSubmitStore {
 
     viewExcelSave = flow(function* () {
         this.fileSaving = true;
-        console.log(this.fileWebViewTemplateId);
-        console.log(this.fileWebViewId);
         try {
             yield axios.put(`/api/v1/report/template`, {
                 templateId: this.fileWebViewTemplateId,

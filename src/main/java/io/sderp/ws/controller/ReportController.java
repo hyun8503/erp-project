@@ -2,6 +2,7 @@ package io.sderp.ws.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.drive.model.File;
+import io.sderp.ws.controller.param.UpdateReportParam;
 import io.sderp.ws.controller.param.UpdateTemplateParam;
 import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
@@ -91,6 +92,13 @@ public class ReportController {
 
         Template template = reportService.getTemplate(param.getTemplateId());
         googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), template, paramJson, httpRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/report")
+    public ResponseEntity<Object> updateReport(HttpServletRequest httpRequest, @RequestBody UpdateReportParam param) throws Exception {
+        Report report = reportService.selectReportByReportId(param.getReportId());
+        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), report, httpRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

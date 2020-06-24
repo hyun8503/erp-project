@@ -14,6 +14,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
     wrap: {
@@ -121,7 +122,7 @@ class ReportSubmit extends React.Component {
 
         return (
             <div className={classes.wrap}>
-                <Backdrop open={this.props.reportStore.fileWebViewLoading}
+                <Backdrop open={this.props.reportStore.fileWebViewLoading || this.props.reportStore.fileSaving}
                           style={{zIndex: 10000}}
                 >
                     <CircularProgress color="inherit" />
@@ -141,11 +142,21 @@ class ReportSubmit extends React.Component {
                                 레포트 제출
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} style={{marginTop: '16px'}}>
-                            <Typography variant="h6" gutterBottom>
-                                현재 날짜: {moment().format("YYYY-MM-DD")}
-                            </Typography>
+                        <Grid container item xs={12} style={{marginTop: '16px'}}>
+                            <Grid item xs={10}>
+                                <Typography variant="h6" gutterBottom>
+                                    현재 날짜: {moment().format("YYYY-MM-DD")}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={2} align={"right"}>
+                                {this.props.reportStore.fileWebViewLink ?
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelSave()}>저장</Button>
+                                    : ""
+                                }
+                            </Grid>
                         </Grid>
+
                         {this.props.reportStore.fileWebViewLink ? renderFileWebView() : renderList()}
                     </Paper>
                 </Grid>

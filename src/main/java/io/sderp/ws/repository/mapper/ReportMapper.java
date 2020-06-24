@@ -8,6 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ReportMapper {
+    int insertReportHistory(@Param("userId") String userId, @Param("reportId") String reportId);
+    int updateReport(Report report);
+
     List<Report> selectAllReport(@Param("platformId") String platformId, @Param("reportName") String reportName);
     List<Report> selectReport(@Param("userId") String userId, @Param("reportMonth") String reportMonth, @Param("platformId") String platformId, @Param("reportName") String reportName);
     Report selectReportByReportId(String reportId);

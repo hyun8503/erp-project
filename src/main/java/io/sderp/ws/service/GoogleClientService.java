@@ -12,6 +12,7 @@ import io.sderp.ws.model.Template;
 import io.sderp.ws.model.UserActionHistories;
 import io.sderp.ws.model.support.UserActionHistoryStatus;
 import io.sderp.ws.model.support.UserActionHistoryType;
+import io.sderp.ws.repository.ReportRepository;
 import io.sderp.ws.repository.TemplateRepository;
 import io.sderp.ws.repository.UserActionHistoryRepository;
 import io.sderp.ws.util.GoogleApiUtil;
@@ -43,11 +44,13 @@ public class GoogleClientService {
 
     private TemplateRepository templateRepository;
     private UserActionHistoryRepository userActionHistoryRepository;
+    private ReportRepository reportRepository;
 
     @Autowired
-    public GoogleClientService(TemplateRepository templateRepository, UserActionHistoryRepository userActionHistoryRepository) {
+    public GoogleClientService(TemplateRepository templateRepository, UserActionHistoryRepository userActionHistoryRepository, ReportRepository reportRepository) {
         this.templateRepository = templateRepository;
         this.userActionHistoryRepository = userActionHistoryRepository;
+        this.reportRepository = reportRepository;
     }
 
     public String checkGoogleCredential(String userId) throws IOException, GeneralSecurityException {
@@ -132,5 +135,31 @@ public class GoogleClientService {
                 .build());
 
         S3Util.upload(template.getFilePath(), multipartFile);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void fileUpdate(String userId, String fileId, Report report, HttpServletRequest httpServletRequest) throws Exception {
+        try(FileOutputStream outputStream = new FileOutputStream( TEMP_DOWNLOAD_PATH+"/"+report.getFileName())) {
+            GoogleApiUtil.getDrive(userId).files().export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").executeMediaAndDownloadTo(outputStream);
+        }
+
+        java.io.File inFile = new java.io.File(TEMP_DOWNLOAD_PATH+"/"+report.getFileName());
+        FileItem fileItem = new DiskFileItem("file", Files.probeContentType(inFile.toPath()), false, inFile.getName(), (int) inFile.length(), inFile.getParentFile());
+
+        try {
+            InputStream input = new FileInputStream(inFile);
+            OutputStream os = fileItem.getOutputStream();
+            IOUtils.copy(input, os);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid file: " + e, e);
+        }
+
+        MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+        report.setFileSize((float) multipartFile.getSize());
+        report.setModifiedDate(LocalDateTime.now());
+
+        reportRepository.insertReportHistory(userId, report.getReportId());
+        reportRepository.updateReport(report);
+        S3Util.upload(report.getFilePath(), multipartFile);
     }
 }

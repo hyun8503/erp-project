@@ -52,6 +52,39 @@
         FROM erp_reports
         WHERE report_id = #{reportId}
     </select>
+
+    <insert id="insertReportHistory" parameterType="Map" useGeneratedKeys="true">
+        INSERT INTO erp_report_histories
+            (report_id,
+             platform_id,
+             template_id,
+             report_name,
+             report_month,
+             file_name,
+             file_path,
+             file_size,
+             reported_user_id,
+             created_date)
+        SELECT report_id,
+               platform_id,
+               template_id,
+               report_name,
+               report_month,
+               file_name,
+               file_path,
+               file_size,
+               #{userId},
+               NOW()
+        FROM erp_reports
+        WHERE report_id = #{reportId}
+    </insert>
+
+    <update id="updateReport" parameterType="Report">
+        UPDATE erp_reports
+        SET file_size = #{fileSize},
+            modified_date = #{modifiedDate}
+        WHERE report_id = #{reportId}
+    </update>
 </mapper>
 
 
