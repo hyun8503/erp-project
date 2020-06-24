@@ -76,7 +76,7 @@ export default class ReportStore {
         try {
             const response = yield axios.get(`/api/v1/gapi/check-credential`);
             if(response.data.authUrl) {
-                alert("구글 인증이 진행됩니다. 팝업창이 닫히면 다시 실행해 주세요");
+                alert("将进行Google认证，关闭弹窗后再试！");
                 const authUrl = response.data.authUrl.replace('&redirect_uri', '&redirect_uri=' + response.data.redirectUri);
                 window.open(authUrl);
             } else {

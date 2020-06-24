@@ -53,7 +53,7 @@ class ModifyUserDialog extends React.Component {
                 disableBackdropClick={false}
                 disableEscapeKeyDown={false}
             >
-                <DialogTitle>사용자 수정</DialogTitle>
+                <DialogTitle>修改用户信息</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={1}>
                             <Grid item xs={6}>
