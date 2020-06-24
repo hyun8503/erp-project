@@ -30,6 +30,7 @@ export default class AuthStore {
     @observable loginState = State.NotAuthenticated;
     @observable loginToken = '';
     @observable loginUser = Object.assign({}, EmptyUser);
+    @observable loginBtnDisabled = true;
 
     @action changeLoginId = (id) => {
         this.login.loginId = id;
@@ -45,6 +46,23 @@ export default class AuthStore {
         this.loginToken = '';
         this.loginUser = Object.assign({}, EmptyUser);
     };
+
+    recaptchaAuth = flow(function* (token) {
+        this.loginBtnDisabled = true;
+        if(token) {
+            this.loginBtnDisabled = false;
+        }
+        try {
+            // const response = yield axios.post(`https://www.google.com/recaptcha/api/siteverify`, {
+            //     secret: KEY.secret,
+            //     response: token,
+            // });
+            // console.log(response);
+        } catch (err) {
+            console.log('recaptchaAuth err');
+            console.log(err);
+        }
+    })
 
     doLogin = flow(function* doLogin() {
         this.loginState = State.Pending;

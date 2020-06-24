@@ -104,7 +104,7 @@ class SignIn extends React.Component {
                                     className={classes.submit}
                                     color="primary"
                                     variant="contained"
-                                    disabled={loginState === store.State.Pending}
+                                    disabled={loginState === store.State.Pending || this.props.authStore.loginBtnDisabled}
                                     onClick={this.handleSubmitForm}
                                     fullWidth >
                                 {loginState === store.State.Pending ? <CircularProgress size={22}/> : '登录'}
@@ -113,7 +113,7 @@ class SignIn extends React.Component {
                                 <ReCAPTCHA
                                     ref={this.recaptchaRef}
                                     sitekey={KEY.recaptcha}
-                                    onChange={(data) => console.log(data)}
+                                    onChange={(data) => this.props.authStore.recaptchaAuth(data)}
                                 />
                             </Grid>
                         </div>
