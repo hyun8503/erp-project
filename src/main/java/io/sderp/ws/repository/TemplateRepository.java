@@ -21,4 +21,6 @@ public class TemplateRepository {
     public int insertTemplate(Template template) {
         return mapper.insertTemplate(template);
     }
+
+    public int updateTemplate(Template template) { return mapper.updateTemplate(template); }
 }

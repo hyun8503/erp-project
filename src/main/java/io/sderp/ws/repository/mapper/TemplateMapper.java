@@ -10,4 +10,5 @@ public interface TemplateMapper {
     List<Template> selectAllTemplate();
     Template selectTemplate(String templateId);
     int insertTemplate(Template template);
+    int updateTemplate(Template template);
 }

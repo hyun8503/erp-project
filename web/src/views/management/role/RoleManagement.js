@@ -112,7 +112,10 @@ class RoleManagement extends React.Component {
     componentDidMount() {
         this.props.roleStore.getRoleList();
     }
-     
+
+    componentWillUnmount() {
+        this.props.roleStore.initStore();
+    }
 
     render() {
         const { classes } = this.props;

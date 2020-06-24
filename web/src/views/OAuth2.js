@@ -14,11 +14,12 @@ class OAuth2 extends React.Component {
     async sendCode(code, scope) {
         try {
             await axios.get(`/api/v1/gapi/oauth2?code=${code}&scope=${scope}`);
-            this.props.history.push("/");
+            window.close();
+            //this.props.history.push("/");
         } catch (e) {
             console.log('ouath2 error');
             console.log(e);
-            this.props.history.push("/");
+            window.close();
         }
     }
 

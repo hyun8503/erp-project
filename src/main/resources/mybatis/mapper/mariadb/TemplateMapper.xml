@@ -45,6 +45,13 @@
                 #{modifiedDate}
             )
     </insert>
+
+    <update id="updateTemplate" parameterType="Template">
+        UPDATE erp_templates
+        SET file_size = #{fileSize},
+            modified_date = #{modifiedDate}
+        WHERE template_id = #{templateId}
+    </update>
 </mapper>
 
 

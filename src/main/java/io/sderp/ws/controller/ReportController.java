@@ -1,7 +1,13 @@
 package io.sderp.ws.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.services.drive.model.File;
+import io.sderp.ws.controller.param.UpdateTemplateParam;
+import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
+import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.service.AuthenticationService;
+import io.sderp.ws.service.GoogleClientService;
 import io.sderp.ws.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,11 +32,28 @@ public class ReportController {
 
     private ReportService reportService;
     private AuthenticationService authenticationService;
+    private GoogleClientService googleClientService;
 
     @Autowired
-    public ReportController(ReportService reportService, AuthenticationService authenticationService) {
+    public ReportController(ReportService reportService, AuthenticationService authenticationService, GoogleClientService googleClientService) {
         this.reportService = reportService;
         this.authenticationService = authenticationService;
+        this.googleClientService = googleClientService;
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<List<Report>> getReportAll(HttpServletRequest httpRequest,
+                                                     @RequestParam(required = false) String platformId,
+                                                     @RequestParam(required = false) String reportName,
+                                                     @RequestParam(required = false) String reportMonth) {
+        List<Report> reportList = new ArrayList<>();
+        if(authenticationService.getUser().getTypeCode() == UserType.ADMIN) {
+            reportList = reportService.selectAllReport(platformId, reportName);
+        } else if(authenticationService.getUser().getTypeCode() == UserType.NORMAL) {
+            reportList = reportService.selectReport(authenticationService.getUser().getUserId(), reportMonth, platformId, reportName);
+        }
+
+        return new ResponseEntity<>(reportList, HttpStatus.OK);
     }
 
     @GetMapping("/report/template")
@@ -39,12 +67,30 @@ public class ReportController {
             throw new RuntimeException("report upload error: files empty");
         }
 
-        reportService.insertTemplate(files);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramJson = objectMapper.writeValueAsString(files);
+
+        reportService.insertTemplate(files, authenticationService.getUser().getUserId(), paramJson, httpRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/report/template")
+    public ResponseEntity<Object> updateTemplate(HttpServletRequest httpRequest, @RequestBody UpdateTemplateParam param) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramJson = objectMapper.writeValueAsString(param);
+
+        Template template = reportService.getTemplate(param.getTemplateId());
+        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), template, paramJson, httpRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/report/template/{templateId}")
-    public ResponseEntity<Object> viewTemplate(HttpServletRequest httpRequest, @PathVariable String templateId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> viewTemplate(HttpServletRequest httpRequest, @PathVariable String templateId) throws IOException, GeneralSecurityException {
+        Template template = reportService.getTemplate(templateId);
+        File file = googleClientService.fileUpload(template, authenticationService.getUser().getUserId());
+        Map<String, String> map = new HashMap<>();
+        map.put("fileId", file.getId());
+        map.put("webViewLink", file.getWebViewLink());
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }

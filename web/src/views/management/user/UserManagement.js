@@ -57,6 +57,10 @@ class UserManagement extends React.Component {
         this.props.userStore.getUsers();
     }
 
+    componentWillUnmount() {
+        this.props.userStore.initStore();
+    }
+
     render() {
         const { classes } = this.props;
 
