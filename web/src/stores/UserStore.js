@@ -3,6 +3,7 @@ import axios from "axios";
 import RoleAdapter from "../adapter/RoleAdapter";
 import PlatformAdapter from "../adapter/PlatformAdapter";
 import * as ErrorType from "../type/ErrorType";
+import {observer} from "mobx-react";
 
 export default class UserStore {
     @observable isAddUserDialog = false;
@@ -24,11 +25,14 @@ export default class UserStore {
     @observable isDeleteDialog = false;
     @observable deletingUser = false;
     @observable deleteUserId = null;
-
+//여
+    @observable userRoleId = "none";
+    @observable userPlatformId = "none";
     @observable userList = [];
     @observable platformList = [];
     @observable roleList = [];
-
+    @observable userSearchPlatformName = "";
+//
     @observable confirmDialogOpen = false;
     @observable confirmDialogMsg = "";
 
@@ -72,6 +76,8 @@ export default class UserStore {
         this.isDeleteDialog = false;
     }
 
+
+
     @action modifyFilterPlatformList = () => {
         if(this.modifyUserSearchPlatformName) {
             const filterPlatformList = this.platformList.filter((item) => item.platformName.indexOf(this.modifyUserSearchPlatformName) !== -1);
@@ -80,7 +86,7 @@ export default class UserStore {
             this.getPlatformList();
         }
     }
-
+///name
     @action changeModifyUserSearchPlatformName = (value) => {
         value = value ? value.trim() : value;
         this.modifyUserSearchPlatformName = value;
@@ -112,12 +118,17 @@ export default class UserStore {
             }
         }
     }
+//
+    @action changeUserPlatformId = (value) => this.userPlatformId = value;
 
+    @action changeUserRoleId = (value) => this.userRoleId = value;
+//
     @action changeModifyUserRoleId = (value) => this.modifyUserRoleId = value;
 
     @action changeModifyUserPwd = (value) => {
         value = value ? value.trim() : value;
         this.modifyUserPwd = value;
+        console.log(value);
     }
 
     @action modifyUserDialogOpen = (userId) => {
@@ -145,6 +156,14 @@ export default class UserStore {
         value = value ? value.trim() : value;
         this.addUserSearchPlatformName = value;
     }
+
+    //
+    @action changeUserSearchPlatformName = (value) => {
+        value = value ? value.trim() : value;
+        this.userSearchPlatformName = value;
+        console.log(value);
+    }
+    //
 
     @action changeIsAddUserDialog = (value) => {
         this.isAddUserDialog = value;
@@ -193,6 +212,7 @@ export default class UserStore {
             }
         }
     }
+
 
     getRoleList = flow(function* () {
         this.roleList = [];
@@ -252,11 +272,51 @@ export default class UserStore {
             console.log(err);
             this.addingUser = false;
             if(err.response.data.code === ErrorType.code.LoginIdInUse) {
-                this.confirmDialogMsg = "Id가 이미 사용중입니다";
+                this.confirmDialogMsg = "您输入的用户ID已经存在";
                 this.confirmDialogOpen = true;
             }
         }
     })
+
+    //여기
+    searchUser = flow(function* (){
+        console.log(this.userList);
+        console.log(this.roleList);
+        console.log(this.platformList);
+        if (!this.userPlatformId && !this.userRoleId && !this.userSearchPlatformName) {
+            return null;
+        }
+        this.userList = [];
+        //this.roleList = [];
+        //this.platformList = [];
+        try {
+            const response = yield axios.get(`/api/v1/user/${this.userPlatformId}/role/${this.userRoleId}/name/${this.userSearchPlatformName}`);
+            this.userList = response.data;
+        } catch (err) {
+            console.log('search platform error');
+            console.log(err);
+        }
+
+
+
+
+
+    })
+
+    modifyPassword = flow(function* (data) {
+        this.modifyingUser = true;
+        console.log(this.modifyUserPwd);
+        try {
+            const data = {password:this.modifyUserPwd}
+            yield axios.put(`/api/v1/user/my-info`,data);
+            this.getUsers();
+        } catch (err) {
+            console.log('modifyPassword error');
+            console.log(err);
+            this.modifyingUser = false;
+        }
+    })
+
 
     modifyUser = flow(function* () {
         this.modifyingUser = true;

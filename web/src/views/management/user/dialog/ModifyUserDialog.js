@@ -60,7 +60,7 @@ class ModifyUserDialog extends React.Component {
                                 <FormControl fullWidth>
                                     <TextField id="userId"
                                                disabled
-                                               label="사용자 ID"
+                                               label="用户ID"
                                                variant="outlined"
                                                value={this.props.userStore.modifyUserInfo ? this.props.userStore.modifyUserInfo.user.loginId : ""}
                                     />
@@ -69,7 +69,7 @@ class ModifyUserDialog extends React.Component {
                             <Grid item xs={6}>
                                 <FormControl noValidate autoComplete="off" fullWidth>
                                     <TextField id="password"
-                                               label="비밀번호 재설정"
+                                               label="更改密码"
                                                type={"password"}
                                                variant="outlined"
                                                value={this.props.userStore.modifyUserPwd}
@@ -84,7 +84,7 @@ class ModifyUserDialog extends React.Component {
                                         onChange={(event) => this.props.userStore.changeModifyUserRoleId(event.target.value)}
                                     >
                                         <MenuItem value="none" disabled>
-                                            <em>역할</em>
+                                            <em>角色</em>
                                         </MenuItem>
                                         {this.props.userStore.roleList.length > 0 ?
                                             this.props.userStore.roleList.map((item) => {
@@ -104,13 +104,13 @@ class ModifyUserDialog extends React.Component {
                                     <Grid item xs={8}>
                                         <TextField variant={"outlined"}
                                                    fullWidth
-                                                   label={"플랫폼 이름"}
+                                                   label={"平台名称"}
                                                    value={this.props.userStore.modifyUserSearchPlatformName}
                                                    onChange={(event) => this.props.userStore.changeModifyUserSearchPlatformName(event.target.value)}
                                         />
                                     </Grid>
                                     <Grid container item xs={4} alignItems={"center"} justify={"flex-start"}>
-                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.userStore.modifyFilterPlatformList()} >검색</Button>
+                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.userStore.modifyFilterPlatformList()} >查询</Button>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs={12}>
@@ -123,7 +123,7 @@ class ModifyUserDialog extends React.Component {
                                                           onChange={(event) => this.props.userStore.changeModifyUserPlatformIdList("all", event.target.checked)}
                                                 />
                                             }
-                                            label="전체선택"
+                                            label="全选"
                                             labelPlacement="end"
                                         />
                                         {this.props.userStore.platformList.length > 0 ?
@@ -152,12 +152,12 @@ class ModifyUserDialog extends React.Component {
                         </FormGroup>
                     </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.modifyUser()}>수정</Button>
+                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.modifyUser()}>修改</Button>
                     <Button variant="outlined" color="primary"
                             onClick={() => this.props.userStore.modifyUserDialogClose()}
                             disabled={this.props.userStore.modifyingUser}
                     >
-                        닫기
+                        关闭
                     </Button>
                 </DialogActions>
             </Dialog>

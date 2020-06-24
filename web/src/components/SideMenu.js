@@ -70,47 +70,47 @@ export default function SideMenu(props) {
     const drawer = (
         <div className={classes.menu}>
             <List>
-                <ListSubheader inset>Report Management</ListSubheader>
+                <ListSubheader inset>报告管理</ListSubheader>
 
                 <NavLink to="/report/submit" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><PostAddIcon /></ListItemIcon>
-                        <ListItemText primary="Report" />
+                        <ListItemText primary="提交报表" />
                     </ListItem>
                 </NavLink>
                 <NavLink to={"/report/list"} className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><FindInPageIcon /></ListItemIcon>
-                        <ListItemText primary="Search" />
+                        <ListItemText primary="查询报表" />
                     </ListItem>
                 </NavLink>
             </List>
             <Divider />
             <List>
-                <ListSubheader inset>System Managemen</ListSubheader>
+                <ListSubheader inset>系统管理</ListSubheader>
 
                 <NavLink to="/management/report" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="Templates" />
+                        <ListItemText primary="报表模版管理" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/platform" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="Platforms" />
+                        <ListItemText primary="平台管理" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/role" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="User Roles" />
+                        <ListItemText primary="角色管理" />
                     </ListItem>
                 </NavLink>
                 <NavLink to="/management/user" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="Users" />
+                        <ListItemText primary="用户管理" />
                     </ListItem>
                 </NavLink>
             </List>
@@ -118,7 +118,7 @@ export default function SideMenu(props) {
             <List>
                 <ListItem button onClick={() => doLogout()}>
                     <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="登出" />
                 </ListItem>
             </List>
         </div>

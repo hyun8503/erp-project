@@ -17,11 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +40,7 @@ public class UserService {
     private static final String DEFAULT_ADMIN_PASSWORD = "1234";
     private static final String DEFAULT_ADMIN_NAME = "administrator";
     private static final Map<String, Boolean> notAcceptableIdMap = new HashMap<>();
+
     static {
         notAcceptableIdMap.put("check", false);
         notAcceptableIdMap.put("signin", false);
@@ -65,7 +70,7 @@ public class UserService {
     public void checkAdmin() {
         final List<User> users = getUsers(UserType.ADMIN);
 
-        if((users == null) || (users.size() < 1)) {
+        if ((users == null) || (users.size() < 1)) {
             logger.info("Admin account not exists : create a default admin account");
 
             final User newAdmin = User.builder()
@@ -84,14 +89,16 @@ public class UserService {
         return repository.selectUser(id);
     }
 
-    public List<User> selectAllUser() { return repository.selectAllUser(); }
+    public List<User> selectAllUser() {
+        return repository.selectAllUser();
+    }
 
     public UserParam getUserParam(String userId) {
         User user = repository.selectUserByUserId(userId);
         Role role = roleRepository.selectRoleByUserId(userId);
         List<Platform> platformList = userPlatformRepository.selectPlatformByUserId(userId);
 
-        if(user.getUserId() == null && role.getRoleId() == null && platformList.size() == 0) {
+        if (user.getUserId() == null && role.getRoleId() == null && platformList.size() == 0) {
             throw new RuntimeException("get user param fail");
         }
 
@@ -140,7 +147,7 @@ public class UserService {
     }
 
     public User createNewUser(User user) {
-        if(isNotAcceptableId(user.getUserId())) {
+        if (isNotAcceptableId(user.getUserId())) {
             throw new NotAcceptableIdException(user.getUserId());
         }
         final String encodedPassword = passwordEncoder.encode(user.getLoginPassword());
@@ -158,11 +165,11 @@ public class UserService {
     public void modifyUser(ModifyUserParam modifyUserParam) {
         String loginPassword = null;
         List<String> platformIdList = modifyUserParam.getUserPlatformIdList();
-        if(platformIdList.size() == 0) {
+        if (platformIdList.size() == 0) {
             throw new RuntimeException("modify user fail: platform id list size not zero");
         }
 
-        if(!modifyUserParam.getUserPwd().isEmpty()) {
+        if (!modifyUserParam.getUserPwd().isEmpty()) {
             loginPassword = passwordEncoder.encode(modifyUserParam.getUserPwd());
         }
 
@@ -177,7 +184,7 @@ public class UserService {
         repository.updateUser(user);
         userRoleRepository.updateUserRole(modifyUserParam.getUserId(), modifyUserParam.getUserRoleId());
         userPlatformRepository.deleteUserPlatform(modifyUserParam.getUserId());
-        for (String platformId: platformIdList) {
+        for (String platformId : platformIdList) {
             userPlatformRepository.insertUserPlatform(UserPlatform.builder()
                     .userId(modifyUserParam.getUserId())
                     .platformId(platformId)
@@ -203,7 +210,7 @@ public class UserService {
 
     private void loginIdDuplicateCheck(String loginId) {
         long count = repository.selectUserCount(loginId);
-        if(count != 0) {
+        if (count != 0) {
             throw new BaseException(ErrorCode.LOGIN_ID_IN_USE, HttpStatus.BAD_REQUEST, "login id in use");
         }
     }
@@ -211,10 +218,30 @@ public class UserService {
     private boolean isNotAcceptableId(String id) {
         boolean isNotAcceptable = false;
 
-        if((id == null) || (id.length() < 1) || (id.contains(" ")) || (notAcceptableIdMap.containsKey(id.toLowerCase()))) {
+        if ((id == null) || (id.length() < 1) || (id.contains(" ")) || (notAcceptableIdMap.containsKey(id.toLowerCase()))) {
             isNotAcceptable = true;
         }
 
         return isNotAcceptable;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int getMyInfo(String password, String userId) {
+        String loginPassword = null;
+        if (!password.isEmpty()) {
+            loginPassword = passwordEncoder.encode(password);
+        }
+        User user = User.builder()
+                .userId(userId)
+                .loginPassword(loginPassword)
+                .build();
+        logger.info("user = {}", user);
+        return repository.updatePassword(user);
+    }
+
+
+    public List<User> searchUserList(String platform, String role, String name) {
+        return repository.searchUserList(platform, role, name);
+    }
 }
+

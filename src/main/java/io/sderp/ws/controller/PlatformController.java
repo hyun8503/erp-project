@@ -74,11 +74,6 @@ public class PlatformController {
     //플랫폼 삭제
     @DeleteMapping("/platform/{platformId}")
     public ResponseEntity<Void> deletePlatform(HttpServletRequest httpRequest,  @RequestBody Platform param) throws Exception {
-//        Map map = new HashMap<String, String>();
-//        map.put("platformId", param.getPlatformId());
-//        map.put("platformName", param.getPlatformName());
-//        map.put("typeCode", param.getTypeCode());
-//        String paramJson = objectMapper.writeValueAsString(map);
         ObjectMapper objectMapper = new ObjectMapper();
         String paramJson = objectMapper.writeValueAsString(param);
         String remoteAddr = httpRequest.getRemoteAddr();

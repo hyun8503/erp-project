@@ -14,7 +14,7 @@ export default function ConfirmDialog(props) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => handleConfirm()}>
-                    확인
+                    确定
                 </Button>
             </DialogActions>
         </Dialog>

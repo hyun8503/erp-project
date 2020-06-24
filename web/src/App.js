@@ -29,7 +29,7 @@ const style = () => ({
 });
 
 
-@inject('authStore')
+@inject('authStore', 'userStore')
 @observer
 class App extends React.Component {
     constructor(props) {
@@ -98,7 +98,10 @@ class App extends React.Component {
                             <TopBar mobileOpen={this.state.mobileOpen}
                                     setMobileOpen={this.setMobileOpen}
                                     isLoggedIn={loginState === store.State.Authenticated}
-                                    doLogout={() => this.props.authStore.doLogout()} />
+                                    doLogout={() => this.props.authStore.doLogout()}
+                                    userPasswordChange = {(value) => this.props.userStore.changeModifyUserPwd(value)}
+                                    userPasswordModifyHandle = {() => {this.props.userStore.modifyPassword()}}
+                            />
                             {loginState === store.State.Authenticated ? (
                                 <React.Fragment>
                                     <Switch>

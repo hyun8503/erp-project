@@ -18,4 +18,7 @@ public interface UserMapper {
 
     int insertUser(User account);
     int updateUser(User user);
+    int updatePassword(User user);
+
+    List<User> searchUserList(String platform, String role, String name);
 }

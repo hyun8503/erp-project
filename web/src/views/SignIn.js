@@ -84,7 +84,7 @@ class SignIn extends React.Component {
                         <div className={classes.form}>
                             <TextField id="id"
                                        name="id"
-                                       label="ID"
+                                       label="账号"
                                        variant="outlined"
                                        margin="normal"
                                        value={login.id}
@@ -92,7 +92,7 @@ class SignIn extends React.Component {
                                        required fullWidth />
                             <TextField id="password"
                                        name="password"
-                                       label="Password"
+                                       label="密码"
                                        type="password"
                                        variant="outlined"
                                        margin="normal"
@@ -107,7 +107,7 @@ class SignIn extends React.Component {
                                     disabled={loginState === store.State.Pending}
                                     onClick={this.handleSubmitForm}
                                     fullWidth >
-                                {loginState === store.State.Pending ? <CircularProgress size={22}/> : 'Sign In'}
+                                {loginState === store.State.Pending ? <CircularProgress size={22}/> : '登录'}
                             </Button>
                             <Grid container item xs={12} justify={"center"}>
                                 <ReCAPTCHA

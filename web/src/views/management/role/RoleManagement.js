@@ -14,6 +14,8 @@ import ConfirmDialog from "../../../components/ConfirmDialog";
 import DeleteDialog from "./dialog/DeleteDialog";
 import Chip from '@material-ui/core/Chip';
 
+import * as PermissionType from "../../../type/PermissionType";
+
 const styles = theme => ({
     wrap: {
         display: 'flex',
@@ -119,6 +121,15 @@ class RoleManagement extends React.Component {
 
     render() {
         const { classes } = this.props;
+        const getPermissionNameText = {
+            [PermissionType.type.PlatformManagement]: "平台管理",
+            [PermissionType.type.ReportSearch]: "查询报表",
+            [PermissionType.type.ReportSubmit]: "提交报表",
+            [PermissionType.type.ReportTemplate]: "报表模版管理",
+            [PermissionType.type.RoleManagement]: "角色管理",
+            [PermissionType.type.UserManagement]: "用户管理",
+        }
+
         return (
             <div className={classes.wrap}>
                 <SideMenu
@@ -132,7 +143,7 @@ class RoleManagement extends React.Component {
                     <Paper className={classes.mainContent}>
                         <Grid item xs={12}>
                             <Typography variant="h4" component="h2">
-                                역할 관리
+                                角色管理
                             </Typography>
                         </Grid>
 
@@ -143,19 +154,19 @@ class RoleManagement extends React.Component {
                                     <TextField
                                         style={{width: 400}}
                                         id="outlined-basic"
-                                        label="역할 이름"
+                                        label="角色名称"
                                         variant="outlined"
                                         value={this.props.roleStore.searchRoleName}
                                         onChange={(event) => this.props.roleStore.changeSearchRoleName(event.target.value)}
                                     />
                                 </FormControl>
 
-                                <Button className={classes.button} variant="contained" color="primary" onClick={() => this.props.roleStore.searchRoleList()}>검색</Button>
+                                <Button className={classes.button} variant="contained" color="primary" onClick={() => this.props.roleStore.searchRoleList()}>查询</Button>
                                 <Button className={classes.button}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.roleStore.changeIsAddRoleDialog(true)}>
-                                    등록
+                                    新增
                                 </Button>
                             </Grid>
                         </Grid>
@@ -180,24 +191,24 @@ class RoleManagement extends React.Component {
                                         actions: '',
                                     },
                                     body: {
-                                        emptyDataSourceMessage: '데이터가 없습니다',
+                                        emptyDataSourceMessage: '对不起，没有数据',
                                     },
                                     pagination: {
-                                        labelRowsSelect: ' 개씩 보기',
-                                        labelDisplayedRows: '총 {count}개 중 {from} - {to}',
+                                        labelRowsSelect: ' 个项目',
+                                        labelDisplayedRows: '总 {count}个 中 {from} - {to}',
                                     },
                                 }}
                                 columns={[
                                     {
-                                        title: '역할 이름',
+                                        title: '角色名称',
                                         field: 'roleName',
                                         cellStyle: {minWidth: '150px'}},
                                     {
-                                        title: '역할',
+                                        title: '权限',
                                         //field: 'roleList',
                                         cellStyle: {minWidth: '800px'},
                                         render: rowData => {
-                                            return rowData.permissionList.map((item) => <Chip key={item.permissionId} style={{marginRight: '4px'}} variant="outlined" size="small" color="primary" label={item.permissionName}/>)
+                                            return rowData.permissionList.map((item) => <Chip key={item.permissionId} style={{marginRight: '4px'}} variant="outlined" size="small" color="primary" label={getPermissionNameText[item.permissionName]}/>)
                                         },
                                         editComponent: props => {
                                             //return props.rowData.roleList.map(item => <Chip key={Math.random().toString()} style={{marginRight: '4px'}} clickable variant="outlined" size="small" color="primary" label={item} onDelete={() => {}} />)

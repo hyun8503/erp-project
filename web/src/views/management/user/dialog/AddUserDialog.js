@@ -57,13 +57,13 @@ class AddUserDialog extends React.Component {
                 disableBackdropClick={false}
                 disableEscapeKeyDown={false}
             >
-                <DialogTitle>사용자 추가</DialogTitle>
+                <DialogTitle>新增用户</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={1}>
                             <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <TextField id="userId"
-                                               label="사용자 ID"
+                                               label="用户ID"
                                                variant="outlined"
                                                value={this.props.userStore.addUserId}
                                                onChange={(event) => this.props.userStore.changeAddUserId(event.target.value)}/>
@@ -72,7 +72,7 @@ class AddUserDialog extends React.Component {
                             <Grid item xs={6}>
                                 <FormControl noValidate autoComplete="off" fullWidth>
                                     <TextField id="password"
-                                               label="비밀번호"
+                                               label="密码"
                                                type={"password"}
                                                variant="outlined"
                                                value={this.props.userStore.addUserPwd}
@@ -87,7 +87,7 @@ class AddUserDialog extends React.Component {
                                         onChange={(event) => this.props.userStore.changeAddUserRoleId(event.target.value)}
                                     >
                                         <MenuItem value="none" disabled>
-                                            <em>역할</em>
+                                            <em>角色</em>
                                         </MenuItem>
                                         {this.props.userStore.roleList.length > 0 ?
                                             this.props.userStore.roleList.map((item) => {
@@ -107,13 +107,13 @@ class AddUserDialog extends React.Component {
                                     <Grid item xs={8}>
                                         <TextField variant={"outlined"}
                                                    fullWidth
-                                                   label={"플랫폼 이름"}
+                                                   label={"平台名称"}
                                                    value={this.props.userStore.addUserSearchPlatformName}
                                                    onChange={(event) => this.props.userStore.changeAddUserSearchPlatformName(event.target.value)}
                                         />
                                     </Grid>
                                     <Grid container item xs={4} alignItems={"center"} justify={"flex-start"}>
-                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.userStore.filterPlatformList()} >검색</Button>
+                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.userStore.filterPlatformList()} >查询</Button>
                                     </Grid>
                                 </Grid>
                                 <Grid container item xs={12}>
@@ -126,7 +126,7 @@ class AddUserDialog extends React.Component {
                                                           onChange={(event) => this.props.userStore.changeAddUserPlatformIdList("all", event.target.checked)}
                                                 />
                                             }
-                                            label="전체선택"
+                                            label="全选"
                                             labelPlacement="end"
                                         />
                                         {this.props.userStore.platformList.length > 0 ?
@@ -156,9 +156,9 @@ class AddUserDialog extends React.Component {
 
                     </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.addUser()}>추가</Button>
+                    <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.userStore.addUser()}>新增</Button>
                     <Button variant="outlined" color="primary"
-                            onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 닫기</Button>
+                            onClick={() => this.props.userStore.changeIsAddUserDialog(false)}> 关闭</Button>
                 </DialogActions>
             </Dialog>
         )

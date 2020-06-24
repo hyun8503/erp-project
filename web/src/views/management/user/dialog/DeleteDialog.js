@@ -19,15 +19,15 @@ class DeleteDialog extends React.Component {
                     maxWidth={'xs'} >
                 <DialogContent>
                     <Typography variant="subtitle1" component="h2">
-                        정말 삭제하시겠습니까?
+                        确定要删除吗？
                     </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.props.userStore.isDeleteDialogClose()} disabled={this.props.userStore.deletingUser}>
-                        취소
+                        取消
                     </Button>
                     <Button color={"primary"} onClick={() => this.props.userStore.deleteUser()} disabled={this.props.userStore.deletingUser}>
-                        확인
+                        确定
                     </Button>
                 </DialogActions>
             </Dialog>

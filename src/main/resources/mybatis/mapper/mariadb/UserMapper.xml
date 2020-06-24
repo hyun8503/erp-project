@@ -99,4 +99,29 @@
             modified_date = #{modifiedDate}
         WHERE user_id = #{userId}
     </update>
+
+    <update id="updatePassword" parameterType="User">
+        UPDATE erp_users
+        SET
+        <if test="loginPassword != null">login_password = #{loginPassword}</if>
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="searchUserList" parameterType="Map" resultType="User">
+        SELECT erp_users.user_id,
+               erp_users.login_id,
+               erp_users.type_code,
+               erp_users.status_code,
+               erp_users.created_date,
+               erp_users.modified_date,
+               erp_roles.role_name
+        FROM erp_users
+            JOIN erp_user_roles ON erp_users.user_id = erp_user_roles.user_id
+            JOIN erp_roles ON erp_user_roles.role_id = erp_roles.role_id
+            JOIN erp_user_platforms ON erp_users.user_id = erp_user_platforms.user_id
+            JOIN erp_platforms ON erp_user_platforms.platform_id = erp_platforms.platform_id
+        WHERE erp_platforms.platform_id like CONCAT('%',#{platform},'%') OR erp_roles.role_id like CONCAT('%',#{role},'%') OR erp_users.user_id like CONCAT('%',#{name},'%')
+    </select>
+
+
 </mapper>

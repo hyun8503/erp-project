@@ -201,7 +201,7 @@ export default class RoleStore {
             console.log(err);
             this.addingRole = false;
             if(err.response.data.code === ErrorType.code.RoleNameDuplicate) {
-                this.confirmDialogMsg = "역할 이름이 이미 존재합니다";
+                this.confirmDialogMsg = "您输入的角色名称已经存在";
                 this.confirmDialogOpen = true;
             } else {
                 this.initAddRoleDialog();
@@ -232,7 +232,7 @@ export default class RoleStore {
             console.log(err);
             this.updatingRole = false
             if(err.response.data.code === ErrorType.code.RoleNameDuplicate) {
-                this.confirmDialogMsg = "역할 이름이 이미 존재합니다";
+                this.confirmDialogMsg = "您输入的角色名称已经存在";
                 this.confirmDialogOpen = true;
             } else {
                 this.initUpdateDialog();
@@ -250,7 +250,7 @@ export default class RoleStore {
             console.log('deleteRole');
             console.log(err);
             if(err.response.data.code === ErrorType.code.RoleInUse) {
-                this.confirmDialogMsg = "역할이 이미 사용중입니다";
+                this.confirmDialogMsg = "角色正在使用中";
                 this.confirmDialogOpen = true;
             } else {
                 this.deleteRoleId = "";

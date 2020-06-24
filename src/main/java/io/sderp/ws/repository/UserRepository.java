@@ -33,4 +33,10 @@ public class UserRepository {
 
     public int insertUser(User user) { return mapper.insertUser(user); }
     public int updateUser(User user) { return mapper.updateUser(user); }
+
+    public int updatePassword(User user) { return mapper.updatePassword(user); }
+
+    public List<User> searchUserList(String platform, String role, String name) {
+        return mapper.searchUserList(platform, role, name);
+    }
 }

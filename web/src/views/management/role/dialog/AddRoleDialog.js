@@ -37,10 +37,10 @@ class AddRoleDialog extends React.Component {
                 disableBackdropClick={false}
                 disableEscapeKeyDown={false}
         >
-            <DialogTitle>권한관리</DialogTitle>
+            <DialogTitle>权限管理</DialogTitle>
             <DialogContent>                                                         
                 <FormControl className={classes.formControl} noValidate autoComplete="off">
-                <TextField id="outlined-basic" label="역할 이름" variant="outlined" value={this.props.roleStore.roleName} onChange={(event) => this.props.roleStore.changeRoleName(event.target.value)} />
+                <TextField id="outlined-basic" label="角色名称" variant="outlined" value={this.props.roleStore.roleName} onChange={(event) => this.props.roleStore.changeRoleName(event.target.value)} />
                     <Container className={classes.container}>
                         <FormGroup row >
                             <FormControlLabel
@@ -52,7 +52,7 @@ class AddRoleDialog extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
-                                label={"보고서 제출"}
+                                label={"提交报表"}
                                 labelPlacement="end"
                             />
                             <FormControlLabel
@@ -64,7 +64,7 @@ class AddRoleDialog extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
-                                label="보고서검색"
+                                label="查询报表"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
@@ -76,7 +76,7 @@ class AddRoleDialog extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
-                                label="보고서형식"
+                                label="报表模板管理"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
@@ -88,7 +88,7 @@ class AddRoleDialog extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
-                                label="플랫폼관리"
+                                label="平台管理"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
@@ -100,7 +100,7 @@ class AddRoleDialog extends React.Component {
                                         color="primary"
                                     />
                                 }
-                                label="사용자관리"
+                                label="用户管理"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
@@ -112,7 +112,7 @@ class AddRoleDialog extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeAddRoleCheckList(event.target.name, event.target.checked)}
                                     />
                                 }
-                                label="역할 관리"
+                                label="角色管理"
                                 labelPlacement="end"
                             />
                         </FormGroup>
@@ -120,9 +120,9 @@ class AddRoleDialog extends React.Component {
                 </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.roleStore.addRole()}>추가</Button>
+                <Button variant="contained" color="primary" disabled={addBtnDisabled} onClick={() => this.props.roleStore.addRole()}>新增</Button>
                 <Button variant="outlined" color="primary" 
-                        onClick={() => this.props.roleStore.changeIsAddRoleDialog(false)}>닫기</Button>
+                        onClick={() => this.props.roleStore.changeIsAddRoleDialog(false)}>关闭</Button>
             </DialogActions>
         </Dialog>
 

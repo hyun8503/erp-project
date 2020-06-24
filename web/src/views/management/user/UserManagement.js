@@ -13,6 +13,7 @@ import AddUserDialog from "./dialog/AddUserDialog";
 import ModifyUserDialog from "./dialog/ModifyUserDialog";
 import DeleteDialog from "./dialog/DeleteDialog";
 import ConfirmDialog from "../../../components/ConfirmDialog";
+import {values} from "mobx";
 
 
 const styles = theme => ({
@@ -55,6 +56,8 @@ class UserManagement extends React.Component {
   
     componentDidMount() {
         this.props.userStore.getUsers();
+        this.props.userStore.getRoleList();
+        this.props.userStore.getPlatformList();
     }
 
     componentWillUnmount() {
@@ -78,7 +81,7 @@ class UserManagement extends React.Component {
                     <Paper className={classes.mainContent}>
                         <Grid container item xs={12}>
                             <Typography variant="h4" component="h2">
-                                사용자 관리
+                                用户管理
                             </Typography>
                         </Grid>
 
@@ -87,13 +90,19 @@ class UserManagement extends React.Component {
                                 <FormControl variant="outlined" fullWidth>
                                     <Select
                                         defaultValue="none"
-                                        onChange={() => {
-                                        }}>
+                                        value={this.props.userStore.roleList.length > 0 ? this.props.userStore.userRoleId : "none"}
+                                        onChange={(event) => this.props.userStore.changeUserRoleId(event.target.value)
+                                        }>
                                         <MenuItem value="none" disabled>
-                                            <em>역할 유형</em>
+                                            <em>选择角色</em>
                                         </MenuItem>
-                                        <MenuItem value={"직영"}>역할1</MenuItem>
-                                        <MenuItem value={"비직영"}>역할2</MenuItem>
+                                        {this.props.userStore.roleList.length > 0 ?
+                                            this.props.userStore.roleList.map((item) => {
+                                                return (
+                                                    <MenuItem key={item.role.roleId} value={item.role.roleId}>{item.role.roleName}</MenuItem>
+                                                )
+                                            })
+                                            : ""}
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -102,33 +111,46 @@ class UserManagement extends React.Component {
                                 <FormControl variant="outlined" fullWidth>
                                     <Select
                                         defaultValue="none"
-                                        onChange={() => {
-                                        }}>
+                                        value={this.props.userStore.platformList.length > 0 ? this.props.userStore.userPlatformId : "none"}
+                                        onChange={(event) => this.props.userStore.changeUserPlatformId(event.target.value)
+                                        }>
                                         <MenuItem value="none" disabled>
-                                            <em>플랫폼</em>
+                                            <em>平台</em>
                                         </MenuItem>
-                                        <MenuItem value={"역할1"}>플랫폼1</MenuItem>
-                                        <MenuItem value={"역할2"}>플랫폼2</MenuItem>
-                                        <MenuItem value={"역할3"}>플랫폼3</MenuItem>
-                                        <MenuItem value={"역할4"}>플랫폼4</MenuItem>
-                                        <MenuItem value={"역할5"}>플랫폼5</MenuItem>
-                                        <MenuItem value={"역할6"}>플랫폼6</MenuItem>
+                                        {this.props.userStore.platformList.length > 0 ?
+                                            this.props.userStore.platformList.map((item) => {
+                                                return (
+                                                    <MenuItem key={item.platformId} value={item.platformId}>{item.platformName}</MenuItem>
+                                                )
+                                            })
+                                            : ""}
                                     </Select>
                                 </FormControl>
                             </Grid>
 
                             <Grid item xs={12} md={3}>
                                 <FormControl noValidate autoComplete="off" fullWidth>
-                                    <TextField id="outlined-basic" label="사용자 ID" variant="outlined"/>
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="用户ID"
+                                        variant="outlined"
+                                        value={this.props.userStore.userSearchPlatformName}
+                                        onChange={(event) => {this.props.userStore.changeUserSearchPlatformName(event.target.value)}}
+                                    />
                                 </FormControl>
                             </Grid>
                             <Grid container item xs={12} sm={12} md={3} alignItems={"center"} justify={"flex-start"}>
-                                <Button variant="contained" color="primary">검색</Button>
+                                <Button variant="contained"
+                                        color="primary"
+                                        onClick = {()=>this.props.userStore.searchUser()}
+                                >
+                                    查询
+                                </Button>
                                 <Button style={{marginLeft: '8px'}}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.userStore.changeIsAddUserDialog(true)}>
-                                    등록
+                                    新增
                                 </Button>
                             </Grid>
                         </Grid>
@@ -154,17 +176,17 @@ class UserManagement extends React.Component {
                                         actions: '',
                                     },
                                     body: {
-                                        emptyDataSourceMessage: '데이터가 없습니다',
+                                        emptyDataSourceMessage: '对不起，没有数据',
                                     },
                                     pagination: {
-                                        labelRowsSelect: ' 개씩 보기',
-                                        labelDisplayedRows: '총 {count}개 중 {from} - {to}',
+                                        labelRowsSelect: ' 个 项目',
+                                        labelDisplayedRows: '总 {count}个 中 {from} - {to}',
                                     },
                                 }}
                                 columns={[
-                                    {title: '사용자 ID', field: 'loginId'},
+                                    {title: '用户ID', field: 'loginId'},
                                     {
-                                        title: '역할',
+                                        title: '角色',
                                         field: 'roleName',
                                     },
 

@@ -94,7 +94,7 @@ class PlatformManagement extends React.Component {
                     <Paper className={classes.mainContent}>
                         <Grid item xs={12}>
                             <Typography variant="h4" component="h2">
-                                플랫폼 관리
+                                平台管理
                             </Typography>
                         </Grid>
 
@@ -107,9 +107,9 @@ class PlatformManagement extends React.Component {
                                         defaultValue={"none"}
                                         value={this.props.platformStore.searchPlatformType}
                                         onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
-                                        <MenuItem value={PlatformType.type.None} disabled><em>플랫폼 유형</em></MenuItem>
-                                        <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>
-                                        <MenuItem value={PlatformType.type.NonDirect}>비직영</MenuItem>
+                                        <MenuItem value={PlatformType.type.None} disabled><em>平台类型</em></MenuItem>
+                                        <MenuItem value={PlatformType.type.Direct}>直营</MenuItem>
+                                        <MenuItem value={PlatformType.type.NonDirect}>非直营</MenuItem>
                                     </Select>
                                 </FormControl>
 
@@ -121,7 +121,7 @@ class PlatformManagement extends React.Component {
                                     <TextField
                                         style={{width: 400}}
                                         id="outlined-basic"
-                                        label="플랫폼 이름"
+                                        label="平台名称"
                                         variant="outlined"
                                         value={this.props.platformStore.searchName}
                                         onChange={(event) => this.props.platformStore.changeSearchName(event.target.value)}
@@ -133,13 +133,13 @@ class PlatformManagement extends React.Component {
                                         color="primary"
                                         onClick={() => this.props.platformStore.searchPlatform()}
                                 >
-                                    검색
+                                    查询
                                 </Button>
                                 <Button className={classes.button}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.platformStore.changeIsAddPlatformDialog(true)}>
-                                    등록
+                                    新增
                                 </Button>
                             </Grid>
                         </Grid>
@@ -166,19 +166,19 @@ class PlatformManagement extends React.Component {
                                         actions: '',
                                     },
                                     body: {
-                                        emptyDataSourceMessage: '데이터가 없습니다',
-                                        editRow: { deleteText: '삭제하시겠습니까?'}
+                                        emptyDataSourceMessage: '没有数据',
+                                        editRow: { deleteText: '确定要删除吗？'}
                                     },
                                     pagination: {
-                                        labelRowsSelect: ' 개씩 보기',
-                                        labelDisplayedRows: '총 {count}개 중 {from} - {to}',
+                                        labelRowsSelect: '个 项目',
+                                        labelDisplayedRows: '总 {count}个 中 {from} - {to}',
                                     },
                                 }}
                                 columns={[
-                                    {title: '플랫폼 이름', field: 'platformName'},
+                                    {title: '平台名称', field: 'platformName'},
                                     {
-                                        title: '플랫폼 유형', field: 'typeCode',
-                                        lookup: {[PlatformType.type.Direct]: '직영', [PlatformType.type.NonDirect]: '비직영'},
+                                        title: '平台类型', field: 'typeCode',
+                                        lookup: {[PlatformType.type.Direct]: '直营', [PlatformType.type.NonDirect]: '非直营'},
                                     },
                                 ]}
                                 data={

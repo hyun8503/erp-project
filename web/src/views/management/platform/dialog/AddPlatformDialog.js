@@ -35,23 +35,23 @@ class AddPlatformDialog extends React.Component {
                 disableBackdropClick={false}
                 disableEscapeKeyDown={false}
             >
-                <DialogTitle>플랫폼 추가</DialogTitle>
+                <DialogTitle>新增平台</DialogTitle>
                 <DialogContent>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <Select
                             value={this.props.platformStore.addSelectedPlatformType}
                             onChange={(event) => this.props.platformStore.changeSelectedPlatformType(event.target.value)}>
                             <MenuItem value="none" disabled>
-                                <em>플랫폼 유형</em>
+                                <em>平台类型</em>
                             </MenuItem>
-                            <MenuItem value={PlatformType.type.Direct}>직영</MenuItem>
-                            <MenuItem value={PlatformType.type.NonDirect}>비직영</MenuItem>
+                            <MenuItem value={PlatformType.type.Direct}>直营</MenuItem>
+                            <MenuItem value={PlatformType.type.NonDirect}>非直营</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl} noValidate autoComplete="off">
                         <TextField
                             id="outlined-basic"
-                            label="플랫폼 이름"
+                            label="平台名称"
                             variant="outlined"
                             value={this.props.platformStore.addPlatformName}
                             onChange={(event) => this.props.platformStore.changeAddPlatformName(event.target.value)}
@@ -59,12 +59,12 @@ class AddPlatformDialog extends React.Component {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" disabled={!this.props.platformStore.addPlatformName || this.props.platformStore.addingPlatform} onClick={() => this.props.platformStore.addPlatform()}>추가</Button>
+                    <Button variant="contained" color="primary" disabled={!this.props.platformStore.addPlatformName || this.props.platformStore.addingPlatform} onClick={() => this.props.platformStore.addPlatform()}>新增</Button>
                     <Button variant="outlined"
                             color="primary"
                             onClick={() => this.props.platformStore.changeIsAddPlatformDialog(false)}
                     >
-                        닫기
+                        关闭
                     </Button>
                 </DialogActions>
             </Dialog>

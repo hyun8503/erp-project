@@ -16,7 +16,6 @@ export default class PlatformStore {
     @observable confirmDialogOpen = false;
     @observable confirmDialogMsg = "";
     @observable deletePlatformError= false;
-
     @observable isDeleteDialog = false;
     @observable deletePlatformId = "";
     @observable deleting = false;
@@ -112,7 +111,7 @@ export default class PlatformStore {
             console.log('deletePlatform');
             console.log(err);
             if(err.response.data.code === ErrorType.code.PlatformInUse) {
-                this.confirmDialogMsg = "플랫이 이미 사용중입니다";
+                this.confirmDialogMsg = "平台在使用中";
                 this.confirmDialogOpen = true;
             } else {
                 this.deletePlatformId = "";
@@ -167,7 +166,7 @@ export default class PlatformStore {
             console.log(err);
             this.addingPlatform = false;
             if (err.response.data.code === ErrorType.code.PlatformNameDuplicate) {
-                this.confirmDialogMsg = "플랫폼 이름이 이미 존재합니다";
+                this.confirmDialogMsg = "您输入的平台名称已经存在";
                 this.confirmDialogOpen = true;
                 console.log(err.response.data.code);
             } else {
