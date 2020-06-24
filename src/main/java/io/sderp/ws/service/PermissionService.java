@@ -1,6 +1,7 @@
 package io.sderp.ws.service;
 
 import io.sderp.ws.model.Permission;
+import io.sderp.ws.model.Platform;
 import io.sderp.ws.model.support.PermissionType;
 import io.sderp.ws.repository.PermissionRepository;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class PermissionService {
     public PermissionService(PermissionRepository permissionRepository) {
         this.permissionRepository = permissionRepository;
         List<Permission> permissionList = permissionRepository.selectAllPermission();
-        if(permissionList.size() == 0) {
+        if (permissionList.size() == 0) {
             logeger.info("insert initialize permission table");
             insertPermissionList(getInitPermissionList());
         }
@@ -33,7 +35,7 @@ public class PermissionService {
         List<Permission> permissionList = new ArrayList<Permission>();
         LocalDateTime now = LocalDateTime.now();
         PermissionType[] types = PermissionType.values();
-        for (PermissionType type: types) {
+        for (PermissionType type : types) {
             permissionList.add(Permission.builder()
                     .permissionId(UUID.randomUUID().toString())
                     .permissionName(type)
@@ -54,5 +56,13 @@ public class PermissionService {
         for (Permission permission : permissionList) {
             permissionRepository.insertPermission(permission);
         }
+    }
+
+    public List<Permission> getPermissionList(String userId) {
+            return permissionRepository.getPermissionList(userId);
+    }
+
+    public List<Permission> allPermissionList() {
+        return permissionRepository.selectAllPermission();
     }
 }

@@ -22,4 +22,9 @@ public class PermissionRepository {
     public int insertPermission(Permission permission) {
         return mapper.insertPermission(permission);
     }
+
+    public List<Permission> getPermissionList(String userId) {
+        return mapper.getPermissionList(userId);
+    }
+
 }

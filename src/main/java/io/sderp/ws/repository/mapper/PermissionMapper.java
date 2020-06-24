@@ -12,4 +12,6 @@ public interface PermissionMapper {
     List<Permission> selectPermissionByRole(String roleId);
 
     int insertPermission(Permission permission);
+
+    List<Permission> getPermissionList(String userId);
 }
