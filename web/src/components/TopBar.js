@@ -122,6 +122,8 @@ export default function TopBar(props) {
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="draggable-dialog-title"
+                        disableBackdropClick={false}
+                        disableEscapeKeyDown={false}
                     >
                         <DialogTitle style={{cursor: 'move'}} id="draggable-dialog-title">
                             密码更改
@@ -146,6 +148,7 @@ export default function TopBar(props) {
                                     variant="contained"
                                     color="primary"
                                     onClick={userPasswordModifyHandle}
+
                             >确定
                             </Button>
                             <Button className={classes.button}

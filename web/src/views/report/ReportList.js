@@ -94,9 +94,9 @@ class ReportList extends React.Component {
                                 fullWidth
                             >
                                 <MenuItem value="none" disabled>
-                                    <em>플랫폼 유형</em>
+                                    <em>平台类型</em>
                                 </MenuItem>
-                                <MenuItem value={"all"}>전체</MenuItem>
+                                <MenuItem value={"all"}>全部类型</MenuItem>
                                 {this.props.platformStore.platformList.length > 0 ?
                                     this.props.platformStore.platformList.map((item) => {
                                         return (
@@ -108,7 +108,7 @@ class ReportList extends React.Component {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                label={"파일명 검색"}
+                                label={"查询报表"}
                                 variant={"outlined"}
                                 value={this.props.reportStore.searchFileName}
                                 onChange={(event) => this.props.reportStore.changeSearchFileName(event.target.value)}
@@ -116,7 +116,7 @@ class ReportList extends React.Component {
                             />
                         </Grid>
                         <Grid container item xs={12} sm={3} alignItems={"center"}>
-                            <Button variant={"contained"} color={"primary"} size={"large"} onClick={() => this.props.reportStore.getReportList()}>검색</Button>
+                            <Button variant={"contained"} color={"primary"} size={"large"} onClick={() => this.props.reportStore.getReportList()}>查询</Button>
                         </Grid>
                     </Grid>
 
@@ -137,7 +137,7 @@ class ReportList extends React.Component {
                                                         {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
-                                                        업데이트: {moment(item.reportMonth).format("YYYY-MM")}
+                                                        上传日期: {moment(item.reportMonth).format("YYYY-MM")}
                                                     </Typography>
                                                 </CardContent>
                                             </CardActionArea>
@@ -171,19 +171,19 @@ class ReportList extends React.Component {
                     <Paper className={classes.mainContent}>
                         <Grid item xs={12}>
                             <Typography variant="h4" component="h2">
-                                레포트 검색
+                                查询报表
                             </Typography>
                         </Grid>
                         <Grid container item xs={12} style={{marginTop: '16px'}}>
                             <Grid item xs={10}>
                                 <Typography variant="h6" gutterBottom>
-                                    현재 날짜: {moment().format("YYYY-MM-DD")}
+                                    目前日期: {moment().format("YYYY-MM-DD")}
                                 </Typography>
                             </Grid>
 
                             <Grid item xs={2} align={"right"}>
                                 {this.props.reportStore.fileWebViewLink ?
-                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelClose()}>닫기</Button>
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelClose()}>关闭</Button>
                                     : ""
                                 }
                             </Grid>
