@@ -15,6 +15,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
     wrap: {
@@ -50,17 +52,114 @@ const styles = theme => ({
     }
 });
 
-@inject("authStore", "reportSubmitStore")
+@inject("authStore", "reportStore", "platformStore")
 @observer
 class ReportList extends React.Component {
     componentDidMount() {
+        this.props.reportStore.getReportList();
+        this.props.platformStore.getPlatformList();
     }
 
     render() {
         const { classes } = this.props;
 
+        const renderFileWebView = () => {
+            return (
+                <React.Fragment>
+                    <Grid item xs={12} style={{display: "flex"}}>
+                        <iframe src={this.props.reportStore.fileWebViewLink ? this.props.reportStore.fileWebViewLink : ""}
+                                style={{
+                                    display: 'flex',
+                                    width: '100%',
+                                    minHeight: '700px'
+                                }}
+                        >
+                        </iframe>
+                    </Grid>
+                </React.Fragment>
+            );
+        }
+
+        const renderList = () => {
+            return (
+                <React.Fragment>
+                    <Grid container item xs={12} spacing={1}>
+                        <Grid item xs={12} sm={3}>
+                            <TextField
+                                select
+                                variant={"outlined"}
+                                defaultValue={"none"}
+                                value={this.props.reportStore.selectedPlatformId}
+                                onChange={(event) => this.props.reportStore.changeSelectedPlatformId(event.target.value)}
+                                fullWidth
+                            >
+                                <MenuItem value="none" disabled>
+                                    <em>플랫폼 유형</em>
+                                </MenuItem>
+                                <MenuItem value={"all"}>전체</MenuItem>
+                                {this.props.platformStore.platformList.length > 0 ?
+                                    this.props.platformStore.platformList.map((item) => {
+                                        return (
+                                            <MenuItem key={item.platformId} value={item.platformId}>{item.platformName}</MenuItem>
+                                        )
+                                    })
+                                    : ""}
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label={"파일명 검색"}
+                                variant={"outlined"}
+                                value={this.props.reportStore.searchFileName}
+                                onChange={(event) => this.props.reportStore.changeSearchFileName(event.target.value)}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid container item xs={12} sm={3} alignItems={"center"}>
+                            <Button variant={"contained"} color={"primary"} size={"large"} onClick={() => this.props.reportStore.getReportList()}>검색</Button>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container className={classes.cardGrid} spacing={3}>
+                        {this.props.reportStore.reportList.length > 0 ?
+                            this.props.reportStore.reportList.map((item, index) => {
+                                return (
+                                    <Grid item xs={3} key={item.reportId}>
+                                        <Card>
+                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId)}>
+                                                <CardMedia
+                                                    className={classes.cardMedia}
+                                                    image={"/images/excel.png"}
+                                                    title={"hoho"}
+                                                />
+                                                <CardContent>
+                                                    <Typography variant={"subtitle1"}>
+                                                        {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
+                                                    </Typography>
+                                                    <Typography variant={"body2"}>
+                                                        업데이트: {moment(item.reportMonth).format("YYYY-MM")}
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grid>
+                                )
+                            })
+                            :
+                            ""
+                        }
+                    </Grid>
+                </React.Fragment>
+            );
+        }
+
         return (
             <div className={classes.wrap}>
+                <Backdrop open={this.props.reportStore.fileWebViewLoading}
+                          style={{zIndex: 10000}}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
                 <SideMenu
                     mobileOpen = {false}
                     setMobileOpen = {() => {}}
@@ -75,95 +174,21 @@ class ReportList extends React.Component {
                                 레포트 검색
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} style={{marginTop: '16px'}}>
-                            <Typography variant="h6" gutterBottom>
-                                현재 날짜: {moment().format("YYYY-MM-DD")}
-                            </Typography>
-                        </Grid>
-
-                        <Grid container item xs={12} spacing={1}>
-                            <Grid item xs={12} sm={3}>
-                                <TextField
-                                    select
-                                    variant={"outlined"}
-                                    defaultValue={"none"}
-                                    fullWidth
-                                >
-                                    <MenuItem value="none" disabled>
-                                        <em>플랫폼 유형</em>
-                                    </MenuItem>
-                                    <MenuItem value={"all"}>전체</MenuItem>
-                                    <MenuItem value={"1"}>플랫폼1</MenuItem>
-                                    <MenuItem value={"2"}>플랫폼2</MenuItem>
-                                    <MenuItem value={"3"}>플랫폼3</MenuItem>
-                                </TextField>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    label={"파일명 검색"}
-                                    variant={"outlined"}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid container item xs={12} sm={3} alignItems={"center"}>
-                                <Button variant={"contained"} color={"primary"} size={"large"}>검색</Button>
-                            </Grid>
-                        </Grid>
-
-                        <Grid container className={classes.cardGrid} spacing={3}>
-                            <Grid item xs={3}>
-                                <Card>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.cardMedia}
-                                            image={"/images/excel.png"}
-                                            title={"hoho"}
-                                        />
-                                        <CardContent>
-                                            <Typography variant={"subtitle1"}>
-                                                test1
-                                            </Typography>
-                                            <Typography variant={"body2"}>
-                                                업데이트: {moment().format("YYYY-MM-DD")}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Card>
+                        <Grid container item xs={12} style={{marginTop: '16px'}}>
+                            <Grid item xs={10}>
+                                <Typography variant="h6" gutterBottom>
+                                    현재 날짜: {moment().format("YYYY-MM-DD")}
+                                </Typography>
                             </Grid>
 
-                            {this.props.reportSubmitStore.fileList.length > 0 ?
-                                this.props.reportSubmitStore.fileList.map((item, index) => {
-                                    return (
-                                        <Grid item xs={3}>
-                                            <Card key={"upload-file"+index}>
-                                                <CardActionArea>
-                                                    <CardMedia
-                                                        className={classes.cardMedia}
-                                                        image={"/images/excel.png"}
-                                                        title={"hoho"}
-                                                    />
-                                                    <CardContent>
-                                                        <Typography variant={"subtitle1"}>
-                                                            {item.name}
-                                                        </Typography>
-                                                        <Typography variant={"body2"}>
-                                                            업데이트: {moment(item.lastModified).format("YYYY-MM-DD")}
-                                                        </Typography>
-                                                    </CardContent>
-                                                </CardActionArea>
-                                            </Card>
-                                        </Grid>
-                                    )
-                                })
-                                :
-                                ""
-                                // <Grid item xs={12}>
-                                //     <Typography variant={"h6"} align={"center"}>
-                                //         레포트가 없습니다.
-                                //     </Typography>
-                                // </Grid>
-                            }
+                            <Grid item xs={2} align={"right"}>
+                                {this.props.reportStore.fileWebViewLink ?
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelClose()}>닫기</Button>
+                                    : ""
+                                }
+                            </Grid>
                         </Grid>
+                        {this.props.reportStore.fileWebViewLink ? renderFileWebView() : renderList()}
                     </Paper>
                 </Grid>
             </div>

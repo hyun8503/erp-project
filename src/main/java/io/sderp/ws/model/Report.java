@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Report {
     private String reportId;
-
     private String reportName;
 
     private String reportMonth;

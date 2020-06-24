@@ -18,4 +18,5 @@ public class ReportRepository {
 
     public List<Report> selectAllReport(String platformId, String reportName) { return reportMapper.selectAllReport(platformId, reportName); }
     public List<Report> selectReport(String userId, String reportMonth, String platformId, String reportName) { return reportMapper.selectReport(userId, reportMonth, platformId, reportName); }
+    public Report selectReportByReportId(String reportId) { return reportMapper.selectReportByReportId(reportId); }
 }

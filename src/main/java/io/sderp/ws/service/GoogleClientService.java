@@ -7,6 +7,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
 import io.sderp.ws.model.UserActionHistories;
 import io.sderp.ws.model.support.UserActionHistoryStatus;
@@ -80,6 +81,19 @@ public class GoogleClientService {
 
         File fileMeta = new File();
         fileMeta.setName(template.getFileName());
+        fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
+        InputStreamContent inputStreamContent = new InputStreamContent("application/vnd.google-apps.spreadsheet", fileResource.getInputStream());
+        File file = GoogleApiUtil.getDrive(userId).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();
+        logger.trace("file info {}, {}, {}, {}", file.getId(), file.getName(), file.getWebViewLink(), file.getMimeType());
+        return file;
+    }
+
+    public File fileUpload(Report report, String userId) throws IOException, GeneralSecurityException {
+        Resource fileResource = S3Util.download(report.getFilePath());
+        logger.trace("file resource = {}", fileResource);
+
+        File fileMeta = new File();
+        fileMeta.setName(report.getFileName());
         fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
         InputStreamContent inputStreamContent = new InputStreamContent("application/vnd.google-apps.spreadsheet", fileResource.getInputStream());
         File file = GoogleApiUtil.getDrive(userId).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();

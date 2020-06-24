@@ -46,6 +46,10 @@ public class ReportService {
         return reportRepository.selectReport(userId, reportMonth, platformId, reportName);
     }
 
+    public Report selectReportByReportId(String reportId) {
+        return reportRepository.selectReportByReportId(reportId);
+    }
+
     public List<Template> selectAllTemplate() {
         return templateRepository.selectAllTemplate();
     }
