@@ -110,7 +110,6 @@ class PlatformManagement extends React.Component {
                                     style={{width: 200}}
                                     variant="outlined" className={classes.formControl}>
                                     <Select
-                                        defaultValue={"none"}
                                         value={this.props.platformStore.searchPlatformType}
                                         onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
                                         <MenuItem value={PlatformType.type.None} disabled><em>平台类型</em></MenuItem>

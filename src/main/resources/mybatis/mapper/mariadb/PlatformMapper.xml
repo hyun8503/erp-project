@@ -25,7 +25,8 @@
                created_date,
                modified_date
         FROM erp_platforms
-        WHERE platform_name like CONCAT('%',#{platformName},'%') AND type_code = #{typeCode}
+        WHERE platform_name like CONCAT('%',#{platformName},'%')
+        <if test="typeCode != 'NONE'"> AND type_code = #{typeCode} </if>
     </select>
 
     <select id="selectPlatformNameCount" parameterType="String" resultType="long">

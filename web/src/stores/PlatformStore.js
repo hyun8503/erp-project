@@ -134,9 +134,11 @@ export default class PlatformStore {
     });
 
     searchPlatform = flow(function* () {
-        if (!this.searchName && !this.searchPlatformType) {
+        if (!this.searchName) {
+            this.getPlatformList();
             return null;
         }
+
         this.platformList = [];
         try {
             const response = yield axios.get(`/api/v1/platform/${this.searchName}/type/${this.searchPlatformType}`);

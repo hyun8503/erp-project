@@ -108,6 +108,7 @@ export default class ReportStore {
             this.fileWebViewLink = null;
             this.fileWebViewId = null;
             this.fileWebViewReportId = null;
+            this.getReportList();
         } catch (err) {
             console.log('viewExcelSaveProc error');
             this.fileSaving = false;
