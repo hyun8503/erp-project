@@ -94,11 +94,10 @@ class UserManagement extends React.Component {
                             <Grid item xs={12} md={3}>
                                 <FormControl variant="outlined" fullWidth>
                                     <Select
-                                        defaultValue="none"
                                         value={this.props.userStore.roleList.length > 0 ? this.props.userStore.userRoleId : "none"}
                                         onChange={(event) => this.props.userStore.changeUserRoleId(event.target.value)
                                         }>
-                                        <MenuItem value="none" disabled>
+                                        <MenuItem value="none">
                                             <em>选择角色</em>
                                         </MenuItem>
                                         {this.props.userStore.roleList.length > 0 ?
@@ -115,11 +114,10 @@ class UserManagement extends React.Component {
                             <Grid item xs={12} md={3}>
                                 <FormControl variant="outlined" fullWidth>
                                     <Select
-                                        defaultValue="none"
                                         value={this.props.userStore.platformList.length > 0 ? this.props.userStore.userPlatformId : "none"}
                                         onChange={(event) => this.props.userStore.changeUserPlatformId(event.target.value)
                                         }>
-                                        <MenuItem value="none" disabled>
+                                        <MenuItem value="none">
                                             <em>平台</em>
                                         </MenuItem>
                                         {this.props.userStore.platformList.length > 0 ?

@@ -3,7 +3,6 @@ import axios from "axios";
 import RoleAdapter from "../adapter/RoleAdapter";
 import PlatformAdapter from "../adapter/PlatformAdapter";
 import * as ErrorType from "../type/ErrorType";
-import {observer} from "mobx-react";
 
 export default class UserStore {
     @observable isAddUserDialog = false;
@@ -277,17 +276,22 @@ export default class UserStore {
     })
 
     searchUser = flow(function* (){
-        if (!this.userPlatformId && !this.userRoleId && !this.userSearchPlatformName) {
+        if (!this.userSearchPlatformName && this.userPlatformId === 'none' && this.userRoleId === 'none') {
+            this.getUsers();
             return null;
         }
+
+        this.userSearchPlatformName = this.userSearchPlatformName ? this.userSearchPlatformName : "none";
         this.userList = [];
 
         try {
             const response = yield axios.get(`/api/v1/user/${this.userPlatformId}/role/${this.userRoleId}/name/${this.userSearchPlatformName}`);
             this.userList = response.data;
+            this.userSearchPlatformName = this.userSearchPlatformName === "none" ? "" : this.userSearchPlatformName;
         } catch (err) {
             console.log('search platform error');
             console.log(err);
+            this.userSearchPlatformName = this.userSearchPlatformName === "none" ? "" : this.userSearchPlatformName;
         }
 
 

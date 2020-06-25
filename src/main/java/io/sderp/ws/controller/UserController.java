@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.controller.param.ModifyUserParam;
 import io.sderp.ws.controller.param.UserParam;
-import io.sderp.ws.model.Platform;
 import io.sderp.ws.model.User;
-import io.sderp.ws.model.support.PlatformType;
 import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.PlatformService;
 import io.sderp.ws.service.UserService;
@@ -69,7 +67,10 @@ public class UserController {
     }
 
     @GetMapping("/user/{platform}/role/{role}/name/{name}")
-    public ResponseEntity<List<User>> searchUser(HttpServletRequest request, @PathVariable String platform, @PathVariable String role, @PathVariable String name) {
+    public ResponseEntity<List<User>> searchUser(HttpServletRequest request, @PathVariable(required = false) String platform, @PathVariable(required = false) String role, @PathVariable(required = false) String name) {
+        platform = (platform.equalsIgnoreCase("none")) ? null : platform;
+        role = (role.equalsIgnoreCase("none")) ? null : role;
+        name = (name.equalsIgnoreCase("none")) ? null : name;
         return new ResponseEntity<>(userService.searchUserList(platform, role, name), HttpStatus.OK);
     }
 }
