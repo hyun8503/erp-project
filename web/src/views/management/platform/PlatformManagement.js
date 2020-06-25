@@ -104,11 +104,9 @@ class PlatformManagement extends React.Component {
                             </Typography>
                         </Grid>
 
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <FormControl
-                                    style={{width: 200}}
-                                    variant="outlined" className={classes.formControl}>
+                        <Grid container spacing={1} direction={"row"} alignItems={"center"}>
+                            <Grid item xs={12} sm={12} md={4}>
+                                <FormControl fullWidth variant="outlined">
                                     <Select
                                         value={this.props.platformStore.searchPlatformType}
                                         onChange={(event)=>{this.props.platformStore.changeSearchPlatformType(event.target.value)}}>
@@ -117,14 +115,14 @@ class PlatformManagement extends React.Component {
                                         <MenuItem value={PlatformType.type.NonDirect}>非直营</MenuItem>
                                     </Select>
                                 </FormControl>
+                            </Grid>
 
-
-                                <FormControl className={classes.formControl}
+                            <Grid item xs={12} sm={12} md={5}>
+                                <FormControl fullWidth
                                              noValidate
                                              autoComplete="off"
                                 >
                                     <TextField
-                                        style={{width: 400}}
                                         id="outlined-basic"
                                         label="平台名称"
                                         variant="outlined"
@@ -132,18 +130,21 @@ class PlatformManagement extends React.Component {
                                         onChange={(event) => this.props.platformStore.changeSearchName(event.target.value)}
                                     />
                                 </FormControl>
+                            </Grid>
 
-                                <Button className={classes.button}
+                            <Grid item xs={12} sm={12} md={3}>
+                                <Button
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.platformStore.searchPlatform()}
                                 >
                                     查询
                                 </Button>
-                                <Button className={classes.button}
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => this.props.platformStore.changeIsAddPlatformDialog(true)}>
+                                <Button
+                                    style={{marginLeft: '8px'}}
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => this.props.platformStore.changeIsAddPlatformDialog(true)}>
                                     新增
                                 </Button>
                             </Grid>

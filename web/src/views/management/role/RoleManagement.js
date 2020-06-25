@@ -153,11 +153,10 @@ class RoleManagement extends React.Component {
                         </Grid>
 
 
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <FormControl className={classes.formControl} noValidate autoComplete="off">
+                        <Grid container spacing={1} alignItems={"center"}>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl noValidate autoComplete="off" fullWidth>
                                     <TextField
-                                        style={{width: 400}}
                                         id="outlined-basic"
                                         label="角色名称"
                                         variant="outlined"
@@ -165,9 +164,11 @@ class RoleManagement extends React.Component {
                                         onChange={(event) => this.props.roleStore.changeSearchRoleName(event.target.value)}
                                     />
                                 </FormControl>
+                            </Grid>
 
-                                <Button className={classes.button} variant="contained" color="primary" onClick={() => this.props.roleStore.searchRoleList()}>查询</Button>
-                                <Button className={classes.button}
+                            <Grid item xs={12} sm={6}>
+                                <Button variant="contained" color="primary" onClick={() => this.props.roleStore.searchRoleList()}>查询</Button>
+                                <Button style={{marginLeft: '8px'}}
                                         variant="contained"
                                         color="primary"
                                         onClick={() => this.props.roleStore.changeIsAddRoleDialog(true)}>
