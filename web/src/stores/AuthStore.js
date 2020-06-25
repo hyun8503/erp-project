@@ -84,7 +84,7 @@ export default class AuthStore {
         }
     })
 
-    doLogin = flow(function* doLogin() {
+    doLogin = flow(function* doLogin(history) {
         this.loginState = State.Pending;
 
         try {
@@ -101,6 +101,9 @@ export default class AuthStore {
             this.loginState = State.Authenticated;
             this.loginToken = token;
             this.loginUser = user;
+            if(this.login.loginId === "admin") {
+                history.push("/report/list")
+            }
         } catch (e) {
             this.loginState = State.Failed;
             this.loginToken = '';
