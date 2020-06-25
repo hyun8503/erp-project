@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     },
     accountInfo: {
     },
+    menuIcon: {
+        paddingRight: theme.spacing(1),
+    },
 }));
 
 
@@ -100,32 +103,32 @@ export default function TopBar(props) {
         <div>
             {getMenuCheck(PermissionType.type.ReportSubmit) ?
                 <NavLink to="/report/submit" className={classes.link}>
-                    <MenuItem><AssignmentIcon fontSize="small" /> 提交报表</MenuItem>
+                    <MenuItem><AssignmentIcon className={classes.menuIcon} /> 提交报表</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.ReportSearch) ?
                 <NavLink to={"/report/list"} className={classes.link}>
-                    <MenuItem><FindInPageIcon fontSize="small" /> 查询报表</MenuItem>
+                    <MenuItem><FindInPageIcon className={classes.menuIcon} /> 查询报表</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.ReportTemplate) ?
                 <NavLink to="/management/report" className={classes.link}>
-                    <MenuItem><ListAltIcon fontSize="small" /> 报表模版管理</MenuItem>
+                    <MenuItem><ListAltIcon className={classes.menuIcon} /> 报表模版管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.PlatformManagement) ?
                 <NavLink to="/management/platform" className={classes.link}>
-                    <MenuItem><WidgetsIcon fontSize="small" /> 平台管理</MenuItem>
+                    <MenuItem><WidgetsIcon className={classes.menuIcon} /> 平台管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.RoleManagement) ?
                 <NavLink to="/management/role" className={classes.link}>
-                    <MenuItem><ExtensionIcon fontSize="small" /> 角色管理</MenuItem>
+                    <MenuItem><ExtensionIcon  className={classes.menuIcon} /> 角色管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.UserManagement) ?
                 <NavLink to="/management/user" className={classes.link}>
-                    <MenuItem><PeopleAltIcon fontSize="small" /> 用户管理</MenuItem>
+                    <MenuItem><PeopleAltIcon className={classes.menuIcon} /> 用户管理</MenuItem>
                 </NavLink>
                 : ""}
         </div>
