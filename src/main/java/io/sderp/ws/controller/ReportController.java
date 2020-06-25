@@ -78,10 +78,7 @@ public class ReportController {
             throw new RuntimeException("report upload error: files empty");
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String paramJson = objectMapper.writeValueAsString(files);
-
-        reportService.insertTemplate(files, authenticationService.getUser().getUserId(), paramJson, httpRequest);
+        reportService.insertTemplate(files, authenticationService.getUser().getUserId(), httpRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
