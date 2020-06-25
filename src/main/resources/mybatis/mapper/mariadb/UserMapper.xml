@@ -120,7 +120,10 @@
             JOIN erp_roles ON erp_user_roles.role_id = erp_roles.role_id
             JOIN erp_user_platforms ON erp_users.user_id = erp_user_platforms.user_id
             JOIN erp_platforms ON erp_user_platforms.platform_id = erp_platforms.platform_id
-        WHERE erp_platforms.platform_id like CONCAT('%',#{platform},'%') OR erp_roles.role_id like CONCAT('%',#{role},'%') OR erp_users.user_id like CONCAT('%',#{name},'%')
+        WHERE erp_users.user_id != '-1'
+              <if test="name != null"> AND erp_users.login_id like CONCAT('%',#{name},'%') </if>
+              <if test="platform != null"> AND erp_user_platforms.platform_id  = #{platform} </if>
+              <if test="role != null"> AND erp_user_roles.role_id  = #{role} </if>
     </select>
 
 

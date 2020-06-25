@@ -28,9 +28,9 @@ public class GoogleApiUtil {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String CREDENTIALS_FILE_PATH = "/client_secret.json";
+    /*product*/
     public static final String REDIRECTION_URI = "http://ec2-13-209-81-142.ap-northeast-2.compute.amazonaws.com/oauth2";
-    private static final String CREDENTIALS_SUCCESS_RENDING_PAGE_URL = "http://localhost:3000/";
-    private static final String CREDENTIALS_FAIL_RENDING_PAGE_URL = "http://localhost:3000/";
+    //public static final String REDIRECTION_URI = "http://localhost:3000/oauth2";
 
     public static String credentialCheck(String userId) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

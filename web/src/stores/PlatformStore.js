@@ -49,6 +49,7 @@ export default class PlatformStore {
         this.searchName = value;
     }
     @action changeSearchPlatformType = (value) => {
+        value = value ? value.trim() : value;
         this.searchPlatformType = value;
     }
     @action changeIsAddPlatformDialog = (value) => this.isAddPlatformDialog = value;
