@@ -56,7 +56,7 @@ export default class AuthStore {
             if(this.myPermissionList.length > 0 && availablePermission) {
                 const idx = this.myPermissionList.findIndex((item) => item.permissionName === availablePermission);
                 if(idx === -1) {
-                    alert("권한이 없습니다");
+                    alert("你的账号没有权限");
                     this.doLogout();
                 }
             }

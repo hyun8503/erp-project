@@ -1,16 +1,8 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 import {makeStyles} from "@material-ui/core/styles";
-import {
-    AppBar, Button,
-    IconButton,
-    List,
-    ListItem,
-    TextField,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
+import {AppBar, Button, IconButton, List, ListItem, TextField, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {AccountCircle} from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -20,6 +12,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
+import Menu from "@material-ui/core/Menu";
+import * as PermissionType from "../type/PermissionType";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const logoWidth = 120;
 
@@ -32,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'none',
         },
     },
@@ -51,8 +46,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function TopBar(props) {
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const classes = useStyles();
-    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, userPasswordModifyHandle, userPasswordChange } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, userPasswordModifyHandle, userPasswordChange, myPermissionList } = props;
     const [open, setOpen] = React.useState(false);
     const [fullWidth, setFullWidth] = React.useState(true);
 
@@ -73,6 +69,53 @@ export default function TopBar(props) {
         handleClose();
     };
 
+    const getMenuCheck = (permission) => {
+        if(myPermissionList.length > 0) {
+            const idx = myPermissionList.findIndex((item) => item.permissionName === permission);
+            if(idx !== -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    const drawer = (
+        <div>
+            {getMenuCheck(PermissionType.type.ReportSubmit) ?
+                <NavLink to="/report/submit" className={classes.link}>
+                    <MenuItem>提交报表</MenuItem>
+                </NavLink>
+                : ""}
+            {getMenuCheck(PermissionType.type.ReportSearch) ?
+                <NavLink to={"/report/list"} className={classes.link}>
+                    <MenuItem>查询报表</MenuItem>
+                </NavLink>
+                : ""}
+            {getMenuCheck(PermissionType.type.ReportTemplate) ?
+                <NavLink to="/management/report" className={classes.link}>
+                    <MenuItem>报表模版管理</MenuItem>
+                </NavLink>
+                : ""}
+            {getMenuCheck(PermissionType.type.PlatformManagement) ?
+                <NavLink to="/management/platform" className={classes.link}>
+                    <MenuItem>平台管理</MenuItem>
+                </NavLink>
+                : ""}
+            {getMenuCheck(PermissionType.type.RoleManagement) ?
+                <NavLink to="/management/role" className={classes.link}>
+                    <MenuItem>角色管理</MenuItem>
+                </NavLink>
+                : ""}
+            {getMenuCheck(PermissionType.type.UserManagement) ?
+                <NavLink to="/management/user" className={classes.link}>
+                    <MenuItem>用户管理</MenuItem>
+                </NavLink>
+                : ""}
+        </div>
+    );
 
 
     if(!isLoggedIn) {
@@ -83,7 +126,7 @@ export default function TopBar(props) {
                         color="inherit"
                         aria-label="open drawer"
                         edge="start"
-                        onClick={handleDrawerToggle}
+                        onClick={(event) => setAnchorEl(event.currentTarget)}
                         className={classes.menuButton}
                     >
                         <MenuIcon/>
@@ -104,7 +147,7 @@ export default function TopBar(props) {
                         color="inherit"
                         aria-label="open drawer"
                         edge="start"
-                        onClick={handleDrawerToggle}
+                        onClick={(event) => setAnchorEl(event.currentTarget)}
                         className={classes.menuButton}
                     >
                         <MenuIcon/>
@@ -172,8 +215,10 @@ export default function TopBar(props) {
                             <ExitToAppIcon/>
                         </ListItem>
                     </List>
-
                 </Toolbar>
+                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+                    {drawer}
+                </Menu>
             </AppBar>
         );
     }

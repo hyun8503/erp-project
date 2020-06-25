@@ -101,6 +101,7 @@ class App extends React.Component {
                                     doLogout={() => this.props.authStore.doLogout()}
                                     userPasswordChange = {(value) => this.props.userStore.changeModifyUserPwd(value)}
                                     userPasswordModifyHandle = {() => {this.props.userStore.modifyPassword()}}
+                                    myPermissionList = {this.props.authStore.myPermissionList}
                             />
                             {loginState === store.State.Authenticated ? (
                                 <React.Fragment>

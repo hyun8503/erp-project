@@ -149,7 +149,7 @@ export default function SideMenu(props) {
 
     return (
         <React.Fragment>
-            <Hidden smUp implementation="css">
+            <Hidden mdUp implementation="css">
                 <Drawer variant="temporary"
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={mobileOpen}
@@ -173,7 +173,7 @@ export default function SideMenu(props) {
                     )}
                 </Drawer>
             </Hidden>
-            <Hidden xsDown implementation="css">
+            <Hidden smDown implementation="css">
                 <Drawer variant="permanent"
                         classes={{
                             paper: classes.drawerPaper,
