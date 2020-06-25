@@ -1,5 +1,6 @@
 package io.sderp.ws.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
 import io.sderp.ws.model.UserActionHistories;
@@ -20,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -64,11 +67,18 @@ public class ReportService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertTemplate(List<MultipartFile> files, String userId, String paramJson, HttpServletRequest httpServletRequest) throws Exception {
+    public void insertTemplate(List<MultipartFile> files, String userId, HttpServletRequest httpServletRequest) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> map = new HashMap<>();
         for (MultipartFile file: files) {
             String templateId = UUID.randomUUID().toString();
             String fileName = templateId + "." + FilenameUtils.getExtension(file.getOriginalFilename());
             String filePath = getTemplateFilePath(templateId, fileName);
+
+            map.put("templateId", templateId);
+            map.put("fileName", fileName);
+            map.put("filePath", filePath);
+
             Template template = Template.builder()
                     .templateId(templateId)
                     .templateName(file.getOriginalFilename())
@@ -83,6 +93,7 @@ public class ReportService {
             logger.trace("aws file key = {}", fileKey);
         }
 
+        String paramJson = objectMapper.writeValueAsString(map);
         userActionHistoryRepository.insertActionHistory(UserActionHistories.builder()
                 .description(paramJson)
                 .ipAddress(httpServletRequest.getRemoteAddr())
