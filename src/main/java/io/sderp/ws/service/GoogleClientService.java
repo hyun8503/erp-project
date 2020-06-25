@@ -40,7 +40,7 @@ import java.util.List;
 public class GoogleClientService {
     private static final Logger logger = LoggerFactory.getLogger(GoogleClientService.class);
 
-    private static final String TEMP_DOWNLOAD_PATH = "/Users/khh/Desktop/KHH/Temp";
+    private static final String TEMP_DOWNLOAD_PATH = "/home/ec2-user/applications/sderp/temp";
 
     private TemplateRepository templateRepository;
     private UserActionHistoryRepository userActionHistoryRepository;
