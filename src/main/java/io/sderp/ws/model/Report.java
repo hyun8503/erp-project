@@ -27,6 +27,8 @@ public class Report {
 
     private Float fileSize;
 
+    private String platformName;
+
     private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate;

@@ -106,7 +106,7 @@ class ReportSubmit extends React.Component {
                                                 />
                                                 <CardContent>
                                                     <Typography variant={"subtitle1"}>
-                                                        {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
+                                                        {moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.reportName.substr(0, item.reportName.lastIndexOf("."))}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
                                                         上传日期: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}

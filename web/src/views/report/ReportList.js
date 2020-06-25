@@ -143,7 +143,7 @@ class ReportList extends React.Component {
                                                 />
                                                 <CardContent>
                                                     <Typography variant={"subtitle1"}>
-                                                        {moment(item.reportMonth).format("YYYY-MM") + " " + item.reportName}
+                                                        {moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.platformName + "-" + item.reportName.substr(0, item.reportName.lastIndexOf("."))}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
                                                         上传日期: {moment(item.reportMonth).format("YYYY-MM")}

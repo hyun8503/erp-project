@@ -1,41 +1,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.sderp.ws.repository.mapper.ReportMapper">
     <select id="selectAllReport" parameterType="Map" resultType="Report">
-        SELECT report_id,
-               platform_id,
-               template_id,
-               report_name,
-               report_month,
-               file_name,
-               file_path,
-               file_size,
-               created_date,
-               modified_date
-        FROM erp_reports
-        WHERE report_id != '-1'
-        <if test="platformId != null"> AND platform_id = #{platformId} </if>
-        <if test="reportName != null"> AND report_name like CONCAT('%',#{reportName},'%')  </if>
+        SELECT erp_reports.report_id,
+               erp_reports.platform_id,
+               erp_reports.template_id,
+               erp_reports.report_name,
+               erp_reports.report_month,
+               erp_reports.file_name,
+               erp_reports.file_path,
+               erp_reports.file_size,
+               erp_reports.created_date,
+               erp_reports.modified_date,
+               erp_platforms.platform_name
+        FROM erp_reports JOIN erp_platforms ON erp_reports.platform_id = erp_platforms.platform_id
+        WHERE erp_reports.report_id != '-1'
+        <if test="platformId != null"> AND erp_reports.platform_id = #{platformId} </if>
+        <if test="reportName != null"> AND erp_reports.report_name like CONCAT('%',#{reportName},'%')  </if>
     </select>
 
     <select id="selectReport" parameterType="Map" resultType="Report">
-        SELECT report_id,
-               platform_id,
-               template_id,
-               report_name,
-               report_month,
-               file_name,
-               file_path,
-               file_size,
-               created_date,
-               modified_date
-        FROM erp_reports
-        WHERE platform_id IN (
+        SELECT erp_reports.report_id,
+               erp_reports.platform_id,
+               erp_reports.template_id,
+               erp_reports.report_name,
+               erp_reports.report_month,
+               erp_reports.file_name,
+               erp_reports.file_path,
+               erp_reports.file_size,
+               erp_reports.created_date,
+               erp_reports.modified_date,
+               erp_platforms.platform_name
+        FROM erp_reports JOIN erp_platforms ON erp_reports.platform_id = erp_platforms.platform_id
+        WHERE erp_reports.platform_id IN (
             SELECT erp_user_platforms.platform_id
             FROM erp_user_platforms
             WHERE erp_user_platforms.user_id = #{userId}
-        ) AND report_month = #{reportMonth}
-        <if test="platformId != null"> AND platform_id = #{platformId} </if>
-        <if test="reportName != null"> AND report_name like CONCAT('%',#{reportName},'%') </if>
+        ) AND erp_reports.report_month = #{reportMonth}
+        <if test="platformId != null"> AND erp_reports.platform_id = #{platformId} </if>
+        <if test="reportName != null"> AND erp_reports.report_name like CONCAT('%',#{reportName},'%') </if>
     </select>
 
     <select id="selectReportByReportId" parameterType="String" resultType="Report">
