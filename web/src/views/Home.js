@@ -13,7 +13,6 @@ import * as PermissionType from "../type/PermissionType";
 const styles = theme => ({
     wrap: {
         display: 'flex',
-        flexDirection: 'column',
         marginTop: '64px',
         width: '100%',
         height: '100%',
@@ -24,10 +23,14 @@ const styles = theme => ({
         width: '100%',
         height: '100%',
         padding: theme.spacing(3),
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(3)
+        }
     },
     appBarSpacer: theme.mixins.toolbar,
     mainContent: {
         display: 'flex',
+        flexDirection: 'column',
         maxWidth: '1200px',
         width: '100%',
         height: '100%',
@@ -71,10 +74,11 @@ class Home extends React.Component {
                 {/*<div className={classes.appBarSpacer} />*/}
                 <Grid container justify={"center"} className={classes.mainContainer} >
                     <Paper className={classes.mainContent}>
-                        <Typography variant="h4" component="h2">
-                            Home
-                        </Typography>
-
+                        <Grid item xs={12}>
+                            <Typography variant="h4" component="h2">
+                                Home
+                            </Typography>
+                        </Grid>
 
                     </Paper>
                 </Grid>

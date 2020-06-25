@@ -33,7 +33,7 @@ const styles = theme => ({
         //height: '100%',
         padding: theme.spacing(3),
         [theme.breakpoints.down('sm')]: {
-            paddingLeft: 0
+            paddingLeft: theme.spacing(3)
         }
     },
     appBarSpacer: theme.mixins.toolbar,
