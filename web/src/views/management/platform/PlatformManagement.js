@@ -15,6 +15,7 @@ import {inject, observer} from "mobx-react";
 import AddPlatformDialog from "./dialog/AddPlatformDialog";
 import * as PlatformType from "../../../type/PlatformType";
 import ConfirmDialog from "../../../components/ConfirmDialog";
+import * as PermissionType from "../../../type/PermissionType";
 
 const styles = theme => ({
     wrap: {
@@ -71,6 +72,7 @@ const styles = theme => ({
 @observer
 class PlatformManagement extends React.Component {
     componentDidMount() {
+        this.props.authStore.getMyPermission(PermissionType.type.PlatformManagement);
         this.props.platformStore.getPlatformList();
     }
 
@@ -88,6 +90,7 @@ class PlatformManagement extends React.Component {
                     setMobileOpen = {() => {}}
                     isLoggedIn = {true}
                     doLogout = {() => this.props.authStore.doLogout()}
+                    myPermissionList = {this.props.authStore.myPermissionList}
                 />
                 <div className={classes.appBarSpacer} />
                 <Grid className={classes.mainContainer} container justify={"center"}>

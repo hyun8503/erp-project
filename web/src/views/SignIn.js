@@ -57,7 +57,7 @@ class SignIn extends React.Component {
     }
 
     handleKeyUpPassword = (e) => {
-        if(e.keyCode === 13) {
+        if(e.keyCode === 13 && !this.props.authStore.loginBtnDisabled) {
             this.props.authStore.doLogin();
         }
     }

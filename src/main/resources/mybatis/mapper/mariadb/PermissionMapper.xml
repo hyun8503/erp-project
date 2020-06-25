@@ -49,16 +49,15 @@
                 #{modifiedDate}
             )
     </insert>
-    <select id="selectPermissionList" resultMap="PermissionResultMap">
+    <select id="getPermissionList" resultMap="PermissionResultMap">
         SELECT erp_permissions.permission_id,
                erp_permissions.permission_name,
                erp_permissions.created_date,
                erp_permissions.modified_date
-        FROM erp_role_permissions JOIN erp_permissions ON erp_role_permissions.permission_id = erp_permissions.permission_id
-        FROM erp_roles JOIN erp_role_permissions ON erp_roles.role_id = erp_roles.role_id
-        FROM erp_user_roles JOIN erp_roles ON erp_roles.role_id = erp_roles.role_id
+        FROM erp_user_roles JOIN erp_roles ON erp_user_roles.role_id = erp_roles.role_id
+            JOIN erp_role_permissions ON erp_roles.role_id = erp_role_permissions.role_id
+            JOIN erp_permissions ON erp_role_permissions.permission_id = erp_permissions.permission_id
         WHERE erp_user_roles.user_id = #{userId}
-
     </select>
 </mapper>
 

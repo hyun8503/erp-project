@@ -13,7 +13,7 @@ import AddUserDialog from "./dialog/AddUserDialog";
 import ModifyUserDialog from "./dialog/ModifyUserDialog";
 import DeleteDialog from "./dialog/DeleteDialog";
 import ConfirmDialog from "../../../components/ConfirmDialog";
-import {values} from "mobx";
+import * as PermissionType from "../../../type/PermissionType";
 
 
 const styles = theme => ({
@@ -55,6 +55,7 @@ const styles = theme => ({
 class UserManagement extends React.Component {
   
     componentDidMount() {
+        this.props.authStore.getMyPermission(PermissionType.type.UserManagement);
         this.props.userStore.getUsers();
         this.props.userStore.getRoleList();
         this.props.userStore.getPlatformList();
@@ -75,6 +76,7 @@ class UserManagement extends React.Component {
                     }}
                     isLoggedIn={true}
                     doLogout={() => this.props.authStore.doLogout()}
+                    myPermissionList = {this.props.authStore.myPermissionList}
                 />
                 <div className={classes.appBarSpacer}/>
                 <Grid className={classes.mainContainer} container justify={"center"}>

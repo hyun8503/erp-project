@@ -64,6 +64,7 @@ class Home extends React.Component {
                     setMobileOpen = {() => {}}
                     isLoggedIn = {true}
                     doLogout = {() => this.props.authStore.doLogout()}
+                    myPermissionList = {this.props.authStore.myPermissionList}
                 />
                 {/*<div className={classes.appBarSpacer} />*/}
                 <Grid container justify={"center"} className={classes.mainContainer} >

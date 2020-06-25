@@ -1,6 +1,7 @@
 package io.sderp.ws.controller;
 
 import io.sderp.ws.model.Permission;
+import io.sderp.ws.model.support.PermissionType;
 import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.service.AuthenticationService;
 import io.sderp.ws.service.PermissionService;
@@ -34,7 +35,14 @@ public class PermissionController {
         public ResponseEntity<List<Permission>> getPermissionList(HttpServletRequest request) {
             List<Permission> permissionList = new ArrayList<>();
             if(authenticationService.getUser().getTypeCode() == UserType.ADMIN) {
+                List<Permission> newPermissions = new ArrayList<>();
                 permissionList = permissionService.allPermissionList();
+                for (Permission permission: permissionList) {
+                    if(permission.getPermissionName() != PermissionType.REPORT_SUBMIT) {
+                        newPermissions.add(permission);
+                    }
+                }
+                permissionList = newPermissions;
             } else if(authenticationService.getUser().getTypeCode() == UserType.NORMAL) {
                 String userId = authenticationService.getUser().getUserId();
                 permissionList = permissionService.getPermissionList(userId);

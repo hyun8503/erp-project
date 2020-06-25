@@ -112,6 +112,7 @@ const styles = theme => ({
 class RoleManagement extends React.Component {
 
     componentDidMount() {
+        this.props.authStore.getMyPermission(PermissionType.type.RoleManagement);
         this.props.roleStore.getRoleList();
     }
 
@@ -137,6 +138,7 @@ class RoleManagement extends React.Component {
                     setMobileOpen = {() => {}}
                     isLoggedIn = {true}
                     doLogout = {() => this.props.authStore.doLogout()}
+                    myPermissionList = {this.props.authStore.myPermissionList}
                 />
                 <div className={classes.appBarSpacer} />
                 <Grid className={classes.mainContainer} container justify={"center"}>

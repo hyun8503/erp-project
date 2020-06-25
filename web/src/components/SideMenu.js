@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SettingsIcon from '@material-ui/icons/Settings';
+import * as PermissionType from "../type/PermissionType";
 
 import {
     Divider,
@@ -16,7 +17,6 @@ import {
     Toolbar
 } from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const logoWidth = 129;
 const logoHeight = 22;
@@ -61,66 +61,89 @@ const useStyles = makeStyles((theme) => ({
 export default function SideMenu(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, myPermissionList } = props;
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    const getMenuCheck = (permission) => {
+        if(myPermissionList.length > 0) {
+            const idx = myPermissionList.findIndex((item) => item.permissionName === permission);
+            if(idx !== -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     const drawer = (
         <div className={classes.menu}>
             <List>
                 <ListSubheader inset>报告管理</ListSubheader>
-
-                <NavLink to="/report/submit" className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><PostAddIcon /></ListItemIcon>
-                        <ListItemText primary="提交报表" />
-                    </ListItem>
-                </NavLink>
-                <NavLink to={"/report/list"} className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><FindInPageIcon /></ListItemIcon>
-                        <ListItemText primary="查询报表" />
-                    </ListItem>
-                </NavLink>
+                {getMenuCheck(PermissionType.type.ReportSubmit) ?
+                    <NavLink to="/report/submit" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><PostAddIcon /></ListItemIcon>
+                            <ListItemText primary="提交报表" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
+                {getMenuCheck(PermissionType.type.ReportSearch) ?
+                    <NavLink to={"/report/list"} className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><FindInPageIcon /></ListItemIcon>
+                            <ListItemText primary="查询报表" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
             </List>
             <Divider />
             <List>
                 <ListSubheader inset>系统管理</ListSubheader>
-
-                <NavLink to="/management/report" className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="报表模版管理" />
-                    </ListItem>
-                </NavLink>
-                <NavLink to="/management/platform" className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="平台管理" />
-                    </ListItem>
-                </NavLink>
-                <NavLink to="/management/role" className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="角色管理" />
-                    </ListItem>
-                </NavLink>
-                <NavLink to="/management/user" className={classes.link}>
-                    <ListItem button>
-                        <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="用户管理" />
-                    </ListItem>
-                </NavLink>
+                {getMenuCheck(PermissionType.type.ReportTemplate) ?
+                    <NavLink to="/management/report" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemText primary="报表模版管理" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
+                {getMenuCheck(PermissionType.type.PlatformManagement) ?
+                    <NavLink to="/management/platform" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemText primary="平台管理" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
+                {getMenuCheck(PermissionType.type.RoleManagement) ?
+                    <NavLink to="/management/role" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemText primary="角色管理" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
+                {getMenuCheck(PermissionType.type.UserManagement) ?
+                    <NavLink to="/management/user" className={classes.link}>
+                        <ListItem button>
+                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemText primary="用户管理" />
+                        </ListItem>
+                    </NavLink>
+                    : ""}
             </List>
-            <Divider />
-            <List>
-                <ListItem button onClick={() => doLogout()}>
-                    <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-                    <ListItemText primary="登出" />
-                </ListItem>
-            </List>
+            {/*<Divider />*/}
+            {/*<List>*/}
+            {/*    <ListItem button onClick={() => doLogout()}>*/}
+            {/*        <ListItemIcon><ExitToAppIcon /></ListItemIcon>*/}
+            {/*        <ListItemText primary="登出" />*/}
+            {/*    </ListItem>*/}
+            {/*</List>*/}
         </div>
     );
 

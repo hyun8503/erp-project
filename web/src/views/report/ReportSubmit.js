@@ -15,6 +15,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
+import * as PermissionType from "../../type/PermissionType";
 
 const styles = theme => ({
     wrap: {
@@ -57,6 +58,7 @@ const styles = theme => ({
 @observer
 class ReportSubmit extends React.Component {
     componentDidMount() {
+        this.props.authStore.getMyPermission(PermissionType.type.ReportSubmit);
         this.props.reportStore.getReportList();
     }
 
@@ -133,6 +135,7 @@ class ReportSubmit extends React.Component {
                     setMobileOpen = {() => {}}
                     isLoggedIn = {true}
                     doLogout = {() => this.props.authStore.doLogout()}
+                    myPermissionList = {this.props.authStore.myPermissionList}
                 />
                 <div className={classes.appBarSpacer} />
                 <Grid className={classes.mainContainer} container justify={"center"}>

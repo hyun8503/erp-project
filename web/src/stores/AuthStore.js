@@ -31,6 +31,7 @@ export default class AuthStore {
     @observable loginToken = '';
     @observable loginUser = Object.assign({}, EmptyUser);
     @observable loginBtnDisabled = true;
+    @observable myPermissionList = [];
 
     @action changeLoginId = (id) => {
         this.login.loginId = id;
@@ -46,6 +47,25 @@ export default class AuthStore {
         this.loginToken = '';
         this.loginUser = Object.assign({}, EmptyUser);
     };
+
+    getMyPermission = flow(function* (availablePermission) {
+        this.myPermissionList = [];
+        try {
+            const response = yield axios.get(`/api/v1/permission`);
+            this.myPermissionList = response.data;
+            if(this.myPermissionList.length > 0 && availablePermission) {
+                const idx = this.myPermissionList.findIndex((item) => item.permissionName === availablePermission);
+                if(idx === -1) {
+                    alert("권한이 없습니다");
+                    this.doLogout();
+                }
+            }
+        } catch (err) {
+            console.log('getMyPermission error');
+            console.log(err);
+            this.myPermissionList = [];
+        }
+    });
 
     recaptchaAuth = flow(function* (token) {
         this.loginBtnDisabled = true;
@@ -119,11 +139,13 @@ export default class AuthStore {
             this.loginState = State.NotAuthenticated;
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
+            this.loginBtnDisabled = true;
         } catch(e) {
             this.login = Object.assign({}, EmptyLogin);
             this.loginState = State.NotAuthenticated;
             this.loginToken = '';
             this.loginUser = Object.assign({}, EmptyUser);
+            this.loginBtnDisabled = true;
         }
     });
 }
