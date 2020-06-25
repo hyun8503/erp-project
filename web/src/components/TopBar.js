@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(3),
         flexGrow: 1,
     },
+    loginId: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+    },
     link: {
         textDecoration: 'none',
         color: 'inherit',
@@ -48,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TopBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const classes = useStyles();
-    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, userPasswordModifyHandle, userPasswordChange, myPermissionList } = props;
+    const { mobileOpen, setMobileOpen, isLoggedIn, doLogout, userPasswordModifyHandle, userPasswordChange, myPermissionList, loginUser } = props;
     const [open, setOpen] = React.useState(false);
     const [fullWidth, setFullWidth] = React.useState(true);
 
@@ -168,6 +172,9 @@ export default function TopBar(props) {
                     >
                         <AccountCircle/>
                     </IconButton>
+                    <Typography noWrap className={classes.loginId}>
+                        {loginUser.loginId}
+                    </Typography>
                     <Dialog
                         fullWidth={fullWidth}
                         open={open}

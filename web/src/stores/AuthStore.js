@@ -114,11 +114,9 @@ export default class AuthStore {
         if(token) {
             try {
                 const response = yield axios.get('/api/v1/authentications/signcheck');
-                const token = response.data.token;
-                const user = response.data.user;
+                const user = response.data;
 
                 this.loginState = State.Authenticated;
-                this.loginToken = token;
                 this.loginUser = user;
             } catch(e) {
                 this.loginState = State.NotAuthenticated;

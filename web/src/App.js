@@ -86,7 +86,7 @@ class App extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { loginState } = this.props.authStore;
+        const { loginState, loginUser } = this.props.authStore;
 
         return (
             <React.Fragment>
@@ -102,6 +102,7 @@ class App extends React.Component {
                                     userPasswordChange = {(value) => this.props.userStore.changeModifyUserPwd(value)}
                                     userPasswordModifyHandle = {() => {this.props.userStore.modifyPassword()}}
                                     myPermissionList = {this.props.authStore.myPermissionList}
+                                    loginUser = {loginUser}
                             />
                             {loginState === store.State.Authenticated ? (
                                 <React.Fragment>
