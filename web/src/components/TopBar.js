@@ -16,6 +16,16 @@ import Menu from "@material-ui/core/Menu";
 import * as PermissionType from "../type/PermissionType";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import SettingsIcon from '@material-ui/icons/Settings';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import WidgetsIcon from '@material-ui/icons/Widgets';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';  
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+
 const logoWidth = 120;
 
 const useStyles = makeStyles((theme) => ({
@@ -90,32 +100,32 @@ export default function TopBar(props) {
         <div>
             {getMenuCheck(PermissionType.type.ReportSubmit) ?
                 <NavLink to="/report/submit" className={classes.link}>
-                    <MenuItem>提交报表</MenuItem>
+                    <MenuItem><AssignmentIcon fontSize="small" /> 提交报表</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.ReportSearch) ?
                 <NavLink to={"/report/list"} className={classes.link}>
-                    <MenuItem>查询报表</MenuItem>
+                    <MenuItem><FindInPageIcon fontSize="small" /> 查询报表</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.ReportTemplate) ?
                 <NavLink to="/management/report" className={classes.link}>
-                    <MenuItem>报表模版管理</MenuItem>
+                    <MenuItem><ListAltIcon fontSize="small" /> 报表模版管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.PlatformManagement) ?
                 <NavLink to="/management/platform" className={classes.link}>
-                    <MenuItem>平台管理</MenuItem>
+                    <MenuItem><WidgetsIcon fontSize="small" /> 平台管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.RoleManagement) ?
                 <NavLink to="/management/role" className={classes.link}>
-                    <MenuItem>角色管理</MenuItem>
+                    <MenuItem><ExtensionIcon fontSize="small" /> 角色管理</MenuItem>
                 </NavLink>
                 : ""}
             {getMenuCheck(PermissionType.type.UserManagement) ?
                 <NavLink to="/management/user" className={classes.link}>
-                    <MenuItem>用户管理</MenuItem>
+                    <MenuItem><PeopleAltIcon fontSize="small" /> 用户管理</MenuItem>
                 </NavLink>
                 : ""}
         </div>
