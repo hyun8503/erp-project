@@ -38,9 +38,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 // To Do : 빠른 시일에 설정해야 함.
-                .antMatchers("/**").permitAll()
-
-                .anyRequest().authenticated();
+                .antMatchers("/", "/home", "/management/**", "/report/**", "/oauth2", "/api/v1/authentications/signin", "/api/v1/authentications/signUp",
+                        "/api/v1/authentications/signout", "/api/v1/authentications/signcheck").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/api/v1/gapi/**", "/api/v1/permission/**", "/api/v1/platforms/**", "/api/v1/platforms-my",
+                        "/api/v1/platform/**", "/api/v1/report/**", "/api/v1/reports/**", "/api/v1/role-with-permission",
+                        "/api/v1/role/**", "/api/v1/roles/**", "/api/v1/user/**", "/api/v1/users/**")
+                .authenticated()
+                .antMatchers("/api/v1/**").authenticated();
     }
 
     @Bean
