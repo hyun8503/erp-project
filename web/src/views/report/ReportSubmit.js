@@ -96,7 +96,7 @@ class ReportSubmit extends React.Component {
                         {this.props.reportStore.reportList.length > 0 ?
                             this.props.reportStore.reportList.map((item, index) => {
                                 return (
-                                    <Grid item xs={3} key={item.reportId}>
+                                    <Grid item xs={3} key={item.reportId} style={{minWidth: '170px'}}>
                                         <Card>
                                             <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId)}>
                                                 <CardMedia

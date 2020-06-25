@@ -125,7 +125,7 @@ class ReportManagement extends React.Component {
                         {this.props.reportSubmitStore.fileList.length > 0 ?
                             this.props.reportSubmitStore.fileList.map((item, index) => {
                                 return (
-                                    <Grid item xs={3} key={"upload-file"+index}>
+                                    <Grid item xs={3} key={"upload-file"+index} style={{minWidth: '170px'}}>
                                         <Card>
                                             <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc(item.templateId)}>
                                                 <CardMedia
