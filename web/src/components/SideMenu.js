@@ -4,6 +4,12 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SettingsIcon from '@material-ui/icons/Settings';
 import * as PermissionType from "../type/PermissionType";
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import WidgetsIcon from '@material-ui/icons/Widgets';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';  
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 import {
     Divider,
@@ -87,7 +93,7 @@ export default function SideMenu(props) {
                 {getMenuCheck(PermissionType.type.ReportSubmit) ?
                     <NavLink to="/report/submit" className={classes.link}>
                         <ListItem button>
-                            <ListItemIcon><PostAddIcon /></ListItemIcon>
+                            <ListItemIcon><AssignmentIcon /></ListItemIcon>
                             <ListItemText primary="提交报表" />
                         </ListItem>
                     </NavLink>
@@ -107,7 +113,7 @@ export default function SideMenu(props) {
                 {getMenuCheck(PermissionType.type.ReportTemplate) ?
                     <NavLink to="/management/report" className={classes.link}>
                         <ListItem button>
-                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemIcon><ListAltIcon /></ListItemIcon>
                             <ListItemText primary="报表模版管理" />
                         </ListItem>
                     </NavLink>
@@ -115,7 +121,7 @@ export default function SideMenu(props) {
                 {getMenuCheck(PermissionType.type.PlatformManagement) ?
                     <NavLink to="/management/platform" className={classes.link}>
                         <ListItem button>
-                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemIcon><WidgetsIcon /></ListItemIcon>
                             <ListItemText primary="平台管理" />
                         </ListItem>
                     </NavLink>
@@ -123,7 +129,7 @@ export default function SideMenu(props) {
                 {getMenuCheck(PermissionType.type.RoleManagement) ?
                     <NavLink to="/management/role" className={classes.link}>
                         <ListItem button>
-                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemIcon><ExtensionIcon /></ListItemIcon>
                             <ListItemText primary="角色管理" />
                         </ListItem>
                     </NavLink>
@@ -131,7 +137,7 @@ export default function SideMenu(props) {
                 {getMenuCheck(PermissionType.type.UserManagement) ?
                     <NavLink to="/management/user" className={classes.link}>
                         <ListItem button>
-                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemIcon><PeopleAltIcon /></ListItemIcon>
                             <ListItemText primary="用户管理" />
                         </ListItem>
                     </NavLink>
