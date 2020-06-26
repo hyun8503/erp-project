@@ -149,7 +149,7 @@ class ReportSubmit extends React.Component {
                         <Grid container item xs={12} style={{marginTop: '16px'}}>
                             <Grid item xs={10}>
                                 <Typography variant="h6" gutterBottom>
-                                    目前日期: {moment().format("YYYY-MM-DD")}
+                                    当前日期: {moment().format("YYYY-MM-DD")}
                                 </Typography>
                             </Grid>
 
