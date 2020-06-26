@@ -1,6 +1,7 @@
 import {action, flow, observable} from "mobx";
 import axios from "axios";
 import moment from "moment";
+import * as DocViewType from "../type/DocViewType";
 
 export default class ReportStore {
     @observable reportList = [];
@@ -69,7 +70,7 @@ export default class ReportStore {
         }
     });
 
-    viewExcelProc = flow(function* (reportId) {
+    viewExcelProc = flow(function* (reportId, viewType) {
         this.fileWebViewLink = null;
         this.fileWebViewId = null;
         this.fileWebViewLoading = true;
@@ -80,7 +81,12 @@ export default class ReportStore {
                 const authUrl = response.data.authUrl.replace('&redirect_uri', '&redirect_uri=' + response.data.redirectUri);
                 window.open(authUrl);
             } else {
-                const response = yield axios.get(`/api/v1/report/${reportId}/webviewlink`);
+                let response = null;
+                if (viewType == DocViewType.type.Edit)
+                    response = yield axios.get(`/api/v1/report/${reportId}/editviewlink`);
+                else
+                    response = yield axios.get(`/api/v1/report/${reportId}/webviewlink`);
+
                 this.fileWebViewLink = response.data.webViewLink;
                 this.fileWebViewId = response.data.fileId;
                 this.fileWebViewReportId = reportId;

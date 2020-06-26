@@ -1,5 +1,6 @@
 import {action, flow, observable} from "mobx";
 import axios from "axios";
+import * as DocViewType from "../type/DocViewType";
 
 export default class ReportSubmitStore {
     @observable uploadFileList = [];
@@ -77,7 +78,7 @@ export default class ReportSubmitStore {
         }
     });
 
-    viewExcelProc = flow(function* (templateId) {
+    viewExcelProc = flow(function* (templateId, viewType) {
         this.fileWebViewLink = null;
         this.fileWebViewId = null;
         this.fileWebViewLoading = true;
@@ -92,6 +93,10 @@ export default class ReportSubmitStore {
                 this.fileWebViewTemplateId = templateId;
                 this.fileWebViewLink = response.data.webViewLink;
                 this.fileWebViewId = response.data.fileId;
+
+                if (viewType == DocViewType.type.View) {
+                    this.fileWebViewLink = this.fileWebViewLink.replace('/edit', '/htmlview');
+                }
             }
             this.fileWebViewLoading = false;
         } catch (err) {

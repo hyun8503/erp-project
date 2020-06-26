@@ -16,6 +16,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import * as PermissionType from "../../type/PermissionType";
+import * as DocViewType from "../../type/DocViewType";
 
 const styles = theme => ({
     wrap: {
@@ -38,7 +39,6 @@ const styles = theme => ({
     mainContent: {
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: '1200px',
         width: '100%',
         height: '100%',
         padding: theme.spacing(2),
@@ -50,11 +50,9 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     cardMedia: {
-        alignItems: "center",
-        backgroundSize: "contain",
-        //width: '100%',
-        height: '140px',
-    }
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 });
 
 @inject("authStore", "reportStore")
@@ -96,23 +94,23 @@ class ReportSubmit extends React.Component {
                         {this.props.reportStore.reportList.length > 0 ?
                             this.props.reportStore.reportList.map((item, index) => {
                                 return (
-                                    <Grid item xs={3} key={item.reportId} style={{minWidth: '170px'}}>
+                                    <Grid item xs={2} key={item.reportId} style={{minWidth: '170px'}}>
                                         <Card>
-                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId)}>
-                                                <CardMedia
-                                                    className={classes.cardMedia}
-                                                    image={"/images/excel.png"}
-                                                    title={"hoho"}
-                                                />
-                                                <CardContent>
-                                                    <Typography variant={"subtitle1"}>
+                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId, DocViewType.type.Edit)}>
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={"/images/excel-logo-04.jpg"}
+                                                title="Paella dish"
+                                            />
+                                            </CardActionArea>
+                                            <CardContent>
+                                                <Typography variant={"subtitle1"}>
                                                         {moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.reportName.substr(0, item.reportName.lastIndexOf("."))}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
-                                                        上传日期: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}
+                                                       上传日期: {moment(item.modifiedDate).format("YYYY-MM-DD HH:mm:ss")}
                                                     </Typography>
-                                                </CardContent>
-                                            </CardActionArea>
+                                            </CardContent>
                                         </Card>
                                     </Grid>
                                 )

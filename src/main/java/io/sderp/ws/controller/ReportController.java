@@ -57,14 +57,30 @@ public class ReportController {
         return new ResponseEntity<>(reportList, HttpStatus.OK);
     }
 
-    @GetMapping("/report/{reportId}/webviewlink")
-    public ResponseEntity<Object> viewReport(HttpServletRequest httpRequest, @PathVariable String reportId) throws IOException, GeneralSecurityException {
+    @GetMapping("/report/{reportId}/editviewlink")
+    public ResponseEntity<Object> editViewReport(HttpServletRequest httpRequest, @PathVariable String reportId) throws IOException, GeneralSecurityException {
         Report report = reportService.selectReportByReportId(reportId);
         File file = googleClientService.fileUpload(report, authenticationService.getUser().getUserId());
+        String webViewLink = file.getWebViewLink();
+        
         Map<String, String> map = new HashMap<>();
         map.put("fileId", file.getId());
-        map.put("webViewLink", file.getWebViewLink());
+        map.put("webViewLink", webViewLink);
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+    
+    @GetMapping("/report/{reportId}/webviewlink")
+    public ResponseEntity<Object> webViewReport(HttpServletRequest httpRequest, @PathVariable String reportId) throws IOException, GeneralSecurityException {
+    	Report report = reportService.selectReportByReportId(reportId);
+    	File file = googleClientService.fileUpload(report, authenticationService.getUser().getUserId());
+    	String webViewLink = file.getWebViewLink();
+    	
+    	webViewLink = webViewLink.replace("/edit", "/htmlview");
+    	
+    	Map<String, String> map = new HashMap<>();
+    	map.put("fileId", file.getId());
+    	map.put("webViewLink", webViewLink);
+    	return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @GetMapping("/report/template")

@@ -14,9 +14,11 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from '@material-ui/core/CardActions';
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import * as PermissionType from "../../../type/PermissionType";
+import * as DocViewType from "../../../type/DocViewType";
 
 const styles = theme => ({
     wrap: {
@@ -52,11 +54,9 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
     },
     cardMedia: {
-        alignItems: "center",
-        backgroundSize: "contain",
-        //width: '100%',
-        height: '140px',
-    }
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 });
 
 @inject("authStore", "reportSubmitStore")
@@ -124,28 +124,28 @@ class ReportManagement extends React.Component {
                         {this.props.reportSubmitStore.fileList.length > 0 ?
                             this.props.reportSubmitStore.fileList.map((item, index) => {
                                 return (
-                                    <Grid item xs={3} key={"upload-file"+index} style={{minWidth: '170px'}}>
+                                    <Grid item xs={2} key={"upload-file"+index} style={{minWidth: '170px'}}>
                                         <Card>
-                                            <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc(item.templateId)}>
-                                                <CardMedia
-                                                    className={classes.cardMedia}
-                                                    image={"/images/excel.png"}
-                                                    title={item.templateName}
-                                                />
-                                                <CardContent>
-                                                    <Typography variant={"subtitle1"}>
+                                            <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc(item.templateId, DocViewType.type.View)}>
+                                            <CardMedia
+                                                className={classes.cardMedia}
+                                                image={"/images/excel-logo-04.jpg"}
+                                                title="Paella dish"
+                                            />
+                                            </CardActionArea>
+                                            <CardContent>
+                                                <Typography variant={"subtitle1"}>
                                                         {item.templateName}
                                                     </Typography>
                                                     <Typography variant={"body2"}>
                                                        上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                     </Typography>
-                                                </CardContent>
-                                            </CardActionArea>
-                                            {/*<CardActions>*/}
-                                            {/*    <Button size="large" color="secondary">*/}
-                                            {/*        삭제*/}
-                                            {/*    </Button>*/}
-                                            {/*</CardActions>*/}
+                                            </CardContent>
+                                            <CardActions disableSpacing>
+                                                <Button size="small" color="primary">
+                                                Delete
+                                                </Button>
+                                            </CardActions>
                                         </Card>
                                     </Grid>
                                 )
