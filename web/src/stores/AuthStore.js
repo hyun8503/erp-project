@@ -102,7 +102,9 @@ export default class AuthStore {
             this.loginToken = token;
             this.loginUser = user;
             if(this.login.loginId === "admin") {
-                history.push("/report/list")
+                history.push("/report/list");
+            } else {
+                history.push("/");
             }
         } catch (e) {
             this.loginState = State.Failed;
