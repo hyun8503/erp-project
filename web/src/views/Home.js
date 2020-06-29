@@ -7,7 +7,6 @@ import {Paper, Typography} from "@material-ui/core";
 import SideMenu from "../components/SideMenu";
 import Grid from "@material-ui/core/Grid";
 import {inject, observer} from "mobx-react";
-import * as PermissionType from "../type/PermissionType";
 
 
 const styles = theme => ({
@@ -44,7 +43,7 @@ const styles = theme => ({
 @observer
 class Home extends React.Component {
     componentDidMount() {
-        this.props.authStore.getMyPermission(PermissionType.type.ReportSearch);
+        //this.props.authStore.getMyPermission(PermissionType.type.ReportSearch);
         this.props.enqueueSnackbar("Welcome", {
             variant: 'info'
         });
