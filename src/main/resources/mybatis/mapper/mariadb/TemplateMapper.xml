@@ -52,6 +52,13 @@
             modified_date = #{modifiedDate}
         WHERE template_id = #{templateId}
     </update>
+    
+    <delete id="deleteTemplate" parameterType="Map">
+        DELETE FROM 
+        	erp_templates
+        WHERE 
+        	template_id = #{templateId}
+    </delete>
 </mapper>
 
 

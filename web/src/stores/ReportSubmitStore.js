@@ -7,13 +7,12 @@ export default class ReportSubmitStore {
     @observable fileList = [];
     @observable isDropZoneAreaRender = true;
     @observable isFileUploading = false;
-
     @observable fileWebViewLink = null;
     @observable fileWebViewId = null;
     @observable fileWebViewTemplateId = null;
     @observable fileWebViewLoading = false;
-
     @observable fileSaving = false;
+    @observable fileDeleting = false;
 
     @action initStore = () => {
         this.uploadFileList = [];
@@ -22,11 +21,18 @@ export default class ReportSubmitStore {
         this.fileWebViewLink = null;
         this.fileWebViewId = null;
         this.fileSaving = false;
+        this.fileDeleting = false;
         this.fileWebViewTemplateId = null;
         this.fileWebViewLoading = false;
         this.isFileUploading = false;
     }
 
+    @action viewExcelClose = () => {
+        this.fileWebViewId = null;
+        this.fileWebViewLink = null;
+        this.fileWebViewLoading = false;
+    }
+    
     @action changeIsDropZoneAreaRender = (value) => this.isDropZoneAreaRender = value;
     @action changeUploadFileList = (files) => this.uploadFileList = files;
 
@@ -121,6 +127,27 @@ export default class ReportSubmitStore {
         } catch (err) {
             console.log('viewExcelSaveProc error');
             this.fileSaving = false;
+        }
+    });
+
+    deleteExcel = flow(function* (templateId) {
+        if (window.confirm('确定要删除吗？') == false) {
+            return;
+        }
+
+        this.fileDeleting = true;
+        try {
+            yield axios.delete(`/api/v1/report/template/${templateId}`);
+
+            this.fileDeleting = false;
+            this.fileWebViewTemplateId = null;
+            this.fileWebViewLink = null;
+            this.fileWebViewId = null;
+
+            this.getTemplateList();
+        } catch (err) {
+            console.log('deleteExcel error');
+            this.fileDeleting = false;
         }
     });
 }

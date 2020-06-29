@@ -1,5 +1,6 @@
 package io.sderp.ws.repository;
 
+import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
 import io.sderp.ws.repository.mapper.TemplateMapper;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,8 @@ public class TemplateRepository {
     }
 
     public int updateTemplate(Template template) { return mapper.updateTemplate(template); }
+    
+    public int deleteTemplate(String templateId) {
+    	return mapper.deleteTemplate(templateId);
+    }
 }

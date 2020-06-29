@@ -12,6 +12,7 @@ import {DropzoneArea} from "material-ui-dropzone";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -140,11 +141,11 @@ class ReportManagement extends React.Component {
                                                        上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                     </Typography>
                                             </CardContent>
-                                            {/*<CardActions disableSpacing>*/}
-                                            {/*    <Button size="small" color="primary">*/}
-                                            {/*    Delete*/}
-                                            {/*    </Button>*/}
-                                            {/*</CardActions>*/}
+                                            <CardActions disableSpacing>
+                                               <Button size="small" color="primary" onClick={() => this.props.reportSubmitStore.deleteExcel(item.templateId)}>
+                                               Delete
+                                               </Button>
+                                            </CardActions>
                                         </Card>
                                     </Grid>
                                 )
@@ -157,7 +158,7 @@ class ReportManagement extends React.Component {
 
         return (
             <div className={classes.wrap}>
-                <Backdrop open={this.props.reportSubmitStore.fileSaving || this.props.reportSubmitStore.fileWebViewLoading || this.props.reportSubmitStore.isFileUploading}
+                <Backdrop open={this.props.reportSubmitStore.fileSaving || this.props.reportSubmitStore.fileWebViewLoading || this.props.reportSubmitStore.isFileUploading|| this.props.reportSubmitStore.fileDeleting}
                           style={{zIndex: 10000}}
                 >
                     <CircularProgress color="inherit" />
@@ -188,7 +189,7 @@ class ReportManagement extends React.Component {
 
                                 <Grid item xs={2} align={"right"}>
                                     {this.props.reportSubmitStore.fileWebViewLink ?
-                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.viewExcelSave()}>储蓄</Button>
+                                        <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportSubmitStore.viewExcelClose()}>关闭</Button>
                                         : ""
                                     }
                                 </Grid>

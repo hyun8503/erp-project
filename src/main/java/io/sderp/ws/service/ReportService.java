@@ -65,6 +65,17 @@ public class ReportService {
 
         return template;
     }
+    
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteTemplate(String templateId) throws Exception {
+    	Template template = templateRepository.selectTemplate(templateId);
+    	if(template.getTemplateId() == null) {
+    		throw new RuntimeException("not exists template");
+    	}
+    	
+    	reportRepository.deleteReportByTemplateId(templateId);
+    	templateRepository.deleteTemplate(templateId);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void insertTemplate(List<MultipartFile> files, String userId, HttpServletRequest httpServletRequest) throws Exception {

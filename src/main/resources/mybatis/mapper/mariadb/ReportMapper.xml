@@ -17,6 +17,24 @@
         <if test="platformId != null"> AND erp_reports.platform_id = #{platformId} </if>
         <if test="reportName != null"> AND erp_reports.report_name like CONCAT('%',#{reportName},'%')  </if>
     </select>
+    
+    <select id="selectAllByTemplateId" parameterType="Map" resultType="Report">
+        SELECT report_id,
+               platform_id,
+               template_id,
+               report_name,
+               report_month,
+               file_name,
+               file_path,
+               file_size,
+               created_date,
+               modified_date,
+               platform_name
+        FROM 
+        	erp_reports
+        WHERE 
+        	template_id = #{templateId}
+    </select>
 
     <select id="selectReport" parameterType="Map" resultType="Report">
         SELECT erp_reports.report_id,
@@ -30,63 +48,90 @@
                erp_reports.created_date,
                erp_reports.modified_date,
                erp_platforms.platform_name
-        FROM erp_reports JOIN erp_platforms ON erp_reports.platform_id = erp_platforms.platform_id
-        WHERE erp_reports.platform_id IN (
-            SELECT erp_user_platforms.platform_id
-            FROM erp_user_platforms
-            WHERE erp_user_platforms.user_id = #{userId}
-        ) AND erp_reports.report_month = #{reportMonth}
-        <if test="platformId != null"> AND erp_reports.platform_id = #{platformId} </if>
-        <if test="reportName != null"> AND erp_reports.report_name like CONCAT('%',#{reportName},'%') </if>
+        FROM 
+        	erp_reports JOIN erp_platforms ON erp_reports.platform_id = erp_platforms.platform_id
+        WHERE 
+	        erp_reports.platform_id IN (
+	            SELECT 
+	            	erp_user_platforms.platform_id
+	            FROM 
+	            	erp_user_platforms
+	            WHERE 
+	            	erp_user_platforms.user_id = #{userId}
+	        ) 
+	        AND erp_reports.report_month = #{reportMonth}
+			<if test="platformId != null"> AND erp_reports.platform_id = #{platformId} </if>
+			<if test="reportName != null"> AND erp_reports.report_name like CONCAT('%',#{reportName},'%') </if>
     </select>
 
     <select id="selectReportByReportId" parameterType="String" resultType="Report">
-        SELECT report_id,
-        platform_id,
-        template_id,
-        report_name,
-        report_month,
-        file_name,
-        file_path,
-        file_size,
-        created_date,
-        modified_date
-        FROM erp_reports
-        WHERE report_id = #{reportId}
+        SELECT 
+	        report_id,
+	        platform_id,
+	        template_id,
+	        report_name,
+	        report_month,
+	        file_name,
+	        file_path,
+	        file_size,
+	        created_date,
+	        modified_date
+        FROM 
+        	erp_reports
+        WHERE 
+        	report_id = #{reportId}
     </select>
 
-    <insert id="insertReportHistory" parameterType="Map" useGeneratedKeys="true">
-        INSERT INTO erp_report_histories
-            (report_id,
-             platform_id,
-             template_id,
-             report_name,
-             report_month,
-             file_name,
-             file_path,
-             file_size,
-             reported_user_id,
-             created_date)
-        SELECT report_id,
-               platform_id,
-               template_id,
-               report_name,
-               report_month,
-               file_name,
-               file_path,
-               file_size,
-               #{userId},
-               NOW()
-        FROM erp_reports
-        WHERE report_id = #{reportId}
-    </insert>
+	<insert id="insertReportHistory" parameterType="Map" useGeneratedKeys="true">
+		INSERT INTO erp_report_histories (
+			report_id,
+			platform_id,
+			template_id,
+			report_name,
+			report_month,
+			file_name,
+			file_path,
+			file_size,
+			reported_user_id,
+			created_date
+		)
+		SELECT 
+			report_id,
+			platform_id,
+			template_id,
+			report_name,
+			report_month,
+			file_name,
+			file_path,
+			file_size,
+			#{userId},
+			NOW()
+		FROM
+			erp_reports
+		WHERE 
+			report_id = #{reportId}
+	</insert>
 
     <update id="updateReport" parameterType="Report">
         UPDATE erp_reports
-        SET file_size = #{fileSize},
+        SET 
+        	file_size = #{fileSize},
             modified_date = #{modifiedDate}
-        WHERE report_id = #{reportId}
+        WHERE 
+        	report_id = #{reportId}
     </update>
+    
+    <delete id="deleteReport" parameterType="Map">
+        DELETE FROM erp_reports
+        WHERE 
+        	report_id = #{reportId}
+    </delete>
+    
+    <delete id="deleteReportByTemplateId" parameterType="Map">
+        DELETE FROM erp_reports
+        WHERE 
+        	template_id = #{templateId}
+    </delete>
 </mapper>
 
 

@@ -18,8 +18,11 @@ public class ReportRepository {
 
     public int insertReportHistory(String userId, String reportId) { return reportMapper.insertReportHistory(userId, reportId); }
     public int updateReport(Report report) { return reportMapper.updateReport(report); }
-
+    public int deleteReport(String reportId) { return reportMapper.deleteReport(reportId); }
+    public int deleteReportByTemplateId(String templateId) { return reportMapper.deleteReportByTemplateId(templateId); }
+    
     public List<Report> selectAllReport(String platformId, String reportName) { return reportMapper.selectAllReport(platformId, reportName); }
+    public List<Report> selectAllByTemplateId(String templateId) { return reportMapper.selectAllByTemplateId(templateId); }
     public List<Report> selectReport(String userId, String reportMonth, String platformId, String reportName) { return reportMapper.selectReport(userId, reportMonth, platformId, reportName); }
     public Report selectReportByReportId(String reportId) { return reportMapper.selectReportByReportId(reportId); }
 }

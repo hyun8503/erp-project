@@ -86,6 +86,9 @@ public class GoogleClientService {
         Resource fileResource = S3Util.download(template.getFilePath());
         logger.trace("file resource = {}", fileResource);
 
+        // delete duplicated files
+        deleteFilesByFileName(template.getFileName(), token);
+        
         File fileMeta = new File();
         fileMeta.setName(template.getFileName());
         fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
@@ -99,6 +102,9 @@ public class GoogleClientService {
         Resource fileResource = S3Util.download(report.getFilePath());
         logger.trace("file resource = {}", fileResource);
 
+        // delete duplicated files
+        deleteFilesByFileName(report.getFileName(), token);
+        
         File fileMeta = new File();
         fileMeta.setName(report.getFileName());
         fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
@@ -165,5 +171,38 @@ public class GoogleClientService {
         reportRepository.insertReportHistory(userId, report.getReportId());
         reportRepository.updateReport(report);
         S3Util.upload(report.getFilePath(), multipartFile);
+    }
+    
+    public void deleteFilesByFileName(String fileName, String token) {
+    	String pageToken = null;
+    	
+    	do {
+    		
+    		FileList result;
+			try {
+				result = GoogleApiUtil.getDrive(token).files().list()
+					.setQ("mimeType='application/vnd.google-apps.spreadsheet'")
+					.setSpaces("drive")
+					.setFields("nextPageToken, files(id, name)")
+					.setPageToken(pageToken)
+					.execute();
+				
+				List<File> files = result.getFiles();
+				if (files != null) {
+		    		for (File file : files) {
+		    			String uploadedFileId = file.getId();
+		    			String uploadedFileName = file.getName();
+		    			
+		    			if (uploadedFileName != null && uploadedFileName.equals(fileName) == true) {
+		    				GoogleApiUtil.getDrive(token).files().delete(uploadedFileId).execute();
+		    			}
+		    		}
+				}
+	    		pageToken = result.getNextPageToken();
+			} catch (Exception ex) {
+				logger.trace(ex.getMessage());
+			}
+    	} while (pageToken != null);
+    	
     }
 }

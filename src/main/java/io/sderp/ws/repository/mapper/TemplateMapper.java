@@ -11,4 +11,5 @@ public interface TemplateMapper {
     Template selectTemplate(String templateId);
     int insertTemplate(Template template);
     int updateTemplate(Template template);
+    int deleteTemplate(String templateId);
 }
