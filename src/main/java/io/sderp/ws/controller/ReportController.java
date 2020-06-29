@@ -60,7 +60,7 @@ public class ReportController {
     @GetMapping("/report/{reportId}/editviewlink")
     public ResponseEntity<Object> editViewReport(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String reportId) throws IOException, GeneralSecurityException {
         Report report = reportService.selectReportByReportId(reportId);
-        File file = googleClientService.fileUpload(report, authenticationService.getUser().getUserId());
+        File file = googleClientService.fileUpload(report, token);
         String webViewLink = file.getWebViewLink();
         
         Map<String, String> map = new HashMap<>();
