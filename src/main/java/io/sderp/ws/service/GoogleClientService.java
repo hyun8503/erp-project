@@ -7,6 +7,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import io.sderp.ws.configuration.support.GoogleProperties;
 import io.sderp.ws.model.Report;
 import io.sderp.ws.model.Template;
 import io.sderp.ws.model.UserActionHistories;
@@ -40,28 +41,29 @@ import java.util.List;
 public class GoogleClientService {
     private static final Logger logger = LoggerFactory.getLogger(GoogleClientService.class);
 
-    /*product*/
-    private static final String TEMP_DOWNLOAD_PATH = "/home/ec2-user/applications/sderp/temp";
-    //private static final String TEMP_DOWNLOAD_PATH = "/Users/khh/Desktop/KHH/Temp";
-
+    private static String TEMP_DOWNLOAD_PATH;
     private TemplateRepository templateRepository;
     private UserActionHistoryRepository userActionHistoryRepository;
     private ReportRepository reportRepository;
 
     @Autowired
-    public GoogleClientService(TemplateRepository templateRepository, UserActionHistoryRepository userActionHistoryRepository, ReportRepository reportRepository) {
+    public GoogleClientService(TemplateRepository templateRepository, UserActionHistoryRepository userActionHistoryRepository, ReportRepository reportRepository, GoogleProperties googleProperties) {
         this.templateRepository = templateRepository;
         this.userActionHistoryRepository = userActionHistoryRepository;
         this.reportRepository = reportRepository;
+        TEMP_DOWNLOAD_PATH = googleProperties.getTempDownloadPath();
+        if(TEMP_DOWNLOAD_PATH == null) {
+            throw new RuntimeException("check properties file");
+        }
     }
 
-    public String checkGoogleCredential(String userId) throws IOException, GeneralSecurityException {
-        return GoogleApiUtil.credentialCheck(userId);
+    public String checkGoogleCredential(String token) throws IOException, GeneralSecurityException {
+        return GoogleApiUtil.credentialCheck(token);
     }
 
-    public Credential getCredentialProcStart(String userId, String code) throws GeneralSecurityException, IOException {
+    public Credential getCredentialProcStart(String token, String code) throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        return GoogleApiUtil.getCredentials(HTTP_TRANSPORT, userId, code);
+        return GoogleApiUtil.getCredentials(HTTP_TRANSPORT, token, code);
     }
 
     public void readDriveFileList(Drive service) throws IOException {
@@ -80,7 +82,7 @@ public class GoogleClientService {
         }
     }
 
-    public File fileUpload(Template template, String userId) throws IOException, GeneralSecurityException {
+    public File fileUpload(Template template, String token) throws IOException, GeneralSecurityException {
         Resource fileResource = S3Util.download(template.getFilePath());
         logger.trace("file resource = {}", fileResource);
 
@@ -88,12 +90,12 @@ public class GoogleClientService {
         fileMeta.setName(template.getFileName());
         fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
         InputStreamContent inputStreamContent = new InputStreamContent("application/vnd.google-apps.spreadsheet", fileResource.getInputStream());
-        File file = GoogleApiUtil.getDrive(userId).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();
+        File file = GoogleApiUtil.getDrive(token).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();
         logger.trace("file info {}, {}, {}, {}", file.getId(), file.getName(), file.getWebViewLink(), file.getMimeType());
         return file;
     }
 
-    public File fileUpload(Report report, String userId) throws IOException, GeneralSecurityException {
+    public File fileUpload(Report report, String token) throws IOException, GeneralSecurityException {
         Resource fileResource = S3Util.download(report.getFilePath());
         logger.trace("file resource = {}", fileResource);
 
@@ -101,15 +103,15 @@ public class GoogleClientService {
         fileMeta.setName(report.getFileName());
         fileMeta.setMimeType("application/vnd.google-apps.spreadsheet");
         InputStreamContent inputStreamContent = new InputStreamContent("application/vnd.google-apps.spreadsheet", fileResource.getInputStream());
-        File file = GoogleApiUtil.getDrive(userId).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();
+        File file = GoogleApiUtil.getDrive(token).files().create(fileMeta, inputStreamContent).setFields("id, name, webViewLink, mimeType").execute();
         logger.trace("file info {}, {}, {}, {}", file.getId(), file.getName(), file.getWebViewLink(), file.getMimeType());
         return file;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void fileUpdate(String userId, String fileId, Template template, String paramJson, HttpServletRequest httpServletRequest) throws Exception {
+    public void fileUpdate(String userId, String fileId, Template template, String paramJson, HttpServletRequest httpServletRequest, String token) throws Exception {
         try(FileOutputStream outputStream = new FileOutputStream( TEMP_DOWNLOAD_PATH+"/"+template.getFileName())) {
-            GoogleApiUtil.getDrive(userId).files().export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").executeMediaAndDownloadTo(outputStream);
+            GoogleApiUtil.getDrive(token).files().export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").executeMediaAndDownloadTo(outputStream);
         }
 
         java.io.File inFile = new java.io.File(TEMP_DOWNLOAD_PATH+"/"+template.getFileName());
@@ -140,9 +142,9 @@ public class GoogleClientService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void fileUpdate(String userId, String fileId, Report report, HttpServletRequest httpServletRequest) throws Exception {
+    public void fileUpdate(String userId, String fileId, Report report, HttpServletRequest httpServletRequest, String token) throws Exception {
         try(FileOutputStream outputStream = new FileOutputStream( TEMP_DOWNLOAD_PATH+"/"+report.getFileName())) {
-            GoogleApiUtil.getDrive(userId).files().export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").executeMediaAndDownloadTo(outputStream);
+            GoogleApiUtil.getDrive(token).files().export(fileId, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").executeMediaAndDownloadTo(outputStream);
         }
 
         java.io.File inFile = new java.io.File(TEMP_DOWNLOAD_PATH+"/"+report.getFileName());

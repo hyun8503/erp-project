@@ -58,7 +58,7 @@ public class ReportController {
     }
 
     @GetMapping("/report/{reportId}/editviewlink")
-    public ResponseEntity<Object> editViewReport(HttpServletRequest httpRequest, @PathVariable String reportId) throws IOException, GeneralSecurityException {
+    public ResponseEntity<Object> editViewReport(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String reportId) throws IOException, GeneralSecurityException {
         Report report = reportService.selectReportByReportId(reportId);
         File file = googleClientService.fileUpload(report, authenticationService.getUser().getUserId());
         String webViewLink = file.getWebViewLink();
@@ -70,9 +70,9 @@ public class ReportController {
     }
     
     @GetMapping("/report/{reportId}/webviewlink")
-    public ResponseEntity<Object> webViewReport(HttpServletRequest httpRequest, @PathVariable String reportId) throws IOException, GeneralSecurityException {
+    public ResponseEntity<Object> webViewReport(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token,  @PathVariable String reportId) throws IOException, GeneralSecurityException {
     	Report report = reportService.selectReportByReportId(reportId);
-    	File file = googleClientService.fileUpload(report, authenticationService.getUser().getUserId());
+    	File file = googleClientService.fileUpload(report, token);
     	String webViewLink = file.getWebViewLink();
     	
     	webViewLink = webViewLink.replace("/edit", "/htmlview");
@@ -99,26 +99,26 @@ public class ReportController {
     }
 
     @PutMapping("/report/template")
-    public ResponseEntity<Object> updateTemplate(HttpServletRequest httpRequest, @RequestBody UpdateTemplateParam param) throws Exception {
+    public ResponseEntity<Object> updateTemplate(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @RequestBody UpdateTemplateParam param) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String paramJson = objectMapper.writeValueAsString(param);
 
         Template template = reportService.getTemplate(param.getTemplateId());
-        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), template, paramJson, httpRequest);
+        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), template, paramJson, httpRequest, token);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/report")
-    public ResponseEntity<Object> updateReport(HttpServletRequest httpRequest, @RequestBody UpdateReportParam param) throws Exception {
+    public ResponseEntity<Object> updateReport(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token,  @RequestBody UpdateReportParam param) throws Exception {
         Report report = reportService.selectReportByReportId(param.getReportId());
-        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), report, httpRequest);
+        googleClientService.fileUpdate(authenticationService.getUser().getUserId(), param.getFileId(), report, httpRequest, token);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/report/template/{templateId}")
-    public ResponseEntity<Object> viewTemplate(HttpServletRequest httpRequest, @PathVariable String templateId) throws IOException, GeneralSecurityException {
+    public ResponseEntity<Object> viewTemplate(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String templateId) throws IOException, GeneralSecurityException {
         Template template = reportService.getTemplate(templateId);
-        File file = googleClientService.fileUpload(template, authenticationService.getUser().getUserId());
+        File file = googleClientService.fileUpload(template, token);
         Map<String, String> map = new HashMap<>();
         map.put("fileId", file.getId());
         map.put("webViewLink", file.getWebViewLink());

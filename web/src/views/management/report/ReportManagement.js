@@ -14,7 +14,6 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from '@material-ui/core/CardActions';
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import * as PermissionType from "../../../type/PermissionType";
@@ -141,11 +140,11 @@ class ReportManagement extends React.Component {
                                                        上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                     </Typography>
                                             </CardContent>
-                                            <CardActions disableSpacing>
-                                                <Button size="small" color="primary">
-                                                Delete
-                                                </Button>
-                                            </CardActions>
+                                            {/*<CardActions disableSpacing>*/}
+                                            {/*    <Button size="small" color="primary">*/}
+                                            {/*    Delete*/}
+                                            {/*    </Button>*/}
+                                            {/*</CardActions>*/}
                                         </Card>
                                     </Grid>
                                 )

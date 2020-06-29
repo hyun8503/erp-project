@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -41,8 +38,8 @@ public class GoogleApiController {
     }
 
     @GetMapping("/gapi/check-credential")
-    public ResponseEntity<Object> checkCredential(HttpServletRequest httpRequest) throws IOException, GeneralSecurityException {
-        String authUrl = googleClientService.checkGoogleCredential(authenticationService.getUser().getUserId());
+    public ResponseEntity<Object> checkCredential(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token) throws IOException, GeneralSecurityException {
+        String authUrl = googleClientService.checkGoogleCredential(token);
         Map<String, String> map = new HashMap<>();
         map.put("authUrl", authUrl);
         map.put("redirectUri", GoogleApiUtil.REDIRECTION_URI);
@@ -50,8 +47,8 @@ public class GoogleApiController {
     }
 
     @GetMapping("/gapi/oauth2")
-    public ResponseEntity<Object> credentialProcStart(HttpServletRequest httpRequest, @RequestParam String code, @RequestParam String scope) throws IOException, GeneralSecurityException {
-        Credential credential = googleClientService.getCredentialProcStart(authenticationService.getUser().getUserId(), code);
+    public ResponseEntity<Object> credentialProcStart(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token,  @RequestParam String code, @RequestParam String scope) throws IOException, GeneralSecurityException {
+        Credential credential = googleClientService.getCredentialProcStart(token, code);
         logger.info("credential Success = {}", credential.getAccessToken());
         return new ResponseEntity<>(HttpStatus.OK);
     }

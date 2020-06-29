@@ -11,8 +11,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
+import io.sderp.ws.configuration.support.GoogleProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,15 +25,22 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class GoogleApiUtil {
     private static final Logger logger = LoggerFactory.getLogger(GoogleApiUtil.class);
     private static final String APPLICATION_NAME = "Google Drive API For Sindh Tech";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String CREDENTIALS_FILE_PATH = "/client_secret.json";
-    /*product*/
-    public static final String REDIRECTION_URI = "http://ec2-13-209-81-142.ap-northeast-2.compute.amazonaws.com/oauth2";
-    //public static final String REDIRECTION_URI = "http://localhost:3000/oauth2";
+    public static String REDIRECTION_URI;
+
+    @Autowired
+    public GoogleApiUtil(GoogleProperties googleProperties) {
+        REDIRECTION_URI = googleProperties.getOauth2RedirectionUri();
+        if(REDIRECTION_URI == null) {
+            throw new RuntimeException("check properties file");
+        }
+    }
 
     public static String credentialCheck(String userId) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
