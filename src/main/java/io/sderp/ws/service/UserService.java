@@ -1,5 +1,7 @@
 package io.sderp.ws.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sderp.ws.controller.param.ModifyUserParam;
 import io.sderp.ws.controller.param.SignUpParam;
 import io.sderp.ws.controller.param.UserParam;
@@ -16,15 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -115,7 +113,8 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public User signUp(SignUpParam signUpParam) {
+    public User signUp(SignUpParam signUpParam, String remoteAddr) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         loginIdDuplicateCheck(signUpParam.getUserId());
         List<String> platformIdList = signUpParam.getUserPlatformIdList();
         final String userId = UUID.randomUUID().toString();
@@ -135,6 +134,7 @@ public class UserService {
 
         createNewUser(newUser);
         userRoleRepository.insertUserRole(userRole);
+
         for (String platformId : platformIdList) {
             userPlatformRepository.insertUserPlatform(UserPlatform.builder()
                     .userId(userId)
@@ -143,6 +143,14 @@ public class UserService {
                     .modifiedDate(LocalDateTime.now())
                     .build());
         }
+
+        userActionHistoryRepository.insertActionHistory(UserActionHistories.builder()
+                .userId(userId)
+                .typeCode(UserActionHistoryType.USER)
+                .statusCode(UserActionHistoryStatus.CREATE)
+                .ipAddress(remoteAddr)
+                .description(objectMapper.writeValueAsString(signUpParam))
+                .build());
 
         return newUser;
     }
@@ -163,7 +171,8 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void modifyUser(ModifyUserParam modifyUserParam) {
+    public void modifyUser(ModifyUserParam modifyUserParam, String remoteAddr) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         String loginPassword = null;
         List<String> platformIdList = modifyUserParam.getUserPlatformIdList();
         if (platformIdList.size() == 0) {
@@ -193,10 +202,22 @@ public class UserService {
                     .createdDate(LocalDateTime.now())
                     .build());
         }
+
+        userActionHistoryRepository.insertActionHistory(UserActionHistories.builder()
+                .description(objectMapper.writeValueAsString(modifyUserParam))
+                .ipAddress(remoteAddr)
+                .statusCode(UserActionHistoryStatus.UPDATE)
+                .typeCode(UserActionHistoryType.USER)
+                .userId(modifyUserParam.getUserId())
+                .build());
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void withdrawUser(String userId) {
+    public void withdrawUser(String userId, String remoteAddr) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> param = new HashMap<>();
+        param.put("userId", userId);
+
         repository.updateUser(User.builder()
                 .userId(userId)
                 .loginPassword(null)
@@ -207,6 +228,14 @@ public class UserService {
 
         userRoleRepository.deleteUserRole(userId);
         userPlatformRepository.deleteUserPlatform(userId);
+
+        userActionHistoryRepository.insertActionHistory(UserActionHistories.builder()
+                .description(objectMapper.writeValueAsString(param))
+                .ipAddress(remoteAddr)
+                .statusCode(UserActionHistoryStatus.MAPPING)
+                .typeCode(UserActionHistoryType.USER)
+                .userId(userId)
+                .build());
     }
 
     private void loginIdDuplicateCheck(String loginId) {
@@ -227,7 +256,7 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int getMyInfo(String password, String userId, String remoteAddr, String paramJson) {
+    public int updateMyInfo(String password, String userId, String remoteAddr, String paramJson) {
         String loginPassword = null;
         if (!password.isEmpty()) {
             loginPassword = passwordEncoder.encode(password);

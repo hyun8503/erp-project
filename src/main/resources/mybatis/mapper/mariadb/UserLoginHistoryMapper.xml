@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.sderp.ws.repository.mapper.UserLoginHistoryMapper">
+    <insert id="insertUserLoginHistory" parameterType="UserLoginHistory" useGeneratedKeys="true">
+        INSERT INTO erp_user_login_histories (user_id, os, browser, ip_address, created_date)
+        VALUES (#{userId}, #{os}, #{browser}, #{ipAddress}, #{createdDate})
+    </insert>
+</mapper>
+
+

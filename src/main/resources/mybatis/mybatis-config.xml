@@ -20,6 +20,7 @@
         <typeAlias type="io.sderp.ws.model.UserActionHistories" alias="UserActionHistories" />
         <typeAlias type="io.sderp.ws.model.Template" alias="Template" />
         <typeAlias type="io.sderp.ws.model.Report" alias="Report"/>
+        <typeAlias type="io.sderp.ws.model.UserLoginHistory" alias="UserLoginHistory" />
     </typeAliases>
 
     <typeHandlers>

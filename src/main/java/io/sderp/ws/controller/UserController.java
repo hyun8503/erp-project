@@ -51,18 +51,18 @@ public class UserController {
         String userId = authenticationService.getUser().getUserId();
         JSONObject jObject = new JSONObject(password);
         String parsingPassword = jObject.getString("password");
-        return new ResponseEntity<>(userService.getMyInfo(parsingPassword,userId,remoteAddr,paramJson), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateMyInfo(parsingPassword,userId,remoteAddr,paramJson), HttpStatus.OK);
     }
 
     @PutMapping("/user")
-    public ResponseEntity<Object> updateUser(HttpServletRequest httpRequest, @RequestBody ModifyUserParam modifyUserParam) {
-        userService.modifyUser(modifyUserParam);
+    public ResponseEntity<Object> updateUser(HttpServletRequest httpRequest, @RequestBody ModifyUserParam modifyUserParam) throws JsonProcessingException {
+        userService.modifyUser(modifyUserParam, httpRequest.getRemoteAddr());
         return new ResponseEntity<>(modifyUserParam, HttpStatus.OK);
     }
 
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity<Object> deleteUser(HttpServletRequest httpRequest, @PathVariable String userId) {
-        userService.withdrawUser(userId);
+    public ResponseEntity<Object> deleteUser(HttpServletRequest httpRequest, @PathVariable String userId) throws JsonProcessingException {
+        userService.withdrawUser(userId, httpRequest.getRemoteAddr());
         return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
