@@ -141,7 +141,7 @@ public class ReportController {
     public ResponseEntity<Object> deleteTemplate(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String templateId) throws Exception {
     	SimpleUser user = authenticationService.getUser();
     	
-    	if(user != null && user.getTypeCode() == UserType.ADMIN) {
+    	if(user != null) {
     		reportService.deleteTemplate(templateId, user.getUserId(), httpRequest);
         }
     	
