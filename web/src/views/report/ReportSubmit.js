@@ -53,6 +53,10 @@ const styles = theme => ({
         height: 0,
         paddingTop: '56.25%', // 16:9
     },
+    buttonSpacing: {
+        margin: theme.spacing(1),
+    }
+
 });
 
 @inject("authStore", "reportStore")
@@ -74,12 +78,24 @@ class ReportSubmit extends React.Component {
             return (
                 <React.Fragment>
                     <Grid item xs={12} style={{display: "flex"}}>
+                        <Typography variant={"subtitle1"}>
+                            {this.props.reportStore.reportName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{display: "flex"}}>
                         <iframe src={this.props.reportStore.fileWebViewLink ? this.props.reportStore.fileWebViewLink : ""}
                                 style={{
-                                    display: 'flex',
                                     width: '100%',
-                                    minHeight: '700px'
+                                    height: '80vh',
+                                    minHeight: '700px',
+                                    display: 'block',
+                                    border: 'solid 1px gray'
                                 }}
+                                allowFullScreen="true"
+                                mozallowfullscreen="true"
+                                webkitallowfullscreen="true"
+                                frameBorder="0"
+                                scrolling="no" 
                         >
                         </iframe>
                     </Grid>
@@ -96,7 +112,7 @@ class ReportSubmit extends React.Component {
                                 return (
                                     <Grid item xs={2} key={item.reportId} style={{minWidth: '170px'}}>
                                         <Card>
-                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId, DocViewType.type.Edit)}>
+                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId, DocViewType.type.Edit, (moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.reportName.substr(0, item.reportName.lastIndexOf("."))))}>
                                             <CardMedia
                                                 className={classes.cardMedia}
                                                 image={"/images/excel-logo-04.jpg"}
@@ -155,7 +171,11 @@ class ReportSubmit extends React.Component {
 
                             <Grid item xs={2} align={"right"}>
                                 {this.props.reportStore.fileWebViewLink ?
-                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelSave()}>储蓄</Button>
+                                    <Button variant={"contained"} onClick={() => this.props.reportStore.viewExcelClose()} className={classes.buttonSpacing}>取消</Button>
+                                    : ""
+                                }
+                                {this.props.reportStore.fileWebViewLink ?
+                                    <Button variant={"contained"} color={"primary"} onClick={() => this.props.reportStore.viewExcelSave()} className={classes.buttonSpacing}>储蓄</Button>
                                     : ""
                                 }
                             </Grid>

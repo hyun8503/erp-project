@@ -34,7 +34,7 @@
     <logger name="org.springframework" level="info" />
 
     <!-- Log for Application -->
-    <logger name="io.sderp.ws" level="trace" />
+    <logger name="io.sderp.ws" level="info" />
 
     <!-- Log for ROOT -->
     <root level="error">

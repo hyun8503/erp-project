@@ -1,23 +1,17 @@
 package io.sderp.ws.service;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.File;
-import com.google.api.services.drive.model.FileList;
-import io.sderp.ws.configuration.support.GoogleProperties;
-import io.sderp.ws.model.Report;
-import io.sderp.ws.model.Template;
-import io.sderp.ws.model.UserActionHistories;
-import io.sderp.ws.model.support.UserActionHistoryStatus;
-import io.sderp.ws.model.support.UserActionHistoryType;
-import io.sderp.ws.repository.ReportRepository;
-import io.sderp.ws.repository.TemplateRepository;
-import io.sderp.ws.repository.UserActionHistoryRepository;
-import io.sderp.ws.util.GoogleApiUtil;
-import io.sderp.ws.util.S3Util;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
@@ -30,12 +24,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.nio.file.Files;
-import java.security.GeneralSecurityException;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
+
+import io.sderp.ws.configuration.support.GoogleProperties;
+import io.sderp.ws.model.Report;
+import io.sderp.ws.model.Template;
+import io.sderp.ws.model.UserActionHistories;
+import io.sderp.ws.model.support.UserActionHistoryStatus;
+import io.sderp.ws.model.support.UserActionHistoryType;
+import io.sderp.ws.repository.ReportRepository;
+import io.sderp.ws.repository.TemplateRepository;
+import io.sderp.ws.repository.UserActionHistoryRepository;
+import io.sderp.ws.util.GoogleApiUtil;
+import io.sderp.ws.util.S3Util;
 
 @Service
 public class GoogleClientService {
@@ -82,6 +89,12 @@ public class GoogleClientService {
         }
     }
 
+    public InputStream fileDownload(String fileKey) throws IOException, GeneralSecurityException {
+    	Resource fileResource = S3Util.download(fileKey);
+    	
+    	return (fileResource!=null?fileResource.getInputStream():null);
+    }
+    
     public File fileUpload(Template template, String token) throws IOException, GeneralSecurityException {
         Resource fileResource = S3Util.download(template.getFilePath());
         logger.trace("file resource = {}", fileResource);
@@ -186,18 +199,19 @@ public class GoogleClientService {
 					.setFields("nextPageToken, files(id, name)")
 					.setPageToken(pageToken)
 					.execute();
+				if (result == null) continue;
 				
 				List<File> files = result.getFiles();
-				if (files != null) {
-		    		for (File file : files) {
-		    			String uploadedFileId = file.getId();
-		    			String uploadedFileName = file.getName();
-		    			
-		    			if (uploadedFileName != null && uploadedFileName.equals(fileName) == true) {
-		    				GoogleApiUtil.getDrive(token).files().delete(uploadedFileId).execute();
-		    			}
-		    		}
-				}
+				if (files == null) continue;
+				
+	    		for (File file : files) {
+	    			String uploadedFileId = file.getId();
+	    			String uploadedFileName = file.getName();
+	    			
+	    			if (uploadedFileName != null && uploadedFileName.equals(fileName) == true) {
+	    				GoogleApiUtil.getDrive(token).files().delete(uploadedFileId).execute();
+	    			}
+	    		}
 	    		pageToken = result.getNextPageToken();
 			} catch (Exception ex) {
 				logger.trace(ex.getMessage());

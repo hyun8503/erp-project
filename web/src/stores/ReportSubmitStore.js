@@ -13,6 +13,7 @@ export default class ReportSubmitStore {
     @observable fileWebViewLoading = false;
     @observable fileSaving = false;
     @observable fileDeleting = false;
+    @observable templateName = null;
 
     @action initStore = () => {
         this.uploadFileList = [];
@@ -25,12 +26,14 @@ export default class ReportSubmitStore {
         this.fileWebViewTemplateId = null;
         this.fileWebViewLoading = false;
         this.isFileUploading = false;
+        this.templateName = null;
     }
 
     @action viewExcelClose = () => {
         this.fileWebViewId = null;
         this.fileWebViewLink = null;
         this.fileWebViewLoading = false;
+        this.templateName = null;
     }
     
     @action changeIsDropZoneAreaRender = (value) => this.isDropZoneAreaRender = value;
@@ -84,10 +87,11 @@ export default class ReportSubmitStore {
         }
     });
 
-    viewExcelProc = flow(function* (templateId, viewType) {
+    viewExcelProc = flow(function* (templateId, viewType, templateName) {
         this.fileWebViewLink = null;
         this.fileWebViewId = null;
         this.fileWebViewLoading = true;
+        this.templateName = templateName;
         try {
             const response = yield axios.get(`/api/v1/gapi/check-credential`);
             if(response.data.authUrl) {

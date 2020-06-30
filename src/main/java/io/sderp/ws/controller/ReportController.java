@@ -1,6 +1,7 @@
 package io.sderp.ws.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.drive.model.File;
 
-import io.sderp.ws.controller.param.DeleteTemplateParam;
 import io.sderp.ws.controller.param.UpdateReportParam;
 import io.sderp.ws.controller.param.UpdateTemplateParam;
 import io.sderp.ws.model.Report;
+import io.sderp.ws.model.SimpleUser;
 import io.sderp.ws.model.Template;
 import io.sderp.ws.model.support.UserType;
 import io.sderp.ws.service.AuthenticationService;
@@ -96,6 +99,18 @@ public class ReportController {
     	map.put("webViewLink", webViewLink);
     	return new ResponseEntity<>(map, HttpStatus.OK);
     }
+    
+    @GetMapping("/report/{reportId}/download")
+    public void downloadReport(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String reportId) throws IOException, GeneralSecurityException {
+        Report report = reportService.selectReportByReportId(reportId);
+        if (report == null) {
+        	throw new RuntimeException("not exist report");
+        }
+        
+        InputStream input = googleClientService.fileDownload(report.getFilePath());
+        IOUtils.copy(input, httpResponse.getOutputStream());
+        httpResponse.flushBuffer();
+    }
 
     @GetMapping("/report/template")
     public ResponseEntity<List<Template>> getTemplates(HttpServletRequest httpRequest) {
@@ -124,9 +139,10 @@ public class ReportController {
     
     @DeleteMapping("/report/template/{templateId}")
     public ResponseEntity<Object> deleteTemplate(HttpServletRequest httpRequest, @RequestHeader(name="X-Auth-Token") String token, @PathVariable String templateId) throws Exception {
+    	SimpleUser user = authenticationService.getUser();
     	
-    	if(authenticationService.getUser().getTypeCode() == UserType.ADMIN) {
-    		reportService.deleteTemplate(templateId);
+    	if(user != null && user.getTypeCode() == UserType.ADMIN) {
+    		reportService.deleteTemplate(templateId, user.getUserId(), httpRequest);
         }
     	
     	return new ResponseEntity<>(HttpStatus.OK);

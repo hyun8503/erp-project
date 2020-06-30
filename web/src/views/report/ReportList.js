@@ -75,12 +75,24 @@ class ReportList extends React.Component {
             return (
                 <React.Fragment>
                     <Grid item xs={12} style={{display: "flex"}}>
+                        <Typography variant={"subtitle1"}>
+                            {this.props.reportStore.reportName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{display: "flex"}}>
                         <iframe src={this.props.reportStore.fileWebViewLink ? this.props.reportStore.fileWebViewLink : ""}
                                 style={{
-                                    display: 'flex',
                                     width: '100%',
-                                    minHeight: '700px'
+                                    height: '80vh',
+                                    minHeight: '700px',
+                                    display: 'block',
+                                    border: 'solid 1px gray'
                                 }}
+                                allowFullScreen="true"
+                                mozallowfullscreen="true"
+                                webkitallowfullscreen="true"
+                                frameBorder="0"
+                                scrolling="no" 
                         >
                         </iframe>
                     </Grid>
@@ -134,7 +146,7 @@ class ReportList extends React.Component {
                                 return (
                                     <Grid item xs={2} key={item.reportId} style={{minWidth: '170px'}}>
                                         <Card>
-                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId, DocViewType.type.View)}>
+                                            <CardActionArea onClick={() => this.props.reportStore.viewExcelProc(item.reportId, DocViewType.type.View, (moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.platformName + "-" + item.reportName.substr(0, item.reportName.lastIndexOf("."))))}>
                                             <CardMedia
                                                 className={classes.cardMedia}
                                                 image={"/images/excel-logo-04.jpg"}
@@ -149,6 +161,11 @@ class ReportList extends React.Component {
                                                        上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
                                                     </Typography>
                                             </CardContent>
+                                            <CardActions disableSpacing>
+                                               <Button size="small" color="primary" onClick={() => this.props.reportStore.downloadExcel(item.reportId, (moment(item.reportMonth).format("YYYY年 MM月") + "-" + item.platformName + "-" + item.reportName))}>
+                                               Download
+                                               </Button>
+                                            </CardActions>
                                         </Card>
                                     </Grid>
                                 )
@@ -163,7 +180,7 @@ class ReportList extends React.Component {
 
         return (
             <div className={classes.wrap}>
-                <Backdrop open={this.props.reportStore.fileWebViewLoading}
+                <Backdrop open={this.props.reportStore.fileWebViewLoading || this.props.reportStore.fileDownloading}
                           style={{zIndex: 10000}}
                 >
                     <CircularProgress color="inherit" />

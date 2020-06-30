@@ -78,12 +78,24 @@ class ReportManagement extends React.Component {
             return (
                 <React.Fragment>
                     <Grid item xs={12} style={{display: "flex"}}>
+                        <Typography variant={"subtitle1"}>
+                            {this.props.reportSubmitStore.templateName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{display: "flex"}}>
                         <iframe src={this.props.reportSubmitStore.fileWebViewLink ? this.props.reportSubmitStore.fileWebViewLink : ""}
                                 style={{
-                                    display: 'flex',
                                     width: '100%',
-                                    minHeight: '700px'
+                                    height: '80vh',
+                                    minHeight: '700px',
+                                    display: 'block',
+                                    border: 'solid 1px gray'
                                 }}
+                                allowFullScreen="true"
+                                mozallowfullscreen="true"
+                                webkitallowfullscreen="true"
+                                frameBorder="0"
+                                scrolling="no" 
                         >
                         </iframe>
                     </Grid>
@@ -126,7 +138,7 @@ class ReportManagement extends React.Component {
                                 return (
                                     <Grid item xs={2} key={"upload-file"+index} style={{minWidth: '170px'}}>
                                         <Card>
-                                            <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc(item.templateId, DocViewType.type.View)}>
+                                            <CardActionArea onClick={() => this.props.reportSubmitStore.viewExcelProc(item.templateId, DocViewType.type.View, item.templateName)}>
                                             <CardMedia
                                                 className={classes.cardMedia}
                                                 image={"/images/excel-logo-04.jpg"}
@@ -135,11 +147,11 @@ class ReportManagement extends React.Component {
                                             </CardActionArea>
                                             <CardContent>
                                                 <Typography variant={"subtitle1"}>
-                                                        {item.templateName}
-                                                    </Typography>
-                                                    <Typography variant={"body2"}>
-                                                       上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
-                                                    </Typography>
+                                                    {item.templateName}
+                                                </Typography>
+                                                <Typography variant={"body2"}>
+                                                    上传日期 : {moment(item.modifiedDate).format("YYYY-MM-DD")}
+                                                </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
                                                <Button size="small" color="primary" onClick={() => this.props.reportSubmitStore.deleteExcel(item.templateId)}>

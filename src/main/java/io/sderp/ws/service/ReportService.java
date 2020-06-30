@@ -67,14 +67,28 @@ public class ReportService {
     }
     
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTemplate(String templateId) throws Exception {
+    public void deleteTemplate(String templateId, String userId, HttpServletRequest httpServletRequest) throws Exception {
     	Template template = templateRepository.selectTemplate(templateId);
     	if(template.getTemplateId() == null) {
     		throw new RuntimeException("not exists template");
     	}
     	
     	reportRepository.deleteReportByTemplateId(templateId);
+    	
     	templateRepository.deleteTemplate(templateId);
+    	
+    	ObjectMapper objectMapper = new ObjectMapper();
+        String jsonPlainText = objectMapper.writeValueAsString(template);
+        
+    	userActionHistoryRepository.insertActionHistory(
+    		UserActionHistories.builder()
+            .description(jsonPlainText)
+            .ipAddress(httpServletRequest.getRemoteAddr())
+            .statusCode(UserActionHistoryStatus.DELETE)
+            .typeCode(UserActionHistoryType.TEMPLATE)
+            .userId(userId)
+            .build()
+    	);
     }
 
     @Transactional(rollbackFor = Exception.class)

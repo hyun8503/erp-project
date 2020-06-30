@@ -2,6 +2,7 @@ import {action, flow, observable} from "mobx";
 import axios from "axios";
 import moment from "moment";
 import * as DocViewType from "../type/DocViewType";
+import { saveAs } from 'file-saver';
 
 export default class ReportStore {
     @observable reportList = [];
@@ -11,7 +12,9 @@ export default class ReportStore {
     @observable fileWebViewReportId = null;
 
     @observable fileSaving = false;
-
+    @observable fileDownloading = false;
+    
+    @observable reportName = null;
     @observable selectedPlatformId = "none";
     @observable searchFileName = "";
 
@@ -27,12 +30,15 @@ export default class ReportStore {
         this.platformList = [];
         this.fileWebViewReportId = null;
         this.fileSaving = false;
+        this.fileDownloading = false;
+        this.reportName = null;
     }
 
     @action viewExcelClose = () => {
         this.fileWebViewId = null;
         this.fileWebViewLink = null;
         this.fileWebViewLoading = false;
+        this.reportName = null;
     }
 
     @action changeSelectedPlatformId = (value) => this.selectedPlatformId = value;
@@ -70,10 +76,12 @@ export default class ReportStore {
         }
     });
 
-    viewExcelProc = flow(function* (reportId, viewType) {
+    viewExcelProc = flow(function* (reportId, viewType, reportName) {
         this.fileWebViewLink = null;
         this.fileWebViewId = null;
         this.fileWebViewLoading = true;
+        this.reportName = reportName;
+
         try {
             const response = yield axios.get(`/api/v1/gapi/check-credential`);
             if(response.data.authUrl) {
@@ -90,15 +98,29 @@ export default class ReportStore {
                 this.fileWebViewLink = response.data.webViewLink;
                 this.fileWebViewId = response.data.fileId;
                 this.fileWebViewReportId = reportId;
-
-                console.log(this.fileWebViewLink);
-                console.log(this.fileWebViewId);
             }
             this.fileWebViewLoading = false;
         } catch (err) {
             console.log('viewExcelProc error');
             console.log(err);
             this.fileWebViewLoading = false;
+        }
+    });
+
+    downloadExcel = flow(function* (reportId, reportFileName) {
+        let response = null;
+        this.fileDownloading = true;
+        try {
+            response = yield axios.get(`/api/v1/report/${reportId}/download`, { responseType: 'arraybuffer' });
+
+            var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' });
+
+            saveAs(blob, reportFileName);
+
+            this.fileDownloading = false;
+        } catch (err) {
+            console.log('downloadExcel error : ' + err);
+            this.fileDownloading = false;
         }
     });
 
